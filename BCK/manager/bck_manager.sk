@@ -6,7 +6,7 @@ on load:
         load yaml "plugins/Skript/scripts/BCK/manager/config.yml" as "bck.manager.config"
         load yaml "plugins/Skript/scripts/BCK/manager/data.yml" as "bck.manager.data"
     else:
-        broadcast "§6[§4BCK§6/§5Manager§6]§r Script loading cancel It requires (bck_manager.sk)"
+        broadcast "§6[§4BCK§6/§5Manager§6]§r Script loading cancel It requires (core.sk)"
         unload script file "bck_manager.sk"
 command /manager:
     trigger:

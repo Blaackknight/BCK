@@ -1,5 +1,6 @@
 on load:
     bckManagerLoad()
+    wait 1 seconds
     set {sbm} to yaml value "data.money" from "bck.manager.config"
     set {skn} to "§4BCK§r"
 

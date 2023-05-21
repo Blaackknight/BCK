@@ -3,8 +3,8 @@ on load:
     if {_list::*} contains "core.sk":
         send "§6[§4BCK§6]§r Loading manager..." to console
         send "§6[§4BCK§6/§5Manager§6]§r Loaded successfully !" to console
-        load yaml "plugins/Skript/scripts/manager/config.yml" as "bck.manager.config"
-        load yaml "plugins/Skript/scripts/manager/data.yml" as "bck.manager.data"
+        load yaml "plugins/Skript/scripts/BCK/manager/config.yml" as "bck.manager.config"
+        load yaml "plugins/Skript/scripts/BCK/manager/data.yml" as "bck.manager.data"
     else:
         broadcast "§6[§4BCK§6/§5Manager§6]§r Script loading cancel It requires (bck_manager.sk)"
         unload script file "bck_manager.sk"
@@ -123,10 +123,10 @@ on inventory click:
                 if {_u} contain "Activer":
                     set {_susA} to managerAddonExist("money", true)
                     if {_susA} is false:
-                        set {_list::*} to fileList("plugins/Skript/scripts/manager/money/")
+                        set {_list::*} to fileList("plugins/Skript/scripts/BCK/manager/money/")
                         #broadcast "%{_list::*}%"
                         loop {_list::*}:
-                            disable skript "/manager/money/%loop-value%"
+                            disable skript "BCK/manager/money/%loop-value%"
                         set {_active} to lever named "§6§lActiver/Désactiver"
                         set {_actived} to "§c§lDésactivé"
                         set line 1 of lore of {_active} to "§6Etat:§r %{_actived}%"
@@ -134,9 +134,9 @@ on inventory click:
                         set slot 13 of {_g} to {_active}
                         send "§6[§4BCK§6/§bMoney§6]§e §cDésactivation§e réussi !"
                     else if {_susA} is true:
-                        set {_list::*} to fileList("plugins/Skript/scripts/manager/money/")
+                        set {_list::*} to fileList("plugins/Skript/scripts/BCK/manager/money/")
                         loop {_list::*}:
-                            enable skript "/manager/money/%loop-value%"
+                            enable skript "BCK/manager/money/%loop-value%"
                         set {_active} to lever named "§6§lActiver/Désactiver"
                         set {_actived} to "§a§lActivé"
                         set line 1 of lore of {_active} to "§6Etat:§r %{_actived}%"
@@ -180,10 +180,10 @@ on inventory click:
                 if {_u} contain "Activer":
                     set {_susA} to managerAddonExist("account", true)
                     if {_susA} is false:
-                        set {_list::*} to fileList("plugins/Skript/scripts/manager/account/")
+                        set {_list::*} to fileList("plugins/Skript/scripts/BCK/manager/account/")
                         #broadcast "%{_list::*}%"
                         loop {_list::*}:
-                            disable skript "/manager/account/%loop-value%"
+                            disable skript "BCK/manager/account/%loop-value%"
                         set {_active} to lever named "§6§lActiver/Désactiver"
                         set {_actived} to "§c§lDésactivé"
                         set line 1 of lore of {_active} to "§6Etat:§r %{_actived}%"
@@ -191,25 +191,12 @@ on inventory click:
                         set slot 13 of {_g} to {_active}
                         send "§6[§4BCK§6/§dAccount§6]§e §cDésactivation§e réussi !"
                     else if {_susA} is true:
-                        set {_list::*} to fileList("plugins/Skript/scripts/manager/account/")
+                        set {_list::*} to fileList("plugins/Skript/scripts/BCK/manager/account/")
                         loop {_list::*}:
-                            enable skript "/manager/account/%loop-value%"
+                            enable skript "BCK/manager/account/%loop-value%"
                         set {_active} to lever named "§6§lActiver/Désactiver"
                         set {_actived} to "§a§lActivé"
                         set line 1 of lore of {_active} to "§6Etat:§r %{_actived}%"
                         set {_g} to player's current inventory
                         set slot 13 of {_g} to {_active}
                         send "§6[§4BCK§6/§dAccount§6]§e §aActivation§e réussi !"
-command /yml:
-    trigger:
-        # #teleport player to yaml value "%player%.location" from "bck.manager.data"
-        # broadcast yaml value "data.%player%.location" from "bck.manager.data"
-        # set {_t} to yaml value "data.gui.title" from "bck.manager.config"
-        # broadcast formatted "%{_t}%"
-        reload script "/BCK/manager/"
-        reload script "/BCK/core/"
-command /yaml:
-    trigger:
-        set yaml value "data.%player%.location" from "bck.manager.data" to "location of player"
-        save yaml "bck.manager.data"
-        send "§eSaved !"

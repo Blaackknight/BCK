@@ -1,9 +1,0 @@
-command /moneyadd [<player>] [<integer=1>]:
-    permission: op
-    trigger:
-        if arg-1 is set:
-            if arg-2 < 1:
-                send "§cSpecify a number above 1 !"
-                stop
-            moneyAdd(arg-1, arg-2, true)
-            send "%arg-1%'s §8₣ §2add §l§6%arg-2%"

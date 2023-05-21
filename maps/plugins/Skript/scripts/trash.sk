@@ -1,7 +1,0 @@
-command /trash:
-    description: Opens an interface that allows you to put your objects in the trash, §4§l⚠ §r§cAll your objects go in the §5void 
-    cooldown: 1 minute
-    cooldown message: §6You need to wait §b&l%remaining time% &r§6to use this command again!
-    trigger:
-        set {_gui} to genericGui("§0§l♺§r §7Trash §0§l♺", 4, false)
-        open {_gui} to player

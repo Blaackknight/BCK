@@ -1,9 +1,0 @@
-every seconds:
-    loop all players:
-        if world of loop-player is "world":
-            set loop-player's tab list name to "[§aOverworld§r] %loop-player's name%"
-        else if world of loop-player is "world_nether":
-            set loop-player's tab list name to "[§4Nether§r] %loop-player's name%"
-        else if world of loop-player is "world_the_end":
-            set loop-player's tab list name to "[§eEnd§r] %loop-player's name%"
-        

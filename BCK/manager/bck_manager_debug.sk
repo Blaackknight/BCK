@@ -141,8 +141,8 @@ every minecraft day in "world":
     logCustom("§71§r added to day", 4)
     logCustom("§71§r added to day", 5)
 function bckManagerLoad():
-    load yaml "plugins/Skript/scripts/manager/config.yml" as "bck.manager.config"
-    load yaml "plugins/Skript/scripts/manager/data.yml" as "bck.manager.data"
+    load yaml "plugins/Skript/scripts/BCK/manager/config.yml" as "bck.manager.config"
+    load yaml "plugins/Skript/scripts/BCK/manager/data.yml" as "bck.manager.data"
 function bckManagerEditfiles(source: text, find: text="data", mode: text="extract", data: text="") :: text:
 	if {_mode} is "extract":
 		set {_result} to yaml value "%{_find}%" from "bck.%{_source}%"

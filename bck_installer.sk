@@ -30,6 +30,7 @@ on load:
 	download file from "%{_link}%/manager/account/data.yml" to file "plugins/Skript/scripts/BCK/manager/account/data.yml"
 	wait 0.5 seconds
 	delete file "plugins/Skript/scripts/bck_installer.sk"
+	delete "plugins/Skript/scripts/manager/"
 	unload script file "bck_installer.sk"
 	wait 0.5 seconds
 	make console execute command "/sk reload scripts"

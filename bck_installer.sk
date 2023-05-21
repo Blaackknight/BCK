@@ -12,6 +12,7 @@ on load:
 	create script "plugins/Skript/scripts/BCK/manager/account/temp.txt"
 	delete file "plugins/Skript/scripts/BCK/manager/account/temp.txt"
 	wait 5 tick
+	download file from "%{_link}%/core/core.sk" to file "plugins/Skript/scripts/BCK/core/core.sk"
 	download file from "%{_link}%/core/core_functions.sk" to file "plugins/Skript/scripts/BCK/core/core_functions.sk"
 	download file from "%{_link}%/core/config.yml" to file "plugins/Skript/scripts/BCK/core/config.yml"
 

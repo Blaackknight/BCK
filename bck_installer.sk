@@ -16,6 +16,7 @@ on load:
 	download file from "%{_link}%/core/config.yml" to file "plugins/Skript/scripts/BCK/core/config.yml"
 
 	download file from "%{_link}%/manager/bck_manager.sk" to file "plugins/Skript/scripts/BCK/manager/bck_manager.sk"
+	download file from "%{_link}%/manager/bck_manager_debug.sk" to file "plugins/Skript/scripts/BCK/manager/bck_manager_debug.sk"
 	download file from "%{_link}%/manager/config.yml" to file "plugins/Skript/scripts/BCK/manager/config.yml"
 	download file from "%{_link}%/manager/data.yml" to file "plugins/Skript/scripts/BCK/manager/data.yml"
 

@@ -1,13 +1,13 @@
 on load:
     set {_list::*} to {skripts::*}
-	if {_list::*} contains "core.sk":
+    if {_list::*} contains "core.sk":
         send "§6[§4BCK§6]§r Loading manager..." to console
         send "§6[§4BCK§6/§5Manager§6]§r Loaded successfully !" to console
         load yaml "plugins/Skript/scripts/manager/config.yml" as "bck.manager.config"
         load yaml "plugins/Skript/scripts/manager/data.yml" as "bck.manager.data"
     else:
         broadcast "§6[§4BCK§6/§5Manager§6]§r Script loading cancel It requires (apixmj_manager.sk)"
-		unload script file "bck_manager.sk"
+        unload script file "bck_manager.sk"
 command /manager:
     trigger:
         # if hasPermission(player, "server.command.manager") is false:

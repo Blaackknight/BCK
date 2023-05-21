@@ -1,0 +1,6 @@
+on load:
+    send "§6[§4BCK§6]§r Loading core..." to console
+    send "§6[§4BCK§6/§eCore§6]§r Loaded successfully !" to console
+    bckRegisterSkripts()
+    bckRegisterCommands()
+    bckLettersLoad()

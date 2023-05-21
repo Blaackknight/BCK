@@ -4,7 +4,7 @@ on load:
 	set {_link} to "https://raw.githubusercontent.com/Blaackknight/BCK/main"
 	create script "plugins/BCK/manager/temp.txt"
 	delete file "plugins/BCK/manager/temp.txt"
-	reate script "plugins/BCK/core/temp.txt"
+	create script "plugins/BCK/core/temp.txt"
 	delete file "plugins/BCK/core/temp.txt"
 	create script "plugins/BCK/manager/money/temp.txt"
 	delete file "plugins/BCK/manager/money/temp.txt"

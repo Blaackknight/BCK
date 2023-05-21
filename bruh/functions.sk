@@ -16,18 +16,3 @@ function giveNewItem(player: player, item: item, name: text, line1: text="false"
     if {_line5} is not "false":
         set line 5 of lore of {_item} to {_line5}
     give {_items} to {_player}
-function bck_editfiles(source: text, find: text="data", mode: text="extract", data: text="") :: text:
-	if {_mode} is "extract":
-		set {_result} to yaml value "%{_find}%" from "bck.%{_source}%"
-		if {_result} isn't set:
-			if {_data} isn't empty:
-				set {_result} to {_data}
-	else if {_mode} is "delete":
-		set {_result} to yaml value "%{_find}%" from "bck.%{_source}%"
-		if {_result} is set:
-			delete yaml value "%{_find}%" from "bck.%{_source}%"
-			save yaml "bck.%{_source}%"
-	else:
-		set yaml value "%{_find}%" from "bck.%{_source}%" to {_data}
-		save yaml "bck.%{_source}%"
-	return {_result}

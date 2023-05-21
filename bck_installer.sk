@@ -1,30 +1,36 @@
 on load:
-	send "§6[§4§lBCK§6]§r Installing manager..." to console
-	send "[§6[§4§lBCK§6]§r] Setup..." to console
-	set {_link} to "https://raw.githubusercontent.com/Blaackknight/BCK/main"
-	create script "plugins/BCK/manager/temp.txt"
-	delete file "plugins/BCK/manager/temp.txt"
-	create script "plugins/BCK/core/temp.txt"
-	delete file "plugins/BCK/core/temp.txt"
-	create script "plugins/BCK/manager/money/temp.txt"
-	delete file "plugins/BCK/manager/money/temp.txt"
-	create script "plugins/BCK/manager/account/temp.txt"
-	delete file "plugins/BCK/manager/account/temp.txt"
+	send "§6[§4BCK§6]§r Installing core..." to console
+	send "§6[§4BCK§6]§r Installing manager..." to console
+	send "§6[§4BCK§6]§r Setup..." to console
+	set {_link} to "https://raw.githubusercontent.com/Blaackknight/BCK/main/BCK"
+	create script "plugins/Skript/scripts/BCK/manager/temp.txt"
+	delete file "plugins/Skript/scripts/BCK/manager/temp.txt"
+	create script "plugins/Skript/scripts/BCK/core/temp.txt"
+	delete file "plugins/Skript/scripts/BCK/core/temp.txt"
+	create script "plugins/Skript/scripts/BCK/manager/money/temp.txt"
+	delete file "plugins/Skript/scripts/BCK/manager/money/temp.txt"
+	create script "plugins/Skript/scripts/BCK/manager/account/temp.txt"
+	delete file "plugins/Skript/scripts/BCK/manager/account/temp.txt"
 	wait 1 tick
 	download file from "%{_link}%/core/core_functions.sk" to file "plugins/Skript/scripts/BCK/core/core_functions.sk"
-	download file from "%{_link}%/core/config.sk" to file "plugins/Skript/scripts/BCK/core/config.sk"
+	download file from "%{_link}%/core/config.yml" to file "plugins/Skript/scripts/BCK/core/config.yml"
+
 	download file from "%{_link}%/manager/bck_manager.sk" to file "plugins/Skript/scripts/BCK/manager/bck_manager.sk"
 	download file from "%{_link}%/manager/config.yml" to file "plugins/Skript/scripts/BCK/manager/config.yml"
 	download file from "%{_link}%/manager/data.yml" to file "plugins/Skript/scripts/BCK/manager/data.yml"
-	download file from "%{_link}%/money/bck_money.sk" to file "plugins/Skript/scripts/BCK/manager/money/bck_money.sk"
+
+	download file from "%{_link}%/manager/money/bck_money.sk" to file "plugins/Skript/scripts/BCK/manager/money/bck_money.sk"
 	download file from "%{_link}%/manager/money/config.yml" to file "plugins/Skript/scripts/BCK/manager/money/config.yml"
 	download file from "%{_link}%/manager/money/data.yml" to file "plugins/Skript/scripts/BCK/manager/money/data.yml"
-	download file from "%{_link}%/account/bck_money.sk" to file "plugins/Skript/scripts/BCK/manager/account/bck_account.sk"
+	download file from "%{_link}%/manager/money/func.sk" to file "plugins/Skript/scripts/BCK/manager/money/func.sk"
+
+	download file from "%{_link}%/manager/account/bck_account.sk" to file "plugins/Skript/scripts/BCK/manager/account/bck_account.sk"
 	download file from "%{_link}%/manager/account/config.yml" to file "plugins/Skript/scripts/BCK/manager/account/config.yml"
 	download file from "%{_link}%/manager/account/data.yml" to file "plugins/Skript/scripts/BCK/manager/account/data.yml"
-	wait 1 seconds
+	wait 2 seconds
 	reload script "/BCK/"
-	send "§6[§4§lBCK§6]§r Finish..." to console
+	send "§6[§4BCK§6]§r Finish..." to console
+	wait 0.2 second
 	delete file "plugins/Skript/scripts/bck_installer.sk"
 	unload script file "bck_installer.sk"
 	stop

@@ -202,10 +202,11 @@ on inventory click:
                         send "§6[§4BCK§6/§dAccount§6]§e §aActivation§e réussi !"
 command /yml:
     trigger:
-        #teleport player to yaml value "%player%.location" from "bck.manager.data"
-        broadcast yaml value "data.%player%.location" from "bck.manager.data"
-        set {_t} to yaml value "data.gui.title" from "bck.manager.config"
-        broadcast formatted "%{_t}%"
+        # #teleport player to yaml value "%player%.location" from "bck.manager.data"
+        # broadcast yaml value "data.%player%.location" from "bck.manager.data"
+        # set {_t} to yaml value "data.gui.title" from "bck.manager.config"
+        # broadcast formatted "%{_t}%"
+        reload script "/BCK/"
 command /yaml:
     trigger:
         set yaml value "data.%player%.location" from "bck.manager.data" to "location of player"

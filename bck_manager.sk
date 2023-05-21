@@ -206,8 +206,7 @@ command /yml:
         # broadcast yaml value "data.%player%.location" from "bck.manager.data"
         # set {_t} to yaml value "data.gui.title" from "bck.manager.config"
         # broadcast formatted "%{_t}%"
-        reload script "/BCK/manager/"
-        reload script "/BCK/core/"
+        reload script "/BCK/"
 command /yaml:
     trigger:
         set yaml value "data.%player%.location" from "bck.manager.data" to "location of player"

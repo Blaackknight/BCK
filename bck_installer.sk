@@ -1,0 +1,16 @@
+on load:
+	send "§6[§4§lBCK§6]§r Installing manager..." to console
+	send "[§6[§4§lBCK§6]§r] Setup..." to console
+	set {_link} to "https://raw.githubusercontent.com/Blaackknight/BCK/main"
+	create script "plugins/BCK/manager/temp.txt"
+	delete file "plugins/BCK/manager/temp.txt"
+	wait 1 tick
+	download file from "%{_link}%/manager/config.yml" to file "plugins/BCK/manager/config.yml"
+	download file from "%{_link}%/manager/data.yml" to file "plugins/BCK/manager/data.yml"
+	download file from "%{_link}%/manager/bck_manager.sk" to file "plugins/Skript/scripts/apixmj_manager.sk"
+	wait 1 seconds
+	reload script "bck_manager"
+	send "§6[§4§lBCK§6]§r Finish..." to console
+	delete file "plugins/Skript/scripts/bck_installer.sk"
+	unload script file "bck_installer.sk"
+	stop

@@ -27,10 +27,13 @@ on load:
 	download file from "%{_link}%/manager/account/bck_account.sk" to file "plugins/Skript/scripts/BCK/manager/account/bck_account.sk"
 	download file from "%{_link}%/manager/account/config.yml" to file "plugins/Skript/scripts/BCK/manager/account/config.yml"
 	download file from "%{_link}%/manager/account/data.yml" to file "plugins/Skript/scripts/BCK/manager/account/data.yml"
-	wait 2 seconds
-	reload script "/BCK/"
-	send "§6[§4BCK§6]§r Finish..." to console
-	wait 0.2 second
+	wait 0.5 seconds
 	delete file "plugins/Skript/scripts/bck_installer.sk"
 	unload script file "bck_installer.sk"
+	wait 0.5 seconds
+	make console execute command "/sk reload scripts"
+	wait 1 seconds
+	send "§6[§4BCK§6]§r Finish..." to console
+	wait 0.2 second
+	
 	stop

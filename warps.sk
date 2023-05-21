@@ -1,0 +1,69 @@
+options:
+	nopermission: &cPermission insuffisante.
+	line: &8&m---&r
+	
+command /setwarp [<text>]:
+    permission: command.setwarp
+    permission message: {@nopermission}
+    trigger:
+        if arg 1 is not set:
+            send "{@line} &6SetWarp {@line}"
+            send "&6/setwarp &7<warp>"
+        if arg 1 is set:
+            if {serverinfo::warps::*} contains arg-1:
+                send "&6Warps &8» &7Ce warp éxiste déja"
+                stop
+            add arg-1 to {serverinfo::warps::*}
+            set {serverinfo::warplocations::%arg 1%} to location of player
+            send "&6Warps &8» &7Vous avez ajouter le warp &6%arg 1% &7avec l'emplacement &7&o%location of player%"
+            logCustom("§7%player%§r has been created warp named §7%arg-1%§r at %player's location%", 3)
+            logCustom("§7%player%§r has been created warp named §7%arg-1%§r at %player's location%", 4)
+            logCustom("§7%player%§r has been created warp named §7%arg-1%§r at %player's location%", 5)
+	
+command /delwarp [<text>]:
+    permission: command.delwarp
+    permission message: {@nopermission}
+    trigger:
+        if arg 1 is not set:
+            send "{@line} &6DelWarp {@line}"
+            send "&6/delwarp &7<warp>"
+        if arg 1 is set:
+            if {serverinfo::warps::*} does not contain arg-1:
+                send "&6Warps &8» &7Ce warp n'éxiste pas"
+                stop
+            remove arg-1 from {serverinfo::warps::*}
+            delete {serverinfo::warplocations::%arg 1%}
+            logCustom("§7%player%§r has been deleted warp named §7%arg-1%§r", 3)
+            logCustom("§7%player%§r has been deleted warp named §7%arg-1%§r", 4)
+            logCustom("§7%player%§r has been deleted warp named §7%arg-1%§r", 5)
+            send "&6Warps &8» &7Vous venez de supprimé le warp &6%arg 1%"
+	
+command /warp [<text>]:
+    trigger:
+        if arg 1 is not set:
+            send "{@line} &6Warps {@line}"
+            loop {serverinfo::warps::*}:
+                send "&7&l• &e%loop-value%"
+            stop
+        if {serverinfo::warps::*} is not set:
+            send "&6Warps &8» &7Aucun warp trouvé"
+            stop
+        loop {serverinfo::warps::*}:
+            #send "&7&l• &e%loop-value%"
+            if arg 1 is set:
+                if {serverinfo::warps::*} does not contain arg-1:
+                    send "&6Warps &8» &7Ce warp n'éxiste pas (%arg-1%)"
+                    exit loop
+                    stop
+                teleport player to {serverinfo::warplocations::%arg 1%}
+                play sound "entity.experience_orb.pickup" with volume 1 at player
+                logCustom("§7%player%§r has been warped at §7%{serverinfo::warplocations::%arg 1%}% named §7%arg-1%§r", 3)
+                logCustom("§7%player%§r has been warped at §7%{serverinfo::warplocations::%arg 1%}% named §7%arg-1%§r", 4)
+                logCustom("§7%player%§r has been warped at §7%{serverinfo::warplocations::%arg 1%}% named §7%arg-1%§r", 5)
+                send "&6Warps &8» &7Téléportation to &6%arg 1%"
+                exit loop
+
+on tab complete of "/warp":
+    set tab completions of position 1 to {serverinfo::warps::*}
+on tab complete of "/delwarp":
+    set tab completions of position 1 to {serverinfo::warps::*}

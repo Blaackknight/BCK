@@ -1,0 +1,17 @@
+command /nbt:
+    permission: op
+    trigger:
+        set {_t} to player's tool
+        set {_e} to targeted entity
+        set {_b} to targeted block
+        if {_e} is set:
+            set {_nbt} to nbt of {_e}
+            send {_nbt} to player
+        else if {_t} is not air:
+            set {_nbt} to nbt of {_t}
+            send {_nbt} to player
+        else if {_b} is set:
+            set {_nbt} to nbt of {_b}
+            send {_nbt} to player
+        else:
+            send "§cYou don't have item in your hand"

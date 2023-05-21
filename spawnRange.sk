@@ -1,0 +1,30 @@
+command /spawnConfig [<text>] [<number=1>]:
+    trigger:
+        set {_x} to getX({_r::*})
+        set {_y} to getY({_r::*})
+        set {_z} to getZ({_r::*})
+        set {_w} to getWorld({_r::*})
+
+        if arg-1 is set:
+            if arg-1 is "safe_zone":
+                if arg-2 is set:
+                    set {config.spawn.safe_zone} to arg-2
+                    set {config.spawn.safe_zone.x} to arg-2
+                    set {config.spawn.safe_zone.y} to arg-2
+                    set {config.spawn.safe_zone.z} to arg-2
+                    send "§eRadius of the safe zone set to §b%arg-2%"
+                    play sound "entity.experience_orb.pickup" with volume 0.4 at player
+            else if arg-1 is "protection_zone":
+                if arg-2 is set:
+                    set {config.spawn.protection} to arg-2
+                    set {config.spawn.protection.x} to arg-2
+                    set {config.spawn.protection.y} to arg-2
+                    set {config.spawn.protection.z} to arg-2
+                    send "§eRadius of the protection zone set to §b%arg-2%"
+                    play sound "entity.experience_orb.pickup" with volume 0.4 at player
+            else:
+                send "§cUnknown option (%{arg-1}%)"
+on tab complete of "/spawnConfig":
+    if hasPermission(player, "server.command.spawnConfig") is false:
+        stop
+    set tab completions for position 1 to "safe_zone" and "protection_zone"

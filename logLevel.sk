@@ -1,0 +1,61 @@
+command /loglevel [<integer=0>] [<player>]:
+    trigger:
+        if hasPermission(player, "server.command.loglevel") is false:
+            send "§c§lHey! §7Tu n'a pas la permission :|"
+            stop
+        set {_player} to player
+        if arg-2 is set:
+            set {_player} to arg-2
+        if arg-1 is 1:
+            removeAllTier({_player})
+            add {_player} to {log.tier1::*}
+            if arg-2 is not set:
+                send "§6[§4BCK§6]§r §eYour log level has been set to §l§b%arg-1%"
+            else:
+                send "§6[§4BCK§6]§r §e%{_player}% log level has been set to §l§b%arg-1%"
+        else if arg-1 is 2:
+            removeAllTier({_player})
+            add {_player} to {log.tier2::*}
+            if arg-2 is not set:
+                send "§6[§4BCK§6]§r §eYour log level has been set to §l§b%arg-1%"
+            else:
+                send "§6[§4BCK§6]§r §e%{_player}% log level has been set to §l§b%arg-1%"
+        else if arg-1 is 3:
+            removeAllTier({_player})
+            add {_player} to {log.tier3::*}
+            if arg-2 is not set:
+                send "§6[§4BCK§6]§r §eYour log level has been set to §l§b%arg-1%"
+            else:
+                send "§6[§4BCK§6]§r §e%{_player}% log level has been set to §l§b%arg-1%"
+        else if arg-1 is 4:
+            removeAllTier({_player})
+            add {_player} to {log.tier4::*}
+            if arg-2 is not set:
+                send "§6[§4BCK§6]§r §eYour log level has been set to §l§b%arg-1%"
+            else:
+                send "§6[§4BCK§6]§r §e%{_player}% log level has been set to §l§b%arg-1%"
+        else if arg-1 is 5:
+            removeAllTier({_player})
+            add {_player} to {log.tier5::*}
+            if arg-2 is not set:
+                send "§6[§4BCK§6]§r §eYour log level has been set to §l§b%arg-1%"
+            else:
+                send "§6[§4BCK§6]§r §e%{_player}% log level has been set to §l§b%arg-1%"
+        else if arg-1 is 6:
+            removeAllTier({_player})
+            if arg-1 is not set:
+                send "§6[§4BCK§6]§r §eYour log level has been §4reset"
+            else:
+                send "§6[§4BCK§6]§r §e%{_player}% log level has been §4reset"
+
+on tab complete of "/loglevel":
+    if hasPermission(player, "server.command.loglevel") is false:
+        stop
+    set tab completions for position 1 to 1, 2, 3, 4, 5 and 6
+
+function removeAllTier(player: player):
+    remove {_player} from {log.tier1::*}
+    remove {_player} from {log.tier2::*}
+    remove {_player} from {log.tier3::*}
+    remove {_player} from {log.tier4::*}
+    remove {_player} from {log.tier5::*}

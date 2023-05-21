@@ -1,0 +1,5 @@
+command /smc [<entity type>] [<text>]:
+    trigger:
+        spawn arg-1 at the player
+        if arg-2 is set:
+            set name of last spawned entity to arg-2

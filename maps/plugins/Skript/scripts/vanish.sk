@@ -1,0 +1,35 @@
+command /vanish [<text>]:
+    permission: op
+    trigger:
+        if arg-1 is not set:
+            if {vanished::*} does not contain player:
+                add player to {vanished::*}
+                send action bar "§7Vanish §aenabled" to player
+                hide player from all players
+                broadcast "§e%player% left the game"
+            else if {vanished::*} contain player:
+                remove player from {vanished::*}
+                send action bar "§7Vanish §4desabled" to player
+                reveal player from all players
+                broadcast "§e%player% joined the game"
+        else if arg-1 is "on":
+            if {vanished::*} does not contain player:
+                add player to {vanished::*}
+            send action bar "§7Vanish §aenabled" to player
+            hide player from all players
+            broadcast "§e%player% left the game"
+        else if arg-1 is "off":
+            if {vanished::*} contain player:
+                remove player from {vanished::*}
+            send action bar "§7Vanish §4desabled" to player
+            reveal player from all players
+            broadcast "§e%player% joined the game"
+        else:
+            send "§cUnknown option"
+on tab complete of "/vanish":
+    set tab completions for position 1 to "on" and "off"
+on join:
+    if {vanished::*} contain player:
+        hide player from all players
+    else if {vanished::*} does not contain player:
+        reveal player from all players

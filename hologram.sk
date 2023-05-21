@@ -1,0 +1,11 @@
+command hologram [<text>]:
+    trigger:
+        if arg-1 is set:
+            if arg-1 is "create":
+        else:
+            send "§cEntre une option"
+
+on tab complete of "/hologram":
+    if hasPermission(player, "server.command.hologram") is false:
+        stop
+    set tab completions of position 1 to "create"

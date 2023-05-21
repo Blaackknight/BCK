@@ -1,0 +1,6 @@
+command /broadcast [<text>]:
+    permission: op
+    trigger:
+        if arg-1 is not set:
+            stop
+        broadcast "§e[§4INFOS§e]§r %arg-1%"

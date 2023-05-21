@@ -1,0 +1,21 @@
+command /h:
+    description: All commands
+    trigger:
+        if player's name is not "Blaackknight":
+            make player execute command "/help"
+        else:
+            reload skript "suicide.sk"
+            reload skript "reload.sk"
+            reload skript "chat.sk"
+            reload skript "give.sk"
+            reload skript "furnace automatisation.sk"
+            reload skript "ef.sk"
+            reload skript "dirt.sk"
+            reload skript "sp.sk"
+            reload skript "explode.sk"
+            reload skript "hammer.sk"
+            reload skript "hammerGive.sk"
+            reload skript "t.sk"
+            reload script "return.sk"
+            reload skript "tabList.sk"
+            send action bar "§eAll skript has been reloaded !" to player

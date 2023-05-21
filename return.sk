@@ -1,0 +1,17 @@
+command /spawn:
+    cooldown: 5 minute
+    cooldown bypass: spawn.bypass
+    trigger:
+        if {spawn} is not set:
+            send "§cThe spawn is not defined"
+            play sound "entity.villager.no" with volume 0.5 at player
+        teleport player to {spawn}
+        play sound "entity.enderman.teleport" with volume 0.5 at player
+on command "home":
+    if {freeze.%player's uuid%} is true:
+        cancel event
+        send "§eYou are §1frozen.."
+on command "spawn":
+    if {freeze.%player's uuid%} is true:
+        cancel event
+        send "§eYou are §1frozen.."

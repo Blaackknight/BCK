@@ -1,0 +1,11 @@
+function logC(msg: text, lvl: integer=1):
+    if {_lvl} is 1:
+        send formatted "§6[§4BCK§6/§cSuS§6]§r %{_msg}%" to {log.tier1::*}
+    else if {_lvl} is 2:
+        send formatted "§6[§4BCK§6/§cSuS§6]§r %{_msg}%" to {log.tier2::*}
+    else if {_lvl} is 3:
+        send formatted "§6[§4BCK§6/§cSuS§6]§r %{_msg}%" to {log.tier3::*}
+    else if {_lvl} is 4:
+        send formatted "§6[§4BCK§6/§cSuS§6]§r %{_msg}%" to {log.tier4::*}
+    else if {_lvl} is 5:
+        send formatted "§6[§4BCK§6/§cSuS§6]§r %{_msg}%" to {log.tier5::*}

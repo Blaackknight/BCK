@@ -1,0 +1,4 @@
+on command "/op":
+    if player is set:
+        cancel event
+        send "§c§lHey! §7Tu ne peut pas faire cela :|"

@@ -1,0 +1,74 @@
+function bck_files_manager():
+	load yaml "plugins/manager/config.yml" as "bck.manager.config"
+	load yaml "plugins/manager/data.yml" as "bck.manager.data"
+	stop
+
+on load:
+    if {skripts::*} contains "bck_manager.sk":
+        send "§6[§4BCK§6]§r Loading account..." to console
+        wait 2 seconds
+        send "§6[§4BCK§6/§dAccount§6]§r Loaded successfully !" to console
+    else:
+        broadcast "§6[§4BCK§6/§dAccount§6]§r Script loading cancel It require (bck_manager.sk)"
+        unload script file "bck_account.sk"
+    stop
+command /account [<text="player">]:
+    trigger:
+        if {account.%player%} is not "player" or "staff":
+            set {account.%player%} to "player"
+        if {account.%player%} is "player":
+            set {account.survival.%player%.helmet} to player's helmet
+            set {account.survival.%player%.chestplate} to player's chestplate
+            set {account.survival.%player%.leggings} to player's leggings
+            set {account.survival.%player%.boots} to player's boots
+            set {account.survival.%player%.coordinate} to player's location
+            if player's gamemode is creative:
+                set {account.survival.%player%.creative} to true
+            else:
+                set {account.survival.%player%.creative} to false
+            set {_count} to 0
+            loop 36 times:
+                set {account.survival.%player%.%{_count}%} to slot {_count} of player's inventory
+                add 1 to {_count}
+            clear player's inventory
+            set gamemode of player to creative
+            wait 1 ticks
+            set the helmet of player to {account.creative.%player%.helmet}
+            set the chestplate of player to {account.creative.%player%.chestplate}
+            set the leggings of player to {account.creative.%player%.leggings}
+            set the boots of player to {account.creative.%player%.boots}
+            set {_count} to 0
+            loop 36 times:
+                set slot {_count} of player's inventory to {account.creative.%player%.%{_count}%}
+                add 1 to {_count}
+            set {account.%player%} to "staff"
+            coordinateInterrupt(player)
+            send action bar "§6Votre compte vient de passer §dSTAFF" to player
+        else if {account.%player%} is "staff":
+            set {account.creative.%player%.helmet} to player's helmet
+            set {account.creative.%player%.chestplate} to player's chestplate
+            set {account.creative.%player%.leggings} to player's leggings
+            set {account.creative.%player%.boots} to player's boots
+            if {account.survival.%player%.creative} is false:
+                set gamemode of player to survival
+            set {_count} to 0
+            loop 36 times:
+                set {account.creative.%player%.%{_count}%} to slot {_count} of player's inventory
+                add 1 to {_count}
+            wait 1 ticks
+            teleport player at {account.survival.%player%.coordinate}
+            set the helmet of player to {account.survival.%player%.helmet}
+            set the chestplate of player to {account.survival.%player%.chestplate}
+            set the leggings of player to {account.survival.%player%.leggings}
+            set the boots of player to {account.survival.%player%.boots}
+            set {_count} to 0
+            loop 36 times:
+                set slot {_count} of player's inventory to {account.survival.%player%.%{_count}%}
+                add 1 to {_count}
+            set {account.%player%} to "player"
+            coordinateInterrupt(player)
+            send action bar "§6Votre compte vient de passer §bPLAYER" to player
+on tab complete of "/account":
+    if hasPermission(player, "server.command.account") is false:
+        stop
+    set tab completions for position 1 to "player" and "staff"

@@ -1,0 +1,791 @@
+options:
+    m: "§d§lMateriaux"
+    p: "§d§lPatrick"
+    f: "§6§lNourriture"
+    j: "§6§lJerry"
+    po: "§b§lPotions"
+    oz: "§b§lOZ"
+    co: "§a§lConstructions"
+    ro: "§a§lRodrigues"
+    fi: "§1§lPêcheur"
+    dy: "§1§lHector"
+    en: "§4§lIngénieur"
+    ze: "§4§lZephir"
+    pr: "§e§lPrêtre §e§lGabriel"
+    ga: "§e§lGabriel"
+    ea: "§4§lAssistante de §4§ll'Ingénieur"
+    ch: "§4§lChloé"
+    ar: "§8§lArmurier"
+    sh: "§e§lShane"
+    fdo: "§8§lOutilleur"
+    nix: "§8§lNix"
+    fda: "§8§lForgeron d'armes"
+    neg: "§8§lNegon"
+on right click on entity:
+    set {_times::*} to split "%time%" by ":"
+    set {_hour} to {_times::1} parsed as integer
+    if entity's display name is {@m}:
+        cancel event
+        # if {_hour} >= 19:
+        #     send "Bonsoir" to player
+        # else if {_hour} >= 6:
+        #     send "Bonjour" to player
+        # else if {_hour} >= 5:
+        #     send "Bon reveil" to player
+        # else:
+        #     send "Bonsoir" to player
+        # send "%{_hour}%" to player
+        if {villager.materials.%player%} is not set:
+            witch(event-location)
+            send "%{@p}%§r: %getTime(player, true)% %player% !" to player
+            wait 1 second
+            witch(event-location)
+            send "%{@p}%§r: Je suis particulièrement intéressé par certains §litems§r et §lblocs§r qu'on peut trouver par ici. Si vous en récupérez, apportez les moi et je vous les achèterai à un bon prix. Vous pouvez aussi vous en procurer chez moi." to player
+            set {villager.materials.%player%} to true
+        else:
+            set {_gui} to genericGui({@m}, 8)
+            glassAdd({_gui})
+            itemsAdd({_gui}, {villager.materials::*})
+            set slot 53 of {_gui} to arrow named "§2§lNext"
+            set {inv.%player%} to "villagerMaterialsPage1"
+            open {_gui} to player
+            
+    else if entity's display name is {@f}:
+        cancel event
+        if {villager.foods.%player%} is not set:
+            witch(event-location)
+            send "%{@j}%§r: %getTime(player, true)% %player% !" to player
+            wait 1 second
+            witch(event-location)
+            send "%{@j}%§r: Je suis particulièrement intéressé par certains §litems§r et §lblocs§r qu'on peut trouver par ici. Si vous en récupérez, apportez les moi et je vous les achèterai à un bon prix. Vous pouvez aussi vous en procurer chez moi." to player
+            set {villager.foods.%player%} to true
+        else:
+            set {_gui} to genericGui({@f}, 8)
+            glassAdd({_gui})
+            itemsAdd({_gui}, {villager.foods::*})
+            set slot 53 of {_gui} to arrow named "§2§lNext"
+            set {inv.%player%} to "villagerFoodsPage1"
+            open {_gui} to player
+            
+    else if entity's display name is {@po}:
+        cancel event
+        if {villager.potions.%player%} is not set:
+            witch(event-location)
+            send "%{@oz}%§r: %getTime(player, true)% %player% !" to player
+            wait 1 second
+            witch(event-location)
+            send "%{@oz}%§r: Je suis particulièrement intéressé par certaines §lpotions§r qu'on peut trouver par ici. Si vous en récupérez, apportez les moi et je vous les achèterai à un bon prix. Vous pouvez aussi vous en procurer chez moi." to player
+            set {villager.potions.%player%} to true
+        else:
+            set {_gui} to genericGui({@po}, 8)
+            glassAdd({_gui})
+            itemsAdd({_gui}, {villager.potions::*})
+            set slot 53 of {_gui} to arrow named "§2§lNext"
+            set {inv.%player%} to "villagerPotionsPage1"
+            open {_gui} to player
+    else if entity's display name is {@co}:
+        cancel event
+        if {villager.constructions.%player%} is not set:
+            witch(event-location)
+            send "%{@ro}%§r: %getTime(player, true)% %player% !" to player
+            wait 1 second
+            witch(event-location)
+            send "%{@ro}%§r: Je suis particulièrement intéressé par certains §litems§r et §lblocs§r qu'on peut trouver par ici. Si vous en récupérez, apportez les moi et je vous les achèterai à un bon prix. Vous pouvez aussi vous en procurer chez moi." to player
+            set {villager.constructions.%player%} to true
+        else:
+            set {_gui} to genericGui({@co}, 8)
+            glassAdd({_gui})
+            itemsAdd({_gui}, {villager.constructions::*})
+            set slot 53 of {_gui} to arrow named "§2§lNext"
+            set {inv.%player%} to "villagerConstructionsPage1"
+            open {_gui} to player   
+    else if entity's display name is {@fi}:
+        cancel event
+        if {villager.fisherman.%player%} is not set:
+            witch(event-location)
+            send "%{@dy}%§r: %getTime(player, true)% %player% !" to player
+            wait 1 second
+            witch(event-location)
+            send "%{@dy}%§r: Je suis particulièrement intéressé par certains §lpoissons§r et §litems§r qu'on peut trouver par ici. Si vous en récupérez, apportez les moi et je vous les achèterai à un bon prix. Vous pouvez aussi vous en procurer chez moi." to player
+            set {villager.fisherman.%player%} to true
+        else:
+            set {_gui} to genericGui({@fi}, 8)
+            glassAdd({_gui})
+            itemsAdd({_gui}, {villager.fisherman::*})
+            set slot 53 of {_gui} to arrow named "§2§lNext"
+            set {inv.%player%} to "villagerFishermanPage1"
+            open {_gui} to player  
+    else if entity's display name is {@en}:
+        cancel event
+        if {villager.engineer.%player%} is not set:
+            witch(event-location)
+            send "%{@ze}%§r: %getTime(player, true)% %player% !" to player
+            wait 1 second
+            witch(event-location)
+            send "%{@ze}%§r: Je suis particulièrement intéressé par certains §litems§r et §lblocs§r qu'on peut trouver par ici. Si vous en récupérez, apportez les moi et je vous les achèterai à un bon prix. Vous pouvez aussi vous en procurer chez moi." to player
+            set {villager.engineer.%player%} to true
+        else:
+            set {_gui} to genericGui({@en}, 8)
+            glassAdd({_gui})
+            itemsAdd({_gui}, {villager.engineer::*})
+            set slot 53 of {_gui} to arrow named "§2§lNext"
+            set {inv.%player%} to "villagerEngineerPage1"
+            open {_gui} to player   
+    else if entity's display name is {@pr}:
+        cancel event
+        # if {villager.prist.%player%} is not set:
+        player(event-location, player)
+        send "§7§l%player%§r: %getTime(player, true)% mon père !" to player
+        wait 1 second
+        witch(event-location)
+        send "%{@ga}%:§r %getTime(player, true)% %player%.." to player
+        wait 1 second
+        player(event-location, player)
+        send "§7§l%player%§r: Bénissez moi mon père parce que j'ai péché." to player
+        wait 1 second 
+        player(event-location, player)
+        send "§7§l%player%§r: Je ne me suis pas confessé depuis le jour §7§l%{priest.%player%}%." to player
+        wait 1 second
+        witch(event-location)
+        send "%{@ga}%§r: Je vois, bien commençons." to player
+        wait 1 second
+        witch(event-location)
+        send "%{@ga}%§r: Parlez moi de vos péchés.." to player
+        wait 1 second
+        
+        set {_list::*} to "J'ai violez une personne dernièrement..","j'ai rigolé d'un handicapé..","J'ai pris de la §credstone..","Je n'ais pas aidez une personne dans le besoin..","J'ai §4tuer§r une personne récemment..et.. j'ai bien §lAIMER§r !","J'ai pris des §dchampignons spécial..", "J'ai volé des biens a plusieurs personnes.." and "J'ai volé des biens a une personne.."
+        set {_r} to random integer between 1 and listCounter({_list::*})
+        set {_rr} to random integer between 1 and listCounter({_list::*})
+
+        if {priestGabriel.%player%} = {_r}:
+            set {_r} to random integer between 1 and listCounter({_list::*})
+        if {priestGabriel.%player%} = {_r}:
+            set {_r} to random integer between 1 and listCounter({_list::*})
+        if {priestGabriel.%player%} = {_r}:
+            set {_r} to random integer between 1 and listCounter({_list::*})
+        if {priestGabriel.%player%} = {_r}:
+            set {_r} to random integer between 1 and listCounter({_list::*})
+        if {priestGabriel.%player%} = {_r}:
+            set {_r} to random integer between 1 and listCounter({_list::*})
+
+        if {priestGabrielbis.%player%} = {_rr}:
+            set {_rr} to random integer between 1 and listCounter({_list::*})
+        if {priestGabrielbis.%player%} = {_rr}:
+            set {_rr} to random integer between 1 and listCounter({_list::*})
+        if {priestGabrielbis.%player%} = {_rr}:
+            set {_rr} to random integer between 1 and listCounter({_list::*})
+        if {priestGabrielbis.%player%} = {_rr}:
+            set {_rr} to random integer between 1 and listCounter({_list::*})
+        if {priestGabrielbis.%player%} = {_rr}:
+            set {_rr} to random integer between 1 and listCounter({_list::*})
+        
+        set {priestGabriel.%player%} to {_r}
+        set {priestGabrielbis.%player%} to {_r}
+
+        set {_str} to {_list::%{_r}%}
+        set {_strbis} to {_list::%{_rr}%}
+        player(event-location, player)
+        send "§7§l%player%:§r %{_str}%" to player
+        wait 1 second
+        player(event-location, player)
+        send "§7§l%player%:§r %{_strbis}%" to player
+        set {_world} to player's world
+        set {_day} to {world.day}
+        if {_day} is not set:
+            set {_day} to 0
+        set {_date} to "%{_day}% §rà§7 %{_world}'s time%"
+        #set {_date} to {_l::1}
+        set {priest.%player%} to {_date}
+    else if entity's display name is {@ea}:
+        cancel event
+        # if {villager.prist.%player%} is not set:
+        set {_list::*} to "Bienvenue dans la boutique de &4l'ingénieur §r!", "Ici, nous achetons et vendons des équipements de redstone !", "Nous avons un large panel d'équipements pour satisfaire vos projets en redstone !", "&4L'ingénieur§r saura vous satisfaire !", "Nous nous engageons à vous fournir de l'équipement de qualité à des prix qui rémunèrent correctement nos producteurs !", "Notre Filière Qualité, c’est aussi une amélioration progressive des pratiques du bien être de nos ouvriers !", "La redstone est notre passion, vous trouverez tout ce que vous voulez chez &4l'ingénieur§r !", "Un projet en redstone particulier ? Allez donc consulter &4l'ingénieur §r!", "Nous avons des arrivages permanents de produits, vous pouvez en acheter autant que vous voulez !", "Aidez-moi." and "Merci de nous faire confiance avec nos produits !"
+        set {_r} to random integer between 1 and listCounter({_list::*})
+        if {ingineerAssistant.%player%} = {_r}:
+            set {_r} to random integer between 1 and listCounter({_list::*})
+        if {ingineerAssistant.%player%} = {_r}:
+            set {_r} to random integer between 1 and listCounter({_list::*})
+        if {ingineerAssistant.%player%} = {_r}:
+            set {_r} to random integer between 1 and listCounter({_list::*})
+        if {ingineerAssistant.%player%} = {_r}:
+            set {_r} to random integer between 1 and listCounter({_list::*})
+        if {ingineerAssistant.%player%} = {_r}:
+            set {_r} to random integer between 1 and listCounter({_list::*})
+        set {ingineerAssistant.%player%} to {_r}
+        set {_str} to {_list::%{_r}%}
+        witchGirl(event-location)
+        send "%{@ch}%§r: %{_str}%" to player
+    else if entity's display name is {@ar}:
+        cancel event
+        if {villager.armurer.%player%} is not set:
+            witch(event-location)
+            send "%{@sh}%§r: %getTime(player, true)% %player% !" to player
+            wait 1 second
+            witch(event-location)
+            send "%{@sh}%§r: Je suis particulièrement intéressé par certaines §larmures§r qu'on peut trouver par ici. Si vous en récupérez, apportez les moi et je vous les achèterai à un bon prix. Vous pouvez aussi vous en procurer chez moi." to player
+            set {villager.armurer.%player%} to true
+        else:
+            set {_gui} to genericGui({@ar}, 8)
+            glassAdd({_gui})
+            itemsAdd({_gui}, {villager.armurer::*})
+            set slot 53 of {_gui} to arrow named "§2§lNext"
+            set {inv.%player%} to "villagerArmorerPage1"
+            open {_gui} to player   
+    else if entity's display name is {@fdo}:
+        cancel event
+        if {villager.toolssmith.%player%} is not set:
+            witch(event-location)
+            send "%{@nix}%§r: %getTime(player, true)% %player% !" to player
+            wait 1 second
+            witch(event-location)
+            send "%{@nix}%§r: Je suis particulièrement intéressé par certains §loutils§r qu'on peut trouver par ici. Si vous en récupérez, apportez les moi et je vous les achèterai à un bon prix. Vous pouvez aussi vous en procurer chez moi." to player
+            set {villager.toolssmith.%player%} to true
+        else:
+            set {_gui} to genericGui({@fdo}, 8)
+            glassAdd({_gui})
+            itemsAdd({_gui}, {villager.toolssmith::*})
+            set slot 53 of {_gui} to arrow named "§2§lNext"
+            set {inv.%player%} to "villagerToolssmithPage1"
+            open {_gui} to player  
+    else if entity's display name is {@fda}:
+        cancel event
+        if {villager.weaponssmith.%player%} is not set:
+            witch(event-location)
+            send "%{@neg}%§r: %getTime(player, true)% %player% !" to player
+            wait 1 second
+            witch(event-location)
+            send "%{@neg}%§r: Je suis particulièrement intéressé par certaines §larmes§r qu'on peut trouver par ici. Si vous en récupérez, apportez les moi et je vous les achèterai à un bon prix. Vous pouvez aussi vous en procurer chez moi." to player
+            set {villager.weaponssmith.%player%} to true
+        else:
+            set {_gui} to genericGui({@fda}, 8)
+            glassAdd({_gui})
+            itemsAdd({_gui}, {villager.weaponssmith::*})
+            set slot 53 of {_gui} to arrow named "§2§lNext"
+            set {inv.%player%} to "villagerWeaponssmithPage1"
+            open {_gui} to player 
+
+function witch(loc: location):
+    play sound "entity.villager.trade" with volume 1 with pitch 0.8 at {_loc}
+function witchGirl(loc: location):
+    play sound "entity.villager.yes" with volume 1 with pitch 1.5 at {_loc}
+function player(loc: location, player: player):
+    if {_player} is not "cuiiiere":
+        play sound "entity.villager.trade" with volume 1 with pitch 0.2 at {_player}'s location
+    else:
+        play sound "entity.villager.trade" with volume 1 with pitch 2 at {_player}'s location
+
+on inventory click:
+    if {inv.%player%} is "villagerMaterialsPage1":
+        set {_item} to event-slot
+        set {_i} to "%{_item}%"
+        set {_n} to display name of {_item}
+        cancel event
+        if click action is left mouse button with shift:
+            if {_n} is "§2§lNext":
+                set {_gui} to genericGui("%{@m}% 2", 8)
+                glassAdd({_gui}, 2)
+                itemsAdd({_gui}, {villager.materials2::*})
+                set slot 45 of {_gui} to arrow named "§4§lBack"
+                open {_gui} to player
+                set {inv.%player%} to "villagerMaterialsPage2"
+            else if {_i} is not "air":
+                set {_count} to 64
+                loop {_count} times:
+                    giveObjectsItem({villager.materials::*}, {_item}, player)
+        else if click action is right mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_i} is not "air":
+                removeObjectsItem({villager.materials::*}, {_item}, player)
+        else if click action is left mouse button:
+            if {_n} is "§2§lNext":
+                set {_gui} to genericGui("%{@m}% 2", 8)
+                glassAdd({_gui}, 2)
+                itemsAdd({_gui}, {villager.materials2::*})
+                set slot 45 of {_gui} to arrow named "§4§lBack"
+                open {_gui} to player
+                set {inv.%player%} to "villagerMaterialsPage2"
+            else if {_i} is not "air":
+                set {_count} to 1
+                loop {_count} times:
+                    giveObjectsItem({villager.materials::*}, {_item}, player)
+        else if click action is right mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_i} is not "air":
+                removeObjectsItem({villager.materials::*}, {_item}, player)
+    else if {inv.%player%} is "villagerMaterialsPage2":
+        send {_inv.%player%} to player
+        cancel event
+        if click action is left mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_n} is "§2§lNext":
+                set {_gui} to genericGui("%{@m}% 3", 8)
+                itemsAdd({_gui}, {villager.materials3::*})
+                set slot 45 of {_gui} to arrow named "§4§lBack"
+                open {_gui} to player
+                set {inv.%player%} to "villagerMaterialsPage3"
+            else if {_n} is "§4§lBack":
+                set {_gui} to genericGui({@m}, 8)
+                glassAdd({_gui})
+                itemsAdd({_gui}, {villager.materials::*})
+                set slot 53 of {_gui} to arrow named "§2§lNext"
+                open {_gui} to player
+                set {inv.%player%} to "villagerMaterialsPage1"
+            else if {_i} is not "air":
+                giveObjectsItem({villager.materials2::*}, {_item}, player)
+        else if click action is right mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_i} is not "air":
+                removeObjectsItem({villager.materials2::*}, {_item}, player)
+    else if {inv.%player%} is "villagerFoodsPage1":
+        set {_item} to event-slot
+        set {_i} to "%{_item}%"
+        set {_n} to display name of {_item}
+        cancel event
+        if click action is left mouse button:
+            if {_n} is "§2§lNext":
+                set {_gui} to genericGui("%{@f}% 2", 8)
+                glassAdd({_gui}, 2)
+                itemsAdd({_gui}, {villager.foods2::*})
+                set slot 45 of {_gui} to arrow named "§4§lBack"
+                open {_gui} to player
+                set {inv.%player%} to "villagerFoodsPage2"
+            else if {_i} is not "air":
+                giveObjectsItem({villager.foods::*}, {_item}, player)
+        else if click action is right mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_i} is not "air":
+                removeObjectsItem({villager.foods::*}, {_item}, player)
+    else if {inv.%player%} is "villagerFoodsPage2":
+        send {_inv.%player%} to player
+        cancel event
+        if click action is left mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_n} is "§2§lNext":
+                set {_gui} to genericGui("%{@f}% 2", 8)
+                itemsAdd({_gui}, {villager.foods3::*})
+                set slot 45 of {_gui} to arrow named "§4§lBack"
+                open {_gui} to player
+                set {inv.%player%} to "villagerFoodsPage3"
+            else if {_n} is "§4§lBack":
+                set {_gui} to genericGui({@f}, 8)
+                glassAdd({_gui})
+                itemsAdd({_gui}, {villager.foods::*})
+                set slot 53 of {_gui} to arrow named "§2§lNext"
+                open {_gui} to player
+                set {inv.%player%} to "villagerFoodsPage1"
+            else if {_i} is not "air":
+                giveObjectsItem({villager.foods2::*}, {_item}, player)
+        else if click action is right mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_i} is not "air":
+                removeObjectsItem({villager.foods::*}, {_item}, player)
+    else if {inv.%player%} is "villagerPotionsPage1":
+        set {_item} to event-slot
+        set {_i} to "%{_item}%"
+        set {_n} to display name of {_item}
+        cancel event
+        if click action is left mouse button:
+            if {_n} is "§2§lNext":
+                set {_gui} to genericGui("%{@po}% 2", 8)
+                glassAdd({_gui}, 2)
+                itemsAdd({_gui}, {villager.potions2::*})
+                set slot 45 of {_gui} to arrow named "§4§lBack"
+                open {_gui} to player
+                set {inv.%player%} to "villagerPotionsPage2"
+            else if {_i} is not "air":
+                giveObjectsItem({villager.potions::*}, {_item}, player)
+        else if click action is right mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_i} is not "air":
+                removeObjectsItem({villager.potions::*}, {_item}, player)
+    else if {inv.%player%} is "villagerPotionsPage2":
+        send {_inv.%player%} to player
+        cancel event
+        if click action is left mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_n} is "§2§lNext":
+                set {_gui} to genericGui("%{@po}% 3", 8)
+                itemsAdd({_gui}, {villager.potions3::*})
+                set slot 45 of {_gui} to arrow named "§4§lBack"
+                open {_gui} to player
+                set {inv.%player%} to "villagerPotionsPage3"
+            else if {_n} is "§4§lBack":
+                set {_gui} to genericGui({@po}, 8)
+                glassAdd({_gui})
+                itemsAdd({_gui}, {villager.potions::*})
+                set slot 53 of {_gui} to arrow named "§2§lNext"
+                open {_gui} to player
+                set {inv.%player%} to "villagerPotionsPage1"
+            else if {_i} is not "air":
+                giveObjectsItem({villager.potions2::*}, {_item}, player)
+        else if click action is right mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_i} is not "air":
+                removeObjectsItem({villager.potions::*}, {_item}, player)
+    else if {inv.%player%} is "villagerConstructionsPage1":
+        set {_item} to event-slot
+        set {_i} to "%{_item}%"
+        set {_n} to display name of {_item}
+        cancel event
+        if click action is left mouse button:
+            if {_n} is "§2§lNext":
+                set {_gui} to genericGui("%{@co}% 2", 8)
+                glassAdd({_gui}, 3)
+                itemsAdd({_gui}, {villager.constructions2::*})
+                set slot 45 of {_gui} to arrow named "§4§lBack"
+                set slot 53 of {_gui} to arrow named "§2§lNext"
+                open {_gui} to player
+                set {inv.%player%} to "villagerConstructionsPage2"
+            else if {_i} is not "air":
+                giveObjectsItem({villager.constructions::*}, {_item}, player)
+        else if click action is right mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_i} is not "air":
+                removeObjectsItem({villager.constructions::*}, {_item}, player)
+    else if {inv.%player%} is "villagerConstructionsPage2":
+        send {_inv.%player%} to player
+        cancel event
+        if click action is left mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_n} is "§2§lNext":
+                set {_gui} to genericGui("%{@co}% 3", 8)
+                glassAdd({_gui}, 2)
+                itemsAdd({_gui}, {villager.constructions3::*})
+                set slot 45 of {_gui} to arrow named "§4§lBack"
+                open {_gui} to player
+                set {inv.%player%} to "villagerConstructionsPage3"
+            else if {_n} is "§4§lBack":
+                set {_gui} to genericGui({@co}, 8)
+                glassAdd({_gui})
+                itemsAdd({_gui}, {villager.constructions::*})
+                set slot 53 of {_gui} to arrow named "§2§lNext"
+                open {_gui} to player
+                set {inv.%player%} to "villagerConstructionsPage1"
+            else if {_i} is not "air":
+                giveObjectsItem({villager.constructions2::*}, {_item}, player)
+        else if click action is right mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_i} is not "air":
+                removeObjectsItem({villager.constructions2::*}, {_item}, player)
+    else if {inv.%player%} is "villagerConstructionsPage3":
+        send {_inv.%player%} to player
+        cancel event
+        if click action is left mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_n} is "§2§lNext":
+                set {_gui} to genericGui("%{@co}% 4", 8)
+                glassAdd({_gui}, 2)
+                itemsAdd({_gui}, {villager.constructions4::*})
+                set slot 45 of {_gui} to arrow named "§4§lBack"
+                open {_gui} to player
+                set {inv.%player%} to "villagerConstructionsPage4"
+            else if {_n} is "§4§lBack":
+                set {_gui} to genericGui("%{@co}% 2", 8)
+                glassAdd({_gui}, 3)
+                itemsAdd({_gui}, {villager.constructions2::*})
+                set slot 53 of {_gui} to arrow named "§2§lNext"
+                set slot 45 of {_gui} to arrow named "§4§lBack"
+                open {_gui} to player
+                set {inv.%player%} to "villagerConstructionsPage2"
+            else if {_i} is not "air":
+                giveObjectsItem({villager.constructions3::*}, {_item}, player)
+        else if click action is right mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_i} is not "air":
+                removeObjectsItem({villager.constructions3::*}, {_item}, player)
+    else if {inv.%player%} is "villagerFishermanPage1":
+        set {_item} to event-slot
+        set {_i} to "%{_item}%"
+        set {_n} to display name of {_item}
+        cancel event
+        if click action is left mouse button:
+            if {_n} is "§2§lNext":
+                set {_gui} to genericGui("%{@fi}% 2", 8)
+                glassAdd({_gui}, 2)
+                itemsAdd({_gui}, {villager.fisherman::*})
+                set slot 45 of {_gui} to arrow named "§4§lBack"
+                open {_gui} to player
+                set {inv.%player%} to "villagerFishermanPage2"
+            else if {_i} is not "air":
+                giveObjectsItem({villager.fisherman::*}, {_item}, player)
+        else if click action is right mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_i} is not "air":
+                removeObjectsItem({villager.fisherman::*}, {_item}, player)
+    else if {inv.%player%} is "villagerFishermanPage2":
+        send {_inv.%player%} to player
+        cancel event
+        if click action is left mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_n} is "§2§lNext":
+                set {_gui} to genericGui("%{@fi}% 2", 8)
+                set slot 45 of {_gui} to arrow named "§4§lBack"
+                open {_gui} to player
+                set {inv.%player%} to "villagerFishermanPage3"
+            else if {_n} is "§4§lBack":
+                set {_gui} to genericGui({@fi}, 8)
+                glassAdd({_gui})
+                itemsAdd({_gui}, {villager.fisherman::*})
+                set slot 53 of {_gui} to arrow named "§2§lNext"
+                open {_gui} to player
+                set {inv.%player%} to "villagerFishermanPage1"
+            else if {_i} is not "air":
+                giveObjectsItem({villager.fisherman::*}, {_item}, player)
+        else if click action is right mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_i} is not "air":
+                removeObjectsItem({villager.fisherman::*}, {_item}, player)
+    else if {inv.%player%} is "villagerEngineerPage1":
+        set {_item} to event-slot
+        set {_i} to "%{_item}%"
+        set {_n} to display name of {_item}
+        cancel event
+        if click action is left mouse button:
+            if {_n} is "§2§lNext":
+                set {_gui} to genericGui("%{@en}% 2", 8)
+                glassAdd({_gui}, 2)
+                itemsAdd({_gui}, {villager.engineer2::*})
+                set slot 45 of {_gui} to arrow named "§4§lBack"
+                open {_gui} to player
+                set {inv.%player%} to "villagerEngineerPage2"
+            else if {_i} is not "air":
+                giveObjectsItem({villager.engineer::*}, {_item}, player)
+        else if click action is right mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_i} is not "air":
+                removeObjectsItem({villager.engineer::*}, {_item}, player)
+    else if {inv.%player%} is "villagerEngineerPage2":
+        send {_inv.%player%} to player
+        cancel event
+        if click action is left mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_n} is "§2§lNext":
+                set {_gui} to genericGui("%{@en}% 3", 8)
+                set slot 45 of {_gui} to arrow named "§4§lBack"
+                open {_gui} to player
+                set {inv.%player%} to "villagerEngineerPage3"
+            else if {_n} is "§4§lBack":
+                set {_gui} to genericGui({@en}, 8)
+                glassAdd({_gui})
+                itemsAdd({_gui}, {villager.engineer::*})
+                set slot 53 of {_gui} to arrow named "§2§lNext"
+                open {_gui} to player
+                set {inv.%player%} to "villagerEngineerPage1"
+            else if {_i} is not "air":
+                giveObjectsItem({villager.engineer2::*}, {_item}, player)
+        else if click action is right mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_i} is not "air":
+                removeObjectsItem({villager.engineer2::*}, {_item}, player)
+    else if {inv.%player%} is "villagerArmorerPage1":
+        set {_item} to event-slot
+        set {_i} to "%{_item}%"
+        set {_n} to display name of {_item}
+        cancel event
+        if click action is left mouse button:
+            if {_n} is "§2§lNext":
+                set {_gui} to genericGui("%{@ar}% 2", 8)
+                glassAdd({_gui}, 2)
+                itemsAdd({_gui}, {villager.armorer::*})
+                set slot 45 of {_gui} to arrow named "§4§lBack"
+                open {_gui} to player
+                set {inv.%player%} to "villagerArmorerPage2"
+            else if {_i} is not "air":
+                giveObjectsItem({villager.armorer::*}, {_item}, player)
+        else if click action is right mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_i} is not "air":
+                removeObjectsItem({villager.armorer::*}, {_item}, player)
+    else if {inv.%player%} is "villagerArmorerPage2":
+        send {_inv.%player%} to player
+        cancel event
+        if click action is left mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_n} is "§2§lNext":
+                set {_gui} to genericGui("%{@ar}% 2", 8)
+                set slot 45 of {_gui} to arrow named "§4§lBack"
+                open {_gui} to player
+                set {inv.%player%} to "villagerArmorerPage3"
+            else if {_n} is "§4§lBack":
+                set {_gui} to genericGui({@ar}, 8)
+                glassAdd({_gui})
+                itemsAdd({_gui}, {villager.armorer::*})
+                set slot 53 of {_gui} to arrow named "§2§lNext"
+                open {_gui} to player
+                set {inv.%player%} to "villagerArmorerPage1"
+            else if {_i} is not "air":
+                giveObjectsItem({villager.armorer::*}, {_item}, player)
+        else if click action is right mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_i} is not "air":
+                removeObjectsItem({villager.armorer::*}, {_item}, player)
+    else if {inv.%player%} is "villagerToolssmithPage1":
+        set {_item} to event-slot
+        set {_i} to "%{_item}%"
+        set {_n} to display name of {_item}
+        cancel event
+        if click action is left mouse button:
+            if {_n} is "§2§lNext":
+                set {_gui} to genericGui("%{@fdo}% 2", 8)
+                glassAdd({_gui}, 2)
+                itemsAdd({_gui}, {villager.toolssmith::*})
+                set slot 45 of {_gui} to arrow named "§4§lBack"
+                open {_gui} to player
+                set {inv.%player%} to "villagerToolssmithPage2"
+            else if {_i} is not "air":
+                giveObjectsItem({villager.toolssmith::*}, {_item}, player)
+        else if click action is right mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_i} is not "air":
+                removeObjectsItem({villager.toolssmith::*}, {_item}, player)
+    else if {inv.%player%} is "villagerToolssmithPage2":
+        send {_inv.%player%} to player
+        cancel event
+        if click action is left mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_n} is "§2§lNext":
+                set {_gui} to genericGui("%{@fdo}% 2", 8)
+                set slot 45 of {_gui} to arrow named "§4§lBack"
+                open {_gui} to player
+                set {inv.%player%} to "villagerToolssmithPage3"
+            else if {_n} is "§4§lBack":
+                set {_gui} to genericGui({@fdo}, 8)
+                glassAdd({_gui})
+                itemsAdd({_gui}, {villager.toolssmith::*})
+                set slot 53 of {_gui} to arrow named "§2§lNext"
+                open {_gui} to player
+                set {inv.%player%} to "villagerToolssmithPage1"
+            else if {_i} is not "air":
+                giveObjectsItem({villager.toolssmith::*}, {_item}, player)
+        else if click action is right mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_i} is not "air":
+                removeObjectsItem({villager.toolssmith::*}, {_item}, player)
+    else if {inv.%player%} is "villagerWeaponssmithPage1":
+        set {_item} to event-slot
+        set {_i} to "%{_item}%"
+        set {_n} to display name of {_item}
+        cancel event
+        if click action is left mouse button:
+            if {_n} is "§2§lNext":
+                set {_gui} to genericGui("%{@fda}% 2", 8)
+                glassAdd({_gui}, 2)
+                itemsAdd({_gui}, {villager.weaponssmith::*})
+                set slot 45 of {_gui} to arrow named "§4§lBack"
+                open {_gui} to player
+                set {inv.%player%} to "villagerWeaponssmithPage2"
+            else if {_i} is not "air":
+                giveObjectsItem({villager.weaponssmith::*}, {_item}, player)
+        else if click action is right mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_i} is not "air":
+                removeObjectsItem({villager.weaponssmith::*}, {_item}, player)
+    else if {inv.%player%} is "villagerWeaponssmithPage2":
+        send {_inv.%player%} to player
+        cancel event
+        if click action is left mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_n} is "§2§lNext":
+                set {_gui} to genericGui("%{@fda}% 2", 8)
+                set slot 45 of {_gui} to arrow named "§4§lBack"
+                open {_gui} to player
+                set {inv.%player%} to "villagerWeaponssmithPage3"
+            else if {_n} is "§4§lBack":
+                set {_gui} to genericGui({@fda}, 8)
+                glassAdd({_gui})
+                itemsAdd({_gui}, {villager.weaponssmith::*})
+                set slot 53 of {_gui} to arrow named "§2§lNext"
+                open {_gui} to player
+                set {inv.%player%} to "villagerWeaponssmithPage2"
+            else if {_i} is not "air":
+                giveObjectsItem({villager.weaponssmith::*}, {_item}, player)
+        else if click action is right mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_i} is not "air":
+                removeObjectsItem({villager.weaponssmith::*}, {_item}, player)
+function getTime(player: player, capitalize: boolean=false) :: text:
+    set {_world} to {_player}'s world
+    set {_t} to {_world}'s time
+    set {_times::*} to split "%{_t}%" by ":"
+    set {_hour} to {_times::1} parsed as integer
+    if {_hour} >= 19:
+        if {_capitalize} is true:
+            set {_str} to "Bonsoir"
+        else:
+            set {_str} to "bonsoir"
+    else if {_hour} >= 6:
+        if {_capitalize} is true:
+            set {_str} to "Bonjour"
+        else:
+            set {_str} to "bonjour"
+    else if {_hour} >= 5:
+        if {_capitalize} is true:
+            set {_str} to "Bon réveil"
+        else:
+            set {_str} to "Bon réveil"
+    else:
+        if {_capitalize} is true:
+            set {_str} to "Bonsoir"
+        else:
+            set {_str} to "bonsoir"
+    return {_str}

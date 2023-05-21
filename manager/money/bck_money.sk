@@ -1,0 +1,70 @@
+on load:
+    if {skripts::*} contains "bck_manager.sk":
+        send "§6[§4BCK§6]§r Loading money..." to console
+        wait 2 seconds
+        send "§6[§4BCK§6/§bMoney§6]§r Loaded successfully !" to console
+    else:
+        broadcast "§6[§4BCK§6/§bMoney§6]§r Script loading cancel It require (bck_manager.sk)"
+        unload script file "bck_money.sk"
+    stop
+
+command /money [<player>]:
+    trigger:
+        if arg-1 is set:
+            if {money.%arg-1's uuid%} is not set:
+                set {money.%arg-1's uuid%} to 0
+            set {_money} to {money.%arg-1's uuid%}
+            set {_m} to numFormat("%{_money}%")
+            send "§e%arg-1% a §l§7%{_m}%%{sbm}% §e!"
+        else:
+            if {money.%player's uuid%} is not set:
+                set {money.%player's uuid%} to 0
+            set {_money} to {money.%player's uuid%}
+            set {_m} to numFormat("%{_money}%")
+            send "§eTu a §l§7%{_m}%%{sbm}% §e!"
+command /moneyadd [<player>] [<integer=1>]:
+    trigger:
+        if arg-1 is set:
+            if arg-2 < 1:
+                send "§cSpécifie un nombre au dessus de 0 !"
+                stop
+            moneyAdd(arg-1, arg-2, true)
+            send "%arg-1%'s §8₣ §2add §l§6%arg-2%"
+        else:
+            send "§c/moneyadd <joueur> <montant>"
+command /moneyremove [<player>] [<integer=1>]:
+    trigger:
+        if arg-1 is set:
+            if arg-2 < 1:
+                send "§cSpecify a number above 1 !"
+                stop
+            moneyRemove(arg-1, arg-2, true)
+            send "%arg-1%'s §8₣ §4remove §l§6%arg-2%"
+command /sendMoney [<offlineplayer>] [<integer>]:
+    cooldown: 1 minute
+    cooldown message: You need to wait &l%remaining time% &rto use this command again!
+    cooldown bypass: sendMoney.bypass
+    trigger:
+        if arg-1 is set:
+            if arg-2 is not set:
+                send "§cEnter amount"
+                stop
+            if arg-2 < 1:
+                send "§cSpecify a number above 1 !"
+                stop
+            if {money.%player's uuid%} < arg-2:
+                send "§eYou don't have enough ₣"
+                stop
+            else if {money.%player's uuid%} >= arg-2:
+                sendMoney(player, arg-1, arg-2, true)
+                send "§eYou just send §8%arg-2%₣ §eto %arg-1%" to player
+                send "§eYou have just received §8%arg-2%%{sbm}% §efrom %player%" to arg-1
+command /setmoney [<player>] [<integer=1>]:
+    permission: op
+    aliases: moneyset
+    trigger:
+        if arg-1 is set:
+            if {money.%arg-1's uuid%} is not set:
+                set {money.%arg-1's uuid%} to 0
+            set {money.%arg-1's uuid%} to arg-2
+            send "%arg-1%'s §8%{sbm}% §bset §rto §l§6%arg-2%"

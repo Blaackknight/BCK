@@ -1,0 +1,71 @@
+command /hammerGive [<text= "3x3">]:
+	trigger:
+		set {_line} to 1
+		set {_lineN} to 0
+		set {_list::*} to "3x3", "4x4" and "7x7"
+		if line 1 of lore of player's tool is set:
+			set {_line} to 2
+			set {_lineN} to 1
+		if line 2 of lore of player's tool is set:
+			set {_line} to 3
+			set {_lineN} to 2
+		if line 3 of lore of player's tool is set:
+			set {_line} to 4
+			set {_lineN} to 3
+		if line 4 of lore of player's tool is set:
+			set {_line} to 5
+			set {_lineN} to 4
+		if line 5 of lore of player's tool is set:
+			set {_line} to 6
+			set {_lineN} to 5
+		if line 6 of lore of player's tool is set:
+			set {_line} to 7
+			set {_lineN} to 6
+		if line 7 of lore of player's tool is set:
+			set {_line} to 8
+			set {_lineN} to 7
+		if arg-1 is "3x3":
+			if line {_lineN} of lore of player's tool contains "§3Miner §aI":
+				send action bar "§eVous avez déja cet amélioration sur votre §c%player's tool%" to player
+			else if line {_lineN} of lore of player's tool contains "§3Miner §bII":
+				set line {_lineN} of lore of player's tool to "§3Miner §aI"
+				play sound "entity.experience_orb.pickup" with volume 0.3 at player
+			else if line {_lineN} of lore of player's tool contains "§3Miner §cIII":
+				set line {_lineN} of lore of player's tool to "§3Miner §aI"
+				play sound "entity.experience_orb.pickup" with volume 0.3 at player
+			else:
+				if player's tool is not air:
+					set line {_line} of lore of player's tool to "§3Miner §aI"
+					play sound "entity.experience_orb.pickup" with volume 0.3 at player
+		else if arg-1 is "4x4":
+			if line {_lineN} of lore of player's tool contains "§3Miner §bII":
+				send action bar "§eVous avez déja cet amélioration sur votre §c%player's tool%" to player
+			else if line {_lineN} of lore of player's tool contains "§3Miner §cIII":
+				set line {_lineN} of lore of player's tool to "§3Miner §bII"
+				play sound "entity.experience_orb.pickup" with volume 0.3 at player
+			else if line {_lineN} of lore of player's tool contains "§3Miner §aI":
+				set line {_lineN} of lore of player's tool to "§3Miner §bII"
+				play sound "entity.experience_orb.pickup" with volume 0.3 at player
+			else:
+				if player's tool is not air:
+					set line {_line} of lore of player's tool to "§3Miner §bII"
+					play sound "entity.experience_orb.pickup" with volume 0.3 at player
+		else if arg-1 is "7x7":
+			if line {_lineN} of lore of player's tool contains "§3Miner §eIII":
+				send action bar "§eVous avez déja cet amélioration sur votre §c%player's tool%" to player
+			else if line {_lineN} of lore of player's tool contains "§3Miner §aI":
+				set line {_lineN} of lore of player's tool to "§3Miner §eIII"
+				play sound "entity.experience_orb.pickup" with volume 0.3 at player
+			else if line {_lineN} of lore of player's tool contains "§3Miner §bII":
+				set line {_lineN} of lore of player's tool to "§3Miner §eIII"
+				play sound "entity.experience_orb.pickup" with volume 0.3 at player
+			else:
+				if player's tool is not air:
+					set line {_line} of lore of player's tool to "§3Miner §eIII"
+					play sound "entity.experience_orb.pickup" with volume 0.3 at player
+		else:
+			send "§cErreur de syntaxe !"
+on tab complete of "/hammerGive":
+	if hasPermission(player, "server.command.hammerGive") is false:
+		stop
+	set tab completions for position 1 to "3x3", "4x4" and "7x7"

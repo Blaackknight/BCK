@@ -1,0 +1,16 @@
+command /sendMoney [<player>] [<integer=1>]:
+    cooldown: 1 minute
+    cooldown message: You need to wait &l%remaining time% &rto use this command again!
+	cooldown bypass: sendMoney.bypass
+    trigger:
+        if arg-1:
+            if arg-2 < 1:
+                send "§cSpecify a number above 1 !"
+                stop
+            if {money.%player's uuid%} < arg-2:
+                send "§eYou don't have enough ₣"
+                stop
+            else if {money.%player's uuid%} >= arg-2:
+                sendMoney(player, arg-1, arg-2, true)
+                send "§eYou just send §8%arg-2%₣ §eto %arg-1%" to player
+                send "§eYou have just received §8%arg-2%₣ §efrom %player%" to arg-1

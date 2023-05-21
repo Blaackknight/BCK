@@ -1,0 +1,3 @@
+command /chatlevel [<integer=0>]:
+    permission: op
+    trigger:

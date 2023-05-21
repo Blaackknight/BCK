@@ -1,0 +1,152 @@
+command /sellers [<text>] [<text>]:
+    trigger:
+        if arg-1 is set:
+            if arg-1 is "spawn":
+                if arg-2 is set:
+                    set {_list::*} to getSellers(false, true)
+                    set {_nlist::*} to getSellers()
+                    set {_v} to true
+                    loop {_list::*}:
+                        set {_l} to loop-value
+                        if arg-2 is {_l}:
+                            set {_v} to false
+                    if {_v} is true:
+                        send "§cInvalid sellers name"
+                        stop
+                    if arg-2 is "Materiaux":
+                        spawn 1 of villager at player's location 
+                        set {_v} to last spawned entity
+                        set display name of {_v} to "§d§lMateriaux"
+                        mobNbtEdit(player, "villager", "VillagerData.level", "5")
+                        mobNbtEdit(player, "villager", "VillagerData.profession", "nitwit")
+                        mobNbtEdit(player, "villager", "VillagerData.type", "plains")
+                        mobNbtEdit(player, "villager", "NoAI", "1b")
+                        mobNbtEdit(player, "villager", "NoGravity", "1b")
+                        mobNbtEdit(player, "villager", "PersistenceRequired", "1b")
+                        mobNbtEdit(player, "villager", "Invulnerable", "1b")
+                        mobNbtEdit(player, "villager", "Silent", "1b")
+                    else if arg-2 is "Nourriture":
+                        spawn 1 of villager at player's location 
+                        set {_v} to last spawned entity
+                        set display name of {_v} to "§6§lNourriture"
+                        mobNbtEdit(player, "villager", "VillagerData.level", "5")
+                        mobNbtEdit(player, "villager", "VillagerData.profession", "farmer")
+                        mobNbtEdit(player, "villager", "VillagerData.type", "plains")
+                        mobNbtEdit(player, "villager", "NoAI", "1b")
+                        mobNbtEdit(player, "villager", "NoGravity", "1b")
+                        mobNbtEdit(player, "villager", "PersistenceRequired", "1b")
+                        mobNbtEdit(player, "villager", "Invulnerable", "1b")
+                        mobNbtEdit(player, "villager", "Silent", "1b")
+                    else if arg-2 is "Potions":
+                        spawn 1 of villager at player's location 
+                        set {_v} to last spawned entity
+                        set display name of {_v} to "§b§lPotions"
+                        mobNbtEdit(player, "villager", "VillagerData.level", "5")
+                        mobNbtEdit(player, "villager", "VillagerData.profession", "cleric")
+                        mobNbtEdit(player, "villager", "VillagerData.type", "plains")
+                        mobNbtEdit(player, "villager", "NoAI", "1b")
+                        mobNbtEdit(player, "villager", "NoGravity", "1b")
+                        mobNbtEdit(player, "villager", "PersistenceRequired", "1b")
+                        mobNbtEdit(player, "villager", "Invulnerable", "1b")
+                        mobNbtEdit(player, "villager", "Silent", "1b")
+                    else if arg-2 is "Constructions":
+                        spawn 1 of villager at player's location 
+                        set {_v} to last spawned entity
+                        set display name of {_v} to "§a§lConstructions"
+                        mobNbtEdit(player, "villager", "VillagerData.level", "5")
+                        mobNbtEdit(player, "villager", "VillagerData.profession", "mason")
+                        mobNbtEdit(player, "villager", "VillagerData.type", "plains")
+                        mobNbtEdit(player, "villager", "NoAI", "1b")
+                        mobNbtEdit(player, "villager", "NoGravity", "1b")
+                        mobNbtEdit(player, "villager", "PersistenceRequired", "1b")
+                        mobNbtEdit(player, "villager", "Invulnerable", "1b")
+                        mobNbtEdit(player, "villager", "Silent", "1b")
+                    else if arg-2 is "Pêcheur":
+                        spawn 1 of villager at player's location 
+                        set {_v} to last spawned entity
+                        set display name of {_v} to "§1§lPêcheur"
+                        mobNbtEdit(player, "villager", "VillagerData.level", "5")
+                        mobNbtEdit(player, "villager", "VillagerData.profession", "fisherman")
+                        mobNbtEdit(player, "villager", "VillagerData.type", "plains")
+                        mobNbtEdit(player, "villager", "NoAI", "1b")
+                        mobNbtEdit(player, "villager", "NoGravity", "1b")
+                        mobNbtEdit(player, "villager", "PersistenceRequired", "1b")
+                        mobNbtEdit(player, "villager", "Invulnerable", "1b")
+                        mobNbtEdit(player, "villager", "Silent", "1b")
+                    else if arg-2 is "Ingénieur":
+                        spawn 1 of villager at player's location 
+                        set {_v} to last spawned entity
+                        set display name of {_v} to "§4§lIngénieur"
+                        mobNbtEdit(player, "villager", "VillagerData.level", "5")
+                        mobNbtEdit(player, "villager", "VillagerData.profession", "cartographer")
+                        mobNbtEdit(player, "villager", "VillagerData.type", "plains")
+                        mobNbtEdit(player, "villager", "NoAI", "1b")
+                        mobNbtEdit(player, "villager", "NoGravity", "1b")
+                        mobNbtEdit(player, "villager", "PersistenceRequired", "1b")
+                        mobNbtEdit(player, "villager", "Invulnerable", "1b")
+                        mobNbtEdit(player, "villager", "Silent", "1b")
+                    else if arg-2 is "Prêtre Gabriel":
+                        spawn 1 of villager at player's location 
+                        set {_v} to last spawned entity
+                        set display name of {_v} to "§e§lPrêtre §e§lGabriel"
+                        mobNbtEdit(player, "villager", "VillagerData.level", "5")
+                        mobNbtEdit(player, "villager", "VillagerData.profession", "cleric")
+                        mobNbtEdit(player, "villager", "VillagerData.type", "plains")
+                        mobNbtEdit(player, "villager", "NoAI", "1b")
+                        mobNbtEdit(player, "villager", "NoGravity", "1b")
+                        mobNbtEdit(player, "villager", "PersistenceRequired", "1b")
+                        mobNbtEdit(player, "villager", "Invulnerable", "1b")
+                        mobNbtEdit(player, "villager", "Silent", "1b")
+                    else if arg-2 is "Assistante de l'Ingénieur":
+                        spawn 1 of witch at player's location 
+                        set {_v} to last spawned entity
+                        set display name of {_v} to "§4&lAssistante de §4§ll'Ingénieur"
+                        mobNbtEdit(player, "witch", "NoAI", "1b")
+                        mobNbtEdit(player, "witch", "NoGravity", "1b")
+                        mobNbtEdit(player, "witch", "PersistenceRequired", "1b")
+                        mobNbtEdit(player, "witch", "Invulnerable", "1b")
+                        mobNbtEdit(player, "witch", "Silent", "1b")
+                    else if arg-2 is "Armurier":
+                        spawn 1 of villager at player's location 
+                        set {_v} to last spawned entity
+                        set display name of {_v} to "§8§lArmurier"
+                        mobNbtEdit(player, "villager", "VillagerData.level", "5")
+                        mobNbtEdit(player, "villager", "VillagerData.profession", "armorer")
+                        mobNbtEdit(player, "villager", "VillagerData.type", "plains")
+                        mobNbtEdit(player, "villager", "NoAI", "1b")
+                        mobNbtEdit(player, "villager", "NoGravity", "1b")
+                        mobNbtEdit(player, "villager", "PersistenceRequired", "1b")
+                        mobNbtEdit(player, "villager", "Invulnerable", "1b")
+                        mobNbtEdit(player, "villager", "Silent", "1b")
+                    else if arg-2 is "Outilleur":
+                        spawn 1 of villager at player's location 
+                        set {_v} to last spawned entity
+                        set display name of {_v} to "§8§lOutilleur"
+                        mobNbtEdit(player, "villager", "VillagerData.level", "5")
+                        mobNbtEdit(player, "villager", "VillagerData.profession", "toolsmith")
+                        mobNbtEdit(player, "villager", "VillagerData.type", "plains")
+                        mobNbtEdit(player, "villager", "NoAI", "1b")
+                        mobNbtEdit(player, "villager", "NoGravity", "1b")
+                        mobNbtEdit(player, "villager", "PersistenceRequired", "1b")
+                        mobNbtEdit(player, "villager", "Invulnerable", "1b")
+                        mobNbtEdit(player, "villager", "Silent", "1b")
+                    else if arg-2 is "Forgeron d'armes":
+                        spawn 1 of villager at player's location 
+                        set {_v} to last spawned entity
+                        set display name of {_v} to "§8§lForgeron d'armes"
+                        mobNbtEdit(player, "villager", "VillagerData.level", "5")
+                        mobNbtEdit(player, "villager", "VillagerData.profession", "weaponsmith")
+                        mobNbtEdit(player, "villager", "VillagerData.type", "plains")
+                        mobNbtEdit(player, "villager", "NoAI", "1b")
+                        mobNbtEdit(player, "villager", "NoGravity", "1b")
+                        mobNbtEdit(player, "villager", "PersistenceRequired", "1b")
+                        mobNbtEdit(player, "villager", "Invulnerable", "1b")
+                        mobNbtEdit(player, "villager", "Silent", "1b")
+        else:
+            send "§cEnter option"
+on tab complete of "/sellers":
+    if hasPermission(player, "server.command.sellers") is false:
+        stop
+    set tab completions for position 1 to "spawn"
+    if tab arg-1 is "spawn":
+        set tab completions for position 2 to getSellers(false, true)

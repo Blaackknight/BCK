@@ -1,0 +1,30 @@
+command /clan [<text>] [<text>]:
+    trigger:
+        if arg-1 is set:
+            if arg-1 is "create":
+                if arg-2 is not set:
+                    send "§cPlease enter your clan name!"
+                else:
+                    if {clan.%arg-2%} is true:
+                        send "§cA clan and already existing"
+                    else:
+                        set {clan.%arg-2%} to true
+                        set {clan.%arg-2%.ownerUUID} to player's uuid
+                        send "§eYour clan has just been §asuccessfully created§e, here is the name <§l§3%arg-2%§e>"
+            else if arg-1 is "join":
+                if arg-2 is not set:
+                    send "§cPlease enter clan name!"
+                else:
+                    if {clan.%arg-2%} is not set:
+                        send "§cNo existing clan with this name <§l%arg-2%§r§c>"
+                    else:
+                        add player to {_list::*}
+                        set {clan.%arg-2%.players} to {_list::*}
+                        send "§eClan §asuccessfully joined§e, name <§l§3%arg-2%§r§e>"
+            else if arg-1 is "delete":
+
+            else if arg-1 is "list":
+
+on tab complete of "/clan":
+    set {options::*} to "create", "join", "delete" and "list"
+    set tab completions for position 1 to {options::*}

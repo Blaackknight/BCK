@@ -1,0 +1,26 @@
+command /skripts [<text>] [<text>]:
+    trigger:
+        if arg-1 is set:
+            if arg-1 is "enable":
+                if arg-2 is set:
+                    enable script arg-2
+                    send "§7%arg-2% §6has just been §aenabled §6!"
+                else:
+                    send "§cEnter file.."
+            else if arg-1 is "disable":
+                if arg-2 is set:
+                    disable script arg-2
+                    send "§7%arg-2% §6has just been §4disabled §6!"
+                else:
+                    send "§cEnter file.."
+            else:
+                send "§cUnknown option.."
+on tab complete of "/skripts":
+    if hasPermission(player, "server.command.skripts") is false:
+        stop
+    set tab completions for position 1 to "enable" and "disable"
+    if tab arg-1 is "disable":
+        set tab completions for position 2 to getDisabledSkripts()
+    if tab arg-1 is "enable":
+        loop {skripts::*}:
+        set tab completions for position 2 to getEnabledSkripts()

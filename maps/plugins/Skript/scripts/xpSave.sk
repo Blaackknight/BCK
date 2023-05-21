@@ -1,0 +1,27 @@
+on death of player:
+    set {levels.%victim's uuid%} to victim's level
+on respawn:
+    wait 1 tick
+    set {_level} to {levels.%player's uuid%}
+    set {_min} to {_level} * 100
+    set {_max} to {_level} * 200
+    set {_random} to random integer between {_min} and {_max}
+    send formatted "§eDo you want to §arecover §eyour level before your death?%nl%Paid §7%{_random}%%{sbm}%!%nl%<tooltip:Paid for you level>§6[<cmd:/paid>&2Paid<reset>&r&6]"
+    set {xpSave.%player%} to true
+    set {xpSave.%player%.paid} to {_random}
+command /paid:
+    trigger:
+        if {xpSave.%player%} is true:
+            if {money.%player's uuid%} < {xpSave.%player%.paid}:
+                send "§cYou don't have enough %{sbm}%"
+                delete {xpSave.%player%}
+                delete {levels.%player's uuid%}
+                delete {xpSave.%player%.paid}
+                stop
+            moneyRemove(player, {xpSave.%player%.paid}, true)
+            set player's level to {levels.%player's uuid%}
+            play sound "entity.experience_orb.pickup" with volume 0.3 at player
+            send formatted "%selector(player)%, you just paid §7%{xpSave.%player%.paid}%%{sbm}%"
+            delete {xpSave.%player%}
+            delete {levels.%player's uuid%}
+            delete {xpSave.%player%.paid}

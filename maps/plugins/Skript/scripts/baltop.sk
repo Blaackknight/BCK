@@ -1,0 +1,17 @@
+command /baltop:
+    trigger:
+        set {_players::*} to all players
+        loop all players:
+            set {_money} to {money.%loop-player's uuid%}
+            set {_sorted::%loop-player's uuid%} to {_money}
+            #send "%{_money}%"
+        set {_playerSorted::*} to sorted {_sorted::*}
+        send "&6&lTop 10 richest players:" to player
+        #send {_sorted::*} to player
+        #send {_playerSorted::*} to player
+        set {_count} to listCounter({_playerSorted::*})
+        set {_n::*} to indices of {_playerSorted::*}
+        send {_sorted::*}
+        loop 10 times:
+            if {_playerSorted.%loop-value%} is set:
+                send "&7%loop-number%. &a%{_sorted.%loop-value%}% &7- &e%{_money.%{_sorted.%loop-value%}%}%"

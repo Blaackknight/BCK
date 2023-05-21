@@ -1,0 +1,72 @@
+command /permission [<offlineplayer>] [<text>] [<text>]:
+    trigger:
+        if hasPermission(player, "server.owner") is false:
+            if "%player%" is not "<none>":
+                send "§c§lHey! §7Tu n'a pas la permission :/"
+                stop
+        if arg-1 is not set:
+            set {_p} to player
+        else:
+            set {_p} to arg-1
+        if arg-2 is set:
+            if arg-2 is "add":
+                if arg-3 is set:
+                    if {server.permission.%{_p}%.list::*} doesn't contain arg-3:
+                        addPermission({_p}, arg-3, true)
+                        send "§ePermission §b%arg-3% §eajouter à §7%{_p}%"
+                    else:
+                        send "§c%{_p}% a déja la permission %arg-3%"
+                else:
+                    send "§cAucune permission indiqué.."
+            else if arg-2 is "remove":
+                if arg-3 is not set:
+                    send "§cNom d'une permission manquante."
+                    stop
+                if {server.permission.%{_p}%.list::*} doesn't contain arg-3:
+                    send "§c%{_p}% n'as pas la permission %arg-3%.."
+                    stop
+                removePermission({_p}, arg-3, true)
+                send "§ePermission §b%arg-3% §eenlever à §7%{_p}%"
+            else if arg-2 is "reset":
+                loop {server.permission.%{_p}%.list::*}:
+                    removePermission({_p}, loop-value, true)
+                    #send "%loop-value%"
+            else if arg-2 is "default":
+                loop {server.permission.%{_p}%.list::*}:
+                    if loop-value is not "server.owner":
+                        removePermission({_p}, loop-value, true)
+                send "§6Permissions §4enlever§6 de §b%{_p}%"
+                send "§2Ajout§6 des permissions par défault.."
+                wait 1 second
+                addDefaultPermission({_p})
+                send "§6Permission par défault §2ajouter avec succès§6 !"
+            else:
+                send "§cOption inconnue (%arg-2%)"
+        else:
+            send "§c/permission %{_p}% <option>"
+on tab complete of "/permission":
+    if hasPermission(player, "server.command.permission") is false:
+        stop
+    set tab completions for position 2 to "add","remove", "default" and "reset"
+    loop all players:
+        if "%loop-value%" is tab arg-1:
+            if tab arg-2 is "add":
+                set tab completions for position 3 to getServerPermission(loop-value)
+            else if tab arg-2 is "remove":
+                set tab completions for position 3 to {server.permission.%loop-value%.list::*}
+on place:
+    if hasPermission(player, "block.place") is false:
+        cancel event
+        send "§c§lHey! §7Tu n'a pas la permission :|"
+on break:
+    if hasPermission(player, "block.break") is false:
+        cancel event
+        send "§c§lHey! §7Tu n'a pas la permission :|"
+on drop:
+    if hasPermission(player, "item.drop") is false:
+        cancel event
+        send "§c§lHey! §7Tu n'a pas la permission :|"
+on pickup:
+    if hasPermission(player, "item.pickup") is false:
+        cancel event
+        #send "§c§lHey! §7Tu n'a pas la permission :|"

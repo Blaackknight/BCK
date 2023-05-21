@@ -1,0 +1,177 @@
+command /clan [<text>] [<text>] [<text>]:
+    trigger:
+        if arg-1 is set:
+            if arg-1 is "create":
+                if arg-2 is not set:
+                    send "§cVeuillez saisir le nom de votre clan!"
+                else:
+                    if {clan.%arg-2%} is true:
+                        send "§cUn clan portant se nom et déjà existant"
+                    else:
+                        if {clan.%player's uuid%} is set:
+                            if {clan.%player's uuid%} is not false:
+                                send "§cTu es déjà dans un clan.."
+                            else:
+                                set {clan.%arg-2%} to true
+                                set {clan.%arg-2%.owner} to player
+                                set {clan.%player's uuid%} to arg-2
+                                add player to {clan.%arg-2%.players::*}
+                                add arg-2 to {clan.list::*}
+                                set {clan.%player's uuid%.ownedClan} to arg-2
+                                set {clan.%player's uuid%.rank} to "Owner"
+                                send "§eTon clan vien d'être crée avec §asuccès§e, le nom est <§l§3%arg-2%§e>"
+                        else:
+                            set {clan.%arg-2%} to true
+                            set {clan.%arg-2%.owner} to player
+                            set {clan.%player's uuid%} to arg-2
+                            add player to {clan.%arg-2%.players::*}
+                            add arg-2 to {clan.list::*}
+                            set {clan.%player's uuid%.ownedClan} to arg-2
+                            set {clan.%player's uuid%.rank} to "Owner"
+                            send "§eTon clan vien d'être crée avec §asuccès§e, le nom est <§l§3%arg-2%§e>"
+            else if arg-1 is "join":
+                if arg-2 is not set:
+                    send "§cVeuillez entrer le nom du clan!"
+                else:
+                    if {clan.%arg-2%} is not set:
+                        send "§cClan non existant avec comme nom <§l%arg-2%§r§c>"
+                    else:
+                        if {clan.%player's uuid%} is set:
+                            if {clan.%player's uuid%} is not false:
+                                send "§cTu est déja présent dans un clan.."
+                            else:
+                                send formatted "&b%player% &eveut rejoindre votre clan:&r%nl%<tooltip:Accepté le joueur dans votre clan>&e[<cmd:/accept %player% %arg-2%>&2&lAccepté<reset>&r&e]<reset>%nl%<tooltip:Refuser le joueur dans votre clan>&e[<cmd:/refuse %player% %arg-2%>&4&lRefusé<reset>&r&e]<reset>" to {clan.%arg-2%.owner}
+                                send "§eDemande envoyer !"
+                                set {clan.requested.%player%} to true
+                        else:
+                            send formatted "&b%player% &eveut rejoindre votre clan:&r%nl%<tooltip:Accepté le joueur dans votre clan>&e[<cmd:/accept %player% %arg-2%>&2&lAccepté<reset>&r&e]<reset>%nl%<tooltip:Refuser le joueur dans votre clan>&e[<cmd:/refuse %player% %arg-2%>&4&lRefusé<reset>&r&e]<reset>" to {clan.%arg-2%.owner}
+                            send "§eDemand send"
+                            set {clan.requested.%player%} to true
+            else if arg-1 is "leave":
+                if arg-2 is not set:
+                    send "§cVeuillez entrer le nom du clan.."
+                else:
+                    if {clan.%arg-2%} is not set:
+                        send "§cClan non existant avec comme nom <§l%arg-2%§r§c>"
+                    else:
+                        if {clan.%player's uuid%} is false:
+                            send "§cTu n'es pas dans un clan !"
+                        else:
+                            remove player from {clan.%arg-2%.players::*}
+                            set {clan.%player's uuid%} to false
+                            clear {clan.%player's uuid%.rank}
+                            send "§eClan §4quitté §eavec §asuccès §e!"
+            else if arg-1 is "promote":
+                if {clan.%player's uuid%} is not false:
+                    if {clan.%player's uuid%.rank} is "Owner" or "Co-Owner":
+                        set {_p} to arg-2 parsed as offlineplayer
+                        if {_p} is set:
+                            if {_p} is player:
+                                send "§cTu ne peut pas te promouvoir toi même :|"
+                                stop
+                            if {clan.%{_p}'s uuid%} is {clan.%player's uuid%}:
+                                if arg-3 is set:
+                                    if {clan.ranks::*} contain arg-3:
+                                        set {clan.%arg-1's uuid%.rank} to arg-3
+                                        send "§eRang de %{_p}% §2changé§e par %arg-3%"
+                                    else:
+                                        send "§cAucun rang n'existe portant se nom %arg-3%"
+                                else:
+                                    send "§cVeuillez entrer un rang !"
+                            else:
+                                send "§c%{_p}% n'est pas dans votre clan !"
+                        else:
+                            send "§cSpécifie un joueur.."
+                    else:
+                        send "§cSeul le §ePropriétaire du clan§c et le §eCopropriétaire §cpeuveut utlisé cette commande.."
+                else:
+                    send "§cTu n'est pas dans un clan !"
+            else if arg-1 is "kick":
+                if {clan.%player's uuid%.rank} is not "Owner" or "Co-Owner":
+                    send "§cTu n'as pas accès à cet chose.."
+                    stop
+                if arg-2 is set:
+                    set {_p} to arg-2 parsed as offlineplayer
+                    if {clan.%{_p}'s uuid%} is {clan.%player's uuid%}:
+                        set {_clan} to {clan.%player's uuid%}
+                        
+                    else:
+                        send "§c%{_p}% n'est pas dans votre clan !"
+                else:
+                    send "§cVeuillez entrer un joueur."
+            else if arg-1 is "delete":
+                if arg-2 is not set:
+                    send "§cVeuillez entrer le nom d'un clan!"
+                else:
+                    if {clan.%arg-2%} is false:
+                        send "§cAucun clan existant avec ce nom <§l%arg-2%§r§c>"
+                    else if {clan.%player's uuid%.owenedClan} is not arg-2:
+                        send "§cVous n'êtes pas le propriétaire de ce clan!"
+                    else:
+                        set {clan.%arg-2%} to false
+                        set {clan.%player's uuid%} to false
+                        remove arg-2 from {clan.list::*}
+                        set {clan.%player's uuid%.ownedClan} to false
+                        set {clan.%player's uuid%.owenedClan} to false
+                        loop {clan.%arg-2%.players::*}:
+                            set {_p} to loop-value parsed as offlineplayer
+                            set {clan.%{_p}'s uuid%} to false
+                            delete {clan.%{_p}'s uuid%.rank}
+                        delete {clan.%arg-2%.players::*}
+                        send "§aSuccessful §eclan §4deletion !"
+            else if arg-1 is "list":
+                if arg-2 is not set:
+                    send "§cVeuillez entrer une option.."
+                else:
+                    if arg-2 is "clan":
+                        send "§7⟬ List of clans ⟭"
+                        loop {clan.list::*}:
+                            send "§7⁃§r %loop-value%"
+                        send "§7Number of clans: §l%listCounter({clan.list::*})%"
+                    else if arg-2 is "player":
+                        if {clan.%player's uuid%.rank} is not "Owner" or "Co-Owner" or "Officier":
+                            send "§cVous n'êtes pas le propriétaire du clan ou vous n'avez pas la permission!"
+                        else:
+                            send "§7⟬ Membres du §l%{clan.%player's uuid%.ownedClan}%§r§7 clan ⟭"
+                            loop {clan.%{clan.%player's uuid%.ownedClan}%.players::*}:
+                                send "§7⁃§r %loop-value%"
+                            send "§7Nombre de membre: §l%listCounter({clan.%{clan.%player's uuid%.ownedClan}%.players::*})%"
+                    else:
+                        send "§cUnknown option. (§l%arg-2%§r§c)"
+            else if arg-1 is "reset":
+                if player is not op:
+                    send "§cOption inconnue. (§l%arg-1%§r§c)"
+                else:
+                    set {clan.%arg-2%} to false
+                    set {clan.%player's uuid%} to false
+                    set {clan.%player's uuid%.ownedClan} to false
+                    set {clan.%arg-2%.players::*} to {_null::*}
+on tab complete of "/clan":
+    
+    set {_options::*} to "create", "join", "leave", "delete", "promote", "kick" and "list"
+    set tab completions for position 1 to {_options::*}
+    if tab arg-1 is "list":
+        set tab completions for position 2 to "clan" and "player"
+    if tab arg-1 is "promote":
+        set tab completions for position 2 to all players
+        set tab completions for position 3 to getClanRank()
+command /accept [<player>] [<text>]:
+    trigger:
+        if {clan.requested.%arg-1%} is true:
+            add arg-1 to {clan.%arg-2%.players::*}
+            set {clan.%arg-1's uuid%} to arg-2
+            set {clan.%arg-1's uuid%.rank} to "Member"
+            set {clan.requested.%arg-1%} to false
+            send "§eClan §arejoint avec succès§e, name <§l§3%arg-2%§r§e>" to arg-1
+            send "§eRequête §aaccepté §ede §b%arg-1%" to {clan.%arg-2%.owner}
+            
+        else:
+            stop
+command /refuse [<player>] [<text>]:
+    trigger:
+        if {clan.requested.%arg-1%} is true:
+            set {clan.requested.%arg-1%} to false
+            send "§eTa requête a été §4refusé, de <§l§3%arg-2%§r§e>" to arg-1
+            send "§eRequête §4refusé §ede §b%arg-1%" to {clan.%arg-2%.owner}
+        else:
+            stop

@@ -1,0 +1,9 @@
+command /setmoney [<player>] [<integer=1>]:
+    permission: op
+    aliases: moneyset
+    trigger:
+        if arg-1 is set:
+            if {money.%arg-1's uuid%} is not set:
+                set {money.%arg-1's uuid%} to 0
+            set {money.%arg-1's uuid%} to arg-2
+            send "%arg-1%'s §8%{sbm}% §bset §rto §l§6%arg-2%"

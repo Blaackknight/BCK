@@ -1,0 +1,6 @@
+command /setspawn:
+    trigger:
+        set {spawn} to player's location
+        set {spawn.block} to block below player
+        play sound "entity.experience_orb.pickup" with volume 0.5 at player
+        send "§ESpawn set §asuccefully"

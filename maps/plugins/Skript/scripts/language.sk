@@ -1,0 +1,6 @@
+command /language [<text>] [<text>]:
+    permission: op
+    trigger:
+
+on tab complete of "/language":
+    set tab completions for position 1 to "set" and "reset"

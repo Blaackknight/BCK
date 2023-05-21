@@ -1,0 +1,62 @@
+on break of diamond ore or deepslate diamond ore:
+    if the event-player' gamemode is creative:
+        stop
+    if player is not holding iron pickaxe:
+        if player is not holding diamond pickaxe:
+            if player is not holding netherite pickaxe:
+                stop
+            else:
+                chance of 4%:
+                    set {_i} to diamond named "§6§lMysthical Diamond"
+                    set line 1 of lore of {_i} to "§5⦓ §lRarity Mysthical§r §5⦔§r"
+                    drop {_i} at event-location 
+                else if chance of 16%:
+                    set {_i} to diamond named "§6§lPure Diamond"
+                    set line 1 of lore of {_i} to "§7⦓ §lRarity Pure§r §7⦔§r"
+                    drop {_i} at event-location 
+        else:
+            chance of 4%:
+                set {_i} to diamond named "§6§lMysthical Diamond"
+                set line 1 of lore of {_i} to "§5⦓ §lRarity Mysthical§r §5⦔§r"
+                drop {_i} at event-location 
+            else if chance of 16%:
+                set {_i} to diamond named "§6§lPure Diamond"
+                set line 1 of lore of {_i} to "§7⦓ §lRarity Pure§r §7⦔§r"
+                drop {_i} at event-location 
+    else:
+        chance of 4%:
+            set {_i} to diamond named "§6§lMysthical Diamond"
+            set line 1 of lore of {_i} to "§5⦓ §lRarity Mysthical§r §5⦔§r"
+            drop {_i} at event-location
+        else if chance of 16%:
+            set {_i} to diamond named "§6§lPure Diamond"
+            set line 1 of lore of {_i} to "§7⦓ §lRarity Pure§r §7⦔§r"
+            drop {_i} at event-location  
+on break of ancient debris:
+    if the event-player' gamemode is creative:
+        stop
+    if player is not holding diamond pickaxe:
+        if player is not holding netherite pickaxe:
+            stop
+        else:
+            chance of 15%:
+                set {_i} to ancient debris named "§6§lInfernal Debris"
+                set line 1 of lore of {_i} to "§4⦓ §lRarity Infernal§r §4⦔§r"
+                drop {_i} at event-location 
+    else:
+        chance of 15%:
+            set {_i} to ancient debris named "§6§lInfernal Debris"
+            set line 1 of lore of {_i} to "§4⦓ §lRarity Infernal§r §4⦔§r"
+            drop {_i} at event-location 
+function newItem(name: text, item: item, line1: text, line2: text, line3: text, line4: text, line5: text) :: item:
+    set {_i} to {_item} named {_name}
+    if {_line1} is set:
+        set line 1 of lore of {_i} to {_line1}
+    if {_line2} is set:
+        set line 2 of lore of {_i} to {_line2}
+    if {_line3} is set:
+        set line 3 of lore of {_i} to {_line3}
+    if {_line4} is set:
+        set line 4 of lore of {_i} to {_line4}
+    if {_line5} is set:
+        set line 5 of lore of {_i} to {_line5}

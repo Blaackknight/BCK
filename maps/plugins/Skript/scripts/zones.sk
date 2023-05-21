@@ -1,0 +1,201 @@
+#on damage:
+    #set {_s} to location(getX({spawnCoordinates::*}), getY({spawnCoordinates::*}) - 1, getZ({spawnCoordinates::*}), getWorld({spawnCoordinates::*}))
+    # loop all entities in radius {config.spawn.safe_zone} around {spawn.block}:
+    #     set {_type} to type of loop-entity
+    #     set {_type} to "%{_type}%"
+    #     #broadcast {_type}
+    #     if {_type} is "player":
+    #         cancel event
+    #     else if {_type} is "villager":
+    #         cancel event
+    #     else if {_type} is ""
+# on break:
+#     #set {_s} to location(getX({spawnCoordinates::*}), getY({spawnCoordinates::*}) - 1, getZ({spawnCoordinates::*}), getWorld({spawnCoordinates::*}))
+#     set {_n} to {config.spawn.protection_zone} parsed as integer
+#     loop all blocks in radius {_n} around player:
+#         broadcast "%loop-block%"
+    #broadcast "%event-block%"
+on left click with stick:
+    if player's gamemode is creative:
+        cancel event
+    set {_i} to display name of player's tool
+    if {_i} is "§1§lZone §2§lCreator":
+        if player is op:
+            send "§ePoint §aA§e defined"
+            set {zones.%player's uuid%.a} to event-block
+        else:
+            send "§cYou don't have permission.."
+on right click with stick:
+    if event-block is air:
+        stop
+    set {_i} to display name of player's tool
+    if {_i} is "§1§lZone §2§lCreator":
+        if player is op:
+            #send {zones.%player's uuid%.a} to player
+            if {zone.%player's uuid%.a} is not set:
+                set {_b} to event-block
+                send "§ePoint §bB§e defined"
+                set {_a.x} to round down x-coord of {zone.%player's uuid%.a}
+                set {_a.y} to round down y-coord of {zone.%player's uuid%.a}
+                set {_a.z} to round down z-coord of {zone.%player's uuid%.a}
+                set {_b.x} to round down x-coord of {_b}
+                set {_b.y} to round down y-coord of {_b}
+                set {_b.z} to round down z-coord of {_b}
+
+                if {_a.x} is smaller than {_b.x}:
+                    set {_ab.x} to "%{_a.x}%,%{_b.x}%"
+                else:
+                    set {_ab.x} to "%{_b.x}%,%{_a.x}%"
+            
+                if {_a.y} is smaller than {_b.y}:
+                    set {_ab.x} to "%{_a.y}%,%{_b.y}%"
+                else:
+                    set {_ab.x} to "%{_b.y}%,%{_a.y}%"
+            
+                if {_a.z} is smaller than {_b.z}:
+                    set {_ab.x} to "%{_a.z}%,%{_b.z}%"
+                else:
+                    set {_ab.x} to "%{_b.z}%,%{_a.z}%"
+            
+                set {zones.%player's uuid%.selectedArea} to "%{_ab.x}%,%{_ab.y}%"
+            else:
+                send "§ePlease select point §aA§e first !"
+        else:
+            send "§cYou don't have permission.."
+on click:
+    loop {zones.players::*}:
+        set {_data::*} to loop-value split by "|"
+        set {_uuid} to {data::1}
+        set {_speudo} to {_data::2}
+        loop {zones.players::%loop-index%::zones::*}:
+            set {_data::*} to loop-value-2 split at "|"
+            set {_name} to {_data::1}
+            set {_coords::*} to {_data::2} split at ","
+            loop {_coords::*}:
+                set {_coords::%loop-index-3%} to loop-value-3 parsed as number
+            if round down x-coord of event-block is between {_coords_1} and {_coords_2}:
+                if round down y-coord of event-block is between {_coords_3} and {_coords_4}:
+                    if round down z-coord of event-block is between {_coords_5} and {_coords_6}:
+                        if player's uuid isn't {_uuid}:
+                            cancel event
+                        if player's tool is a feather:
+                            send "§cThe area §r%{_name}%§c belongs to §r%{_speudo}% - %{_data::2}%"
+
+command /sticks [<text>] [<text>]:
+    permission: op
+    trigger:
+        if arg-1 is set:
+            if arg-1 is "give":
+                if arg-2 is set:
+                    if arg-2 is "editSign":
+                        set {_i} to stick named "§d§lEdit §6§lStick"
+                        set line 1 of lore of {_i} to "§7⦓ §d§lEdit §6§lStick§r §7⦔§r"
+                        enchant {_i} with unbreaking 1
+                        give {_i} to player
+                        play sound "entity.experience_orb.pickup" with volume 0.4 at player
+                    else if arg-2 is "zoneCreator":
+                        set {_i} to stick named "§1§lZone §2§lCreator"
+                        set line 1 of lore of {_i} to "§7⦓ §1§lZone §2§lCreator§r §7⦔§r"
+                        enchant {_i} with unbreaking 1
+                        give {_i} to player
+                        play sound "entity.experience_orb.pickup" with volume 0.4 at player
+                    else:
+                        send "§cUnknown stick name (%arg-2%)"
+                else:
+                    send "§cEnter stick name"
+            else:
+                send "§cUnknown option (%arg-1%)"
+        else:
+            send "§cEnter option"
+command /zoneadd [<text>]:
+    permission: op
+    usage: §e/zoneadd <area name>
+    trigger:
+        if {zones.%player's uuid%.selectedArea} is set:
+            set {_playerFound} to false
+            loop 2 times:
+                if {_playerFound} is true:
+                    exit loop
+                else:
+                    loop {zones.players::*}:
+                        set {_data::*} to loop-value-2 split by "|"
+                        if player's uuid is {_data::1}:
+                            set {_playerFound} to true
+                            add "%arg-1%|%{zones.%player's uuid%.selectedArea}%" to {zones.players::loop-index::zones::*}
+                            exit loop
+                    if {_playerFound} is false:
+                        add "%player's uuid%|%player%" to {zones.players::*}
+            send "§aThe area named §r%arg-1%§a has been added !" to player
+            clear {zones.%player's uuid%.a}
+            clear {zones.%player's uuid%.selectedArea}
+        else:
+            send "§cPlease select an area first !"
+command /zones:
+    permission: op
+    trigger:
+        set {_playerFound} to false
+        loop {zones.players::*}:
+            set {_data::*} to loop-value split by "|"
+            if player's uuid is {_data::1}:
+                set {_playerFound} to true
+                loop {zones.players::%loop-value%::zones::*}:
+                    set {_data::*} to loop-value-2 split by "|"
+                    set {_name} to {_data::1}
+                    send "§eID: §r%loop-value-2% - §eArea Name: §r%{_name}%" to player
+                exit loop
+        if {_playerFound} is false:
+            send "§cYou are not the owner of any zone.."
+command /zoneremove [<integer>]:
+    permission: op
+    trigger:
+        set {_playerFound} to false
+        loop {zones.players::*}:
+            set {_data::*} to loop-value split by "|"
+            if player's uuid is {_data::1}:
+                set {_playerFound} to true
+                if {zones.players::%loop-index%::zones::%arg-1%} is set:
+                    set {_data::*} to {zones.players::%loop-index%::zones::%arg-1%} split by "|"
+                    set {_name} to {_data::1}
+                if {zones.players::%loop-index%::zones::%arg-1%} is set:
+                    set {_data::*} to {zones.players::%loop-index%::zones::%arg-1%} split by "|"
+                    set {_name} to {_data::1}
+                    clear {zones.players::%loop-index%::zones::%arg-1%}
+                    send "§aZone §r%{_name}% §awith id §r%arg-1% §ahas been successfully §4deleted§a !"
+                    if {zones.players::%loop-index%::zones::%arg-1%} isn't set:
+                        clear {zones.players::%loop-index%}
+                else:
+                    send "§cThis id does not exist.." to player
+        if {_playerFound} is false:
+            send "§cYou are not the owner of any zone.."
+command /zoneowners [<text>] [<offlineplayer>]:
+    permission: op
+    trigger:
+        if arg-1 is not set:
+            if {zones.players::*} is set:
+                loop {zones.players::*}:
+                    set {_data::*} to loop-value split by "|"
+                    set {_uuid} to {_data::1}
+                    set {_speudo} to {_data::2}
+                    set {_p} to {_speudo} parsed as offlineplayer
+                    send formatted "§eID: §r%loop-value% - §ePlayer: §r%selector({_p})%"
+            else:
+                send "§cThere is currently no zone owner.."
+        else if arg-1 is "remove":
+            if arg-2 is set:
+                set {_uuid} to arg-2's uuid
+                if {zones.players::%{_uuid}%} is set:
+                    clear {zones.players::%{_uuid}%::zones::*}
+                    clear {zones.players::%{_uuid}%}
+                    send formatted "§eAll areas of §r%selector(arg-2)%§e have been §4deleted §e!"
+                else:
+                    send "§cUnknown player"
+            else:
+                send "§cEnter player"
+        else:
+            send "§cUnknown option (%arg-1%)"
+on tab complete of "/sticks":
+    set tab completions of position 1 to "give"
+    if tab arg-1 is "give":
+        set tab completions of position 2 to "editSign" and "zoneCreator"
+on tab complete of "/zoneowners":
+    set tab completions of position 1 to "remove"

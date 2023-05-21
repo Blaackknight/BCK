@@ -1,0 +1,222 @@
+command /config [<text>] [<text>] [<text>] [<text>]:
+    permission: op
+    trigger:
+        if arg-1 is set:
+            if arg-1 is "villager":
+                if arg-2 is set:
+                    if arg-2 is "Materiaux":
+                        if arg-3 is "itemadd":
+                            set {_i} to player's tool
+                            set {_ds} to display name of {_i}
+                            if {_i} is not air:
+                                if arg-4 is set:
+                                    set {_price} to arg-4 parsed as integer
+                                    set {_price} to ceil({_price})
+                                    if {_ds} is not set:
+                                        set {_ds} to type of {_i}
+                                        set {_data::*} to "%{_ds}%" split by " "
+                                        loop {_data::*}:
+                                            set {_uuuu} to capitalize(loop-value)
+                                            replace "<none>" with "" in {_uuuu}
+                                            add {_uuuu} to {_list::*}
+                                        if {_list::1} is set:
+                                            set {_str1} to {_list::1}
+                                        if {_list::2} is set:
+                                            set {_str2} to {_list::2}
+                                        if {_list::3} is set:
+                                            set {_str3} to {_list::3}
+                                        if {_list::4} is set:
+                                            set {_str4} to {_list::4}
+                                        if {_list::5} is set:
+                                            set {_str5} to {_list::5}
+                                        if {_str1} is set:
+                                            set {_str} to "%{_str1}%"
+                                        if {_str2} is set:
+                                            set {_str} to "%{_str1}% %{_str2}%"
+                                        if {_str3} is set:
+                                            set {_str} to "%{_str1}% %{_str2}% %{_str3}%"
+                                        if {_str4} is set:
+                                            set {_str} to "%{_str1}% %{_str2}% %{_str3}% %{_str4}%"
+                                        if {_str5} is set:
+                                            set {_str} to "%{_str1}% %{_str2}% %{_str3}% %{_str4}% %{_str5}%"
+                                    else:
+                                        set {_str} to {_ds}
+                                
+                                    materialsAdd({_i}, {_str}, {_price})
+                                    send colored "%{_str}% §eajouter aux §dMatériaux §2achetable ou §4vendable§e."
+                                    play sound "entity.experience_orb.pickup" with volume 0.4 at player
+                                else:
+                                    send "§cTu dois spécifier un prix"
+                            else:
+                                send "§cTu ne dois pas avoir la main vide"
+                    else if arg-2 is "Nourriture":
+                    else if arg-2 is "Potions":
+                    else if arg-2 is "Constructions":
+                    else if arg-2 is "Pêcheur":
+                    else if arg-2 is "Ingénieur":
+                    else if arg-2 is "Armurier":
+                    else if arg-2 is "Outilleur":
+                    else if arg-2 is "Forgeron_Armes":
+                    else:
+                        send "§cVillagoie inconnu (%arg-2%)"
+                else:
+                    send "§cEnter villager name"
+            else if arg-1 is "explosion":
+                if arg-2 is set:
+                    if arg-2 is "on":
+                        set {config.explosion} to true
+                        send "§eExplosion §2activé"
+                        play sound "entity.experience_orb.pickup" with volume 0.4 at player
+                        logCustom("%selector(player)% just turned §7on§r the explosions", 4)
+                        logCustom("%selector(player)% just turned §7on§r the explosions", 5)
+                    else if arg-2 is "off":
+                        set {config.explosion} to false
+                        send "§eExplosion §4désactivé"
+                        play sound "entity.experience_orb.pickup" with volume 0.4 at player
+                        logCustom("%selector(player)% just turned §7off§r the explosions", 4)
+                        logCustom("%selector(player)% just turned §7off§r the explosions", 5)
+            else if arg-1 is "spawn":
+                if arg-2 is set:
+                    if arg-2 is "safezone":
+                        if arg-3 is set:
+                            set {_num} to arg-3 parsed as number
+                            set {config.spawn.safe_zone} to {_num}
+                            set {config.spawn.safe_zone.x} to {_num}
+                            set {config.spawn.safe_zone.y} to {_num}
+                            set {config.spawn.safe_zone.z} to {_num}
+                            send "§eRayon de la safe zone mise à §b%{_num}%"
+                            play sound "entity.experience_orb.pickup" with volume 0.4 at player
+                            logCustom("%selector(player)% just set the safe zone radius to §7%{_num}%", 4)
+                            logCustom("%selector(player)% just set the safe zone radius to §7%{_num}%", 5)
+                    else if arg-2 is "protection":
+                        if arg-3 is set:
+                            set {_num} to arg-3 parsed as number
+                            set {config.spawn.protection} to {_num}
+                            set {config.spawn.protection.x} to {_num}
+                            set {config.spawn.protection.y} to {_num}
+                            set {config.spawn.protection.z} to {_num}
+                            send "Rayon de la zone de protection mise à §7%{_num}%"
+                            play sound "entity.experience_orb.pickup" with volume 0.4 at player
+                            logCustom("%selector(player)% just set the area protection radius to §7%{_num}%", 4)
+                            logCustom("%selector(player)% just set the area protection radius to §7%{_num}%", 5)
+                    else:
+                        send "§cOption inconnue (%arg-2%)"
+            else:
+                send "§cOption inconnue (%arg-1%)"
+        else:
+            send "§cVeuillez entrer une option.."
+on tab complete of "/config":
+    set tab completions of position 1 to "villager", "explosion" and "spawn"
+    if tab arg-1 is "villager":
+        set {_list::*} to getSellers(false, true)
+        loop {_list::*}:
+            if loop-value is "Forgeron d'armes":
+                add "Forgeron_Armes" to {_r::*}
+            else:
+                add loop-value to {_r::*}
+        set tab completions of position 2 to {_r::*}
+        if tab arg-2 is set:
+            set tab completions of position 3 to "itemadd" and "itemremove"
+            if tab arg-3 is "itemadd":
+                
+            else if tab arg-3 is "itemremove":
+                set {_s} to lowercase(tab arg-2)
+                if tab arg-2 is "Materiaux":
+                    set tab completions of position 4 to getItemFromList({villager.materials::*})
+                else if tab arg-2 is "Nourriture":
+                    set tab completions of position 4 to getItemFromList({villager.foods::*})
+                else if tab arg-2 is "Potions":
+                    set tab completions of position 4 to getItemFromList({villager.potions::*})
+                else if tab arg-2 is "Constructions":
+                    set tab completions of position 4 to getItemFromList({villager.constructions::*})
+                else if tab arg-2 is "Pêcheur":
+                    set tab completions of position 4 to getItemFromList({villager.fisherman::*})
+                else if tab arg-2 is "Ingénieur":
+                    set tab completions of position 4 to getItemFromList({villager.engineer::*})
+                else if tab arg-2 is "Armurier":
+                    set tab completions of position 4 to getItemFromList({villager.armorer::*})
+                else if tab arg-2 is "Outilleur":
+                    set tab completions of position 4 to getItemFromList({villager.toolssmith::*})
+                else if tab arg-2 is "Forgeron_Armes":
+                    set tab completions of position 4 to getItemFromList({villager.weaponssmith::*})
+    else if tab arg-1 is "explosion":
+        set tab completions for position 2 to "on" and "off"
+    else if tab arg-1 is "spawn":
+        set tab completions for position 2 to "safezone" and "protection"
+        if tab arg-2 is "safezone":
+            set tab completions for position 3 to "0","1","2","3","4","5","6","7","8","9","10","25","50","75" and "100"
+        else if tab arg-2 is "protection":
+            set tab completions for position 3 to "0","1","2","3","4","5","6","7","8","9","10","25","50","75" and "100"
+
+function add(type: text, i: item, player: player):
+    set {_ds} to type of {_i}
+    set {_data::*} to "%{_ds}%" split by " "
+    loop {_data::*}:
+        set {_uuuu} to capitalize(loop-value)
+        replace "<none>" with "" in {_uuuu}
+        add {_uuuu} to {_list::*}
+        if {_list::1} is set:
+            set {_str1} to {_list::1}
+        if {_list::2} is set:
+            set {_str2} to {_list::2}
+        if {_list::3} is set:
+            set {_str3} to {_list::3}
+        if {_list::4} is set:
+            set {_str4} to {_list::4}
+        if {_list::5} is set:
+            set {_str5} to {_list::5}
+        if {_str1} is set:
+            set {_str} to "%{_str1}%"
+        if {_str2} is set:
+            set {_str} to "%{_str1}% %{_str2}%"
+        if {_str3} is set:
+            set {_str} to "%{_str1}% %{_str2}% %{_str3}%"
+        if {_str4} is set:
+            set {_str} to "%{_str1}% %{_str2}% %{_str3}% %{_str4}%"
+        if {_str5} is set:
+            set {_str} to "%{_str1}% %{_str2}% %{_str3}% %{_str4}% %{_str5}%"
+        else:
+            set {_str} to {_ds}
+                                
+        if {_type} is "Materiaux":
+            materialsAdd({_i}, {_str}, {_price})
+            send colored "%{_str}% §eajouter aux §d%{_type}% §2achetable ou §4vendable§e." to {_player}
+            play sound "entity.experience_orb.pickup" with volume 0.4 at {_player}
+        else if {_type} is "Nourriture":
+            foodsAdd({_i}, {_str}, {_price})
+        send colored "%{_str}% §eajouter aux §d%{_type}% §2achetable ou §4vendable§e." to {_player}
+        play sound "entity.experience_orb.pickup" with volume 0.4 at {_player}
+function remove(type: text, i: item, player: player):
+    set {_ds} to type of {_i}
+    set {_data::*} to "%{_ds}%" split by " "
+    loop {_data::*}:
+        set {_uuuu} to capitalize(loop-value)
+        replace "<none>" with "" in {_uuuu}
+        add {_uuuu} to {_list::*}
+        if {_list::1} is set:
+            set {_str1} to {_list::1}
+        if {_list::2} is set:
+            set {_str2} to {_list::2}
+        if {_list::3} is set:
+            set {_str3} to {_list::3}
+        if {_list::4} is set:
+            set {_str4} to {_list::4}
+        if {_list::5} is set:
+            set {_str5} to {_list::5}
+        if {_str1} is set:
+            set {_str} to "%{_str1}%"
+        if {_str2} is set:
+            set {_str} to "%{_str1}% %{_str2}%"
+        if {_str3} is set:
+            set {_str} to "%{_str1}% %{_str2}% %{_str3}%"
+        if {_str4} is set:
+            set {_str} to "%{_str1}% %{_str2}% %{_str3}% %{_str4}%"
+        if {_str5} is set:
+            set {_str} to "%{_str1}% %{_str2}% %{_str3}% %{_str4}% %{_str5}%"
+        else:
+            set {_str} to {_ds}
+                                
+        
+        materialsAdd({_i}, {_str}, {_price})
+        send colored "%{_str}% §eajouter aux §dMatériaux §2achetable ou §4vendable§e." to {_player}
+        play sound "entity.experience_orb.pickup" with volume 0.4 at {_player}

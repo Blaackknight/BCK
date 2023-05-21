@@ -1,0 +1,25 @@
+command /freeze [<player>]:
+    permission: op
+    trigger:
+        if arg-1 is not set:
+            stop
+        if {freeze.%arg-1's uuid%} is not set:
+            set {freeze.%arg-1's uuid%} to false
+        if {freeze.%arg-1's uuid%} is false:
+            set {freeze.%arg-1's uuid%} to true
+            send "§e%arg-1% has been §1freezed §e!" to player
+            send "§eYou have been §1freezed §e!" to arg-1
+        else if {freeze.%arg-1's uuid%} is true:
+            set {freeze.%arg-1's uuid%} to false
+            send "§e%arg-1% has been §1un-freezed §e!" to player
+            send "§eYou have been §1un-freezed §e!" to arg-1
+on player move:
+    if {freeze.%player's uuid%} is not set:
+        set {freeze.%player's uuid%} to false
+    if {freeze.%player's uuid%} is true:
+        cancel event
+on break:
+    if {freeze.%player's uuid%} is not set:
+        set {freeze.%player's uuid%} to false
+    if {freeze.%player's uuid%} is true:
+        cancel event

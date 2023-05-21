@@ -1,0 +1,5 @@
+on damage:
+    if damage cause is fall:
+        if victim is sneaking:
+            cancel event
+            send "&eBonne réception l'ami :)" to victim

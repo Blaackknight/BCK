@@ -1,0 +1,153 @@
+on skript load:
+    set {sbm} to "₣"
+    set {skn} to "§4BCK§r"
+    # set {token} to "MTEwMzQwNDg3NzExNzM5NTE1NQ.G_aOAl.3dN8k6ajVgOz1xtIl4a072QwUbTM0k2Yc2RmsM"
+    # set {bot} to "POTOR AI"
+    #login to "%{token}%" with the name "%{bot}%"
+
+on load:
+    # add "§7Pure Diamond §6⤇§r §7250%{sbm}%" to {materials.item::*}
+    # add "§5Mysthical Diamond §6⤇§r §73000%{sbm}%" to {materials.item::*}
+    # add "250%{sbm}%" to {materials.}
+
+    #broadcast "Diams: %materialsGetPrice("Mysthical Diamond")%"
+    # broadcast "%{materials.list::*}%"
+    set {skripts::*} to fileList("/plugins/Skript/scripts/")
+    addDrawerItemBlacklisted("enchanted book")
+    addDrawerItemBlacklisted("impulse command block")
+    addDrawerItemBlacklisted("chain command block")
+    addDrawerItemBlacklisted("repeating command block")
+
+    addDrawerLoreBlacklisted("Rarity")
+    addDrawerLoreBlacklisted("Miner")
+    addDrawerLoreBlacklisted("AutoSmelt")
+    addDrawerLoreBlacklisted("Edit Stick")
+
+    addSellers("§d§lMateriaux", "§d§lPatrick")
+    addSellers("§6§lNourriture", "§6§lJerry")
+    addSellers("§b§lPotions", "§b§lOZ")
+    addSellers("§a§lConstructions", "§a§lRodrigues")
+    addSellers("§1§lPêcheur", "§1§lHector")
+    addSellers("§4§lIngénieur", "§4§lZephir")
+    addSellers("§e§lPrêtre §e§lGabriel", "§e§lGabriel")
+    addSellers("§4&lAssistante de §4§ll'Ingénieur", "§4§lChloé")
+    addSellers("§8§lArmurier", "§e§lShane")
+    addSellers("§8§lOutilleur", "§e§lNix")
+    addSellers("§8§lForgeron d'armes", "§e§lNegon")
+
+    clanRankAdd("Owner")
+    clanRankAdd("Co-Owner")
+    clanRankAdd("Officier")
+    clanRankAdd("Member")
+
+    set {_stoneLore::*} to "╥﹏╥"
+    set {_cobblestoneLore::*} to "Ó╭╮Ò"
+    addGeneratorType("stone", "iron block", "§7Stone §bGenerator§r", {_stoneLore::*})
+    addGeneratorType("cobblestone", "iron block", "§7Cobblestone §bgenerator§r", {_cobblestoneLore::*})
+
+    set {spawnCoordinates::*} to getCoordinateSeparate("%{spawn}%")
+    #broadcast getDrawerItemBlacklist()
+
+    set {_letters} to "Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz"
+    set {_letter-pairs::*} to {_letters} split at " "
+ 
+    loop {_letter-pairs::*}:
+ 
+        set {_pair::*} to loop-value split at ""
+ 
+        set {_uppercase} to {_pair::1}
+        set {_lowercase} to {_pair::2}
+ 
+        set {letters::uppercase::%{_lowercase}%} to {_uppercase}
+        set {letters::lowercase::%{_uppercase}%} to {_lowercase}
+
+on unload:
+    #delete {villager.materials::*}
+    #delete {villager.foods::*}
+    delete {foods.simpleList::*}
+    delete {clan.ranks::*}
+    delete {drawer.lore.blacklist::*}
+    delete {drawer.item.blacklist::*}
+    delete {generators.types::*}
+    delete {sellers::*}
+    delete {letters::*}
+    loop all players:
+        set {editsign.line1.%loop-player%} to false
+        set {editsign.line2.%loop-player%} to false
+        set {editsign.line3.%loop-player%} to false
+        set {editsign.line4.%loop-player%} to false
+on break:
+    if player is not set:
+        set {_player} to "Server"
+    else:
+        set {_player} to selector(player)
+    logCustom("%{_player}% has just breaking the §7%event-block%", 5)
+on place:
+    if player is not set:
+        set {_player} to "Server"
+    else:
+        set {_player} to selector(player)
+    logCustom("%{_player}% has just placing the §7%event-block%", 5)
+on command:
+    if player is not set:
+        set {_player} to "Server"
+    else:
+        set {_player} to selector(player)
+    logCustom("%{_player}% has just executed the command §7/%command%", 4)
+    logCustom("%{_player}% has just executed the command §7/%command%", 5)
+on damage:
+    if victim is player:
+        set {_v} to victim
+        set {_a} to attacker
+        if damage cause is fall:
+            set {_a} to "fall"
+        logCustom("%{_v}% has just taken damage by §7%{_a}% (%damage%§4♥§7)§r at %event-location%", 5)
+on drop:
+    logCustom("%player% has just dropped a §7%event-item%§r on the ground at %event-location%", 5)
+on pickup:
+    logCustom("%player% has just pickup a §7%event-item%§r at %event-location%", 5)
+on enderman pickup:
+    logCustom("§l§5Mr Enderman§r just stole a §7%event-block%§r at %event-location%", 5)
+on explode:
+    logCustom("§4Explosion§r at %event-location%", 5)
+on fade of snow layer:
+    logCustom("§7%event-block%§r has just melted at %event-location%", 5)
+on fade of ice:
+    logCustom("§7%event-block%§r has just melted at %event-location%", 5)
+on player fish:
+    logCustom("%player% has just fished", 5)
+on grow:
+    logCustom("§7%event-block%§r just sprouted at %event-location%", 5)
+on tool break:
+    logCustom("%selector(player)%'s tool just broken (§7%event-item%§r)", 5)
+on item despawn:
+    logCustom("§7%event-item%§r just disappeared at %event-location%", 5)
+# on level change:
+#     logCustom("§7%player%§r just went up a level", 5)
+
+#world("%getWorld({spawnCoordinates::*})%")
+    #getY({spawnCoordinates::*}) + {config.spawn.safe_zone.y}, getZ({spawnCoordinates::*}) + {config.spawn.safe_zone.z}, world("%getWorld({spawnCoordinates::*})%")
+    # set {_x} to getX({spawnCoordinates::*}) + {config.spawn.safe_zone.x}
+    # set {_y} to getY({spawnCoordinates::*}) + {config.spawn.safe_zone.y}
+    # set {_z} to getZ({spawnCoordinates::*}) + {config.spawn.safe_zone.z}
+    #send "%getX({spawnCoordinates::*})% / %getY({spawnCoordinates::*})% / %getZ({spawnCoordinates::*})%" to victim
+    #send "%{_x}% / %{_y}% / %{_z}%" to victim
+command /kamikaze [<player>]:
+    permission: op
+    trigger:
+        if arg-1 is set:
+            create a fake explosion at arg-1
+        else:
+            create a fake explosion at player
+on explosion prime:
+    if {config.explosion} is false:
+        cancel event
+        set block at event-location to grass block
+        set block 1 above event-location to oxeye daisy
+        play sound "entity.pig.hurt" with volume 1 at event-location
+        delete event-entity
+        kill event-entity
+every minecraft day in "world":
+    add 1 to {world.day}
+    logCustom("§71§r added to day", 4)
+    logCustom("§71§r added to day", 5)

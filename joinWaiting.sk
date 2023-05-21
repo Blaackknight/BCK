@@ -1,0 +1,57 @@
+on join:
+    set {joinWaiting.%player%} to true
+    set {joinWaiting.coordinate.%player%} to {coordinate.%player%}
+    set {coordinate.%player%} to false
+    allow flight to player
+    make player fly
+    set player's walk speed to 0
+
+on player move:
+    if {joinWaiting.%player%} is true:
+        
+        if player's gamemode is creative:
+            allow flight to player
+            if player is flying:
+                enable flight to player
+        else:
+            disable flight to player
+        loop 5 times:
+            send action bar "" to player
+        set {joinWaiting.%player%} to false
+        set player's walk speed to 0.2
+        set {coordinate.%player%} to {joinWaiting.coordinate.%player%}
+        wait 0.5 second
+        loop 5 times:
+            send action bar "" to player
+on damage:
+    if victim is a player:
+        if {joinWaiting.%victim%} is true:
+            send "§7%victim% §eis loading.." to attacker
+            cancel event
+every 3 second:
+    loop all players:
+        if {joinWaiting.%loop-player%} is true:
+            send action bar "§eYou are currently §aloading." to loop-player
+            wait 0.5 second
+            if {joinWaiting.%loop-player%} is false:
+                stop
+            send action bar "§eYou are currently §aloading.." to loop-player
+            wait 0.5 second
+            if {joinWaiting.%loop-player%} is false:
+                stop
+            send action bar "§eYou are currently §aloading..." to loop-player
+            wait 0.5 second
+            if {joinWaiting.%loop-player%} is false:
+                stop
+            send action bar "§eYou are currently §aloading." to loop-player
+            wait 0.5 second
+            if {joinWaiting.%loop-player%} is false:
+                stop
+            send action bar "§eYou are currently §aloading.." to loop-player
+            wait 0.5 second
+            if {joinWaiting.%loop-player%} is false:
+                stop
+            send action bar "§eYou are currently §aloading..." to loop-player
+            wait 0.5 second
+            if {joinWaiting.%loop-player%} is false:
+                stop

@@ -1,0 +1,49 @@
+command /villagerGui:
+    permission: op
+    aliases: vlg
+    trigger:
+        set {_gui} to genericGui("§6§lFoods", 8)
+        glassAdd({_gui})
+        set slot 53 of {_gui} to arrow named "§2§lNext"
+        set {inv.%player%} to "villagerFoodsPage1"
+        open {_gui} to player
+
+on inventory click:
+    if {inv.%player%} is "villagerFoodsPage1":
+        set {_item} to event-slot
+        set {_i} to "%{_item}%"
+        set {_n} to display name of {_item}
+        cancel event
+        if click action is left mouse button:
+            if {_n} is "§2§lNext":
+                set {_gui} to genericGui("§6§lFoods 2", 8)
+                glassAdd({_gui}, 2)
+                set slot 45 of {_gui} to arrow named "§4§lBack"
+                open {_gui} to player
+                set {inv.%player%} to "villagerFoodsPage2"
+        else if click action is right mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+    else if {inv.%player%} is "villagerFoodsPage2":
+        send {_inv.%player%} to player
+        cancel event
+        if click action is left mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}
+            if {_n} is "§2§lNext":
+                set {_gui} to genericGui("§6§lFoods 2", 8)
+                set slot 45 of {_gui} to arrow named "§4§lBack"
+                open {_gui} to player
+                set {inv.%player%} to "villagerFoodsPage3"
+            else if {_n} is "§4§lBack":
+                set {_gui} to genericGui("§6§lFoods", 8)
+                glassAdd({_gui})
+                set slot 53 of {_gui} to arrow named "§2§lNext"
+                open {_gui} to player
+                set {inv.%player%} to "villagerFoodsPage1"
+        else if click action is right mouse button:
+            set {_item} to event-slot
+            set {_i} to "%{_item}%"
+            set {_n} to display name of {_item}

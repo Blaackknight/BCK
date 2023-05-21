@@ -1,0 +1,19 @@
+on left click:
+    if {cps.%player%} is not set:
+        set {cps.%player%} to 0
+    add 1 to {cps.%player%}
+every 0.3 second:
+    loop all players:
+        if {cps.%loop-player%} > 0:
+            remove 1 from {cps.%loop-player%}
+command /cps:
+    trigger:
+        if {config.cps.%player%} is not set:
+            set {config.cps.%player%} to false
+        if {config.cps.%player%} is true:
+            set {config.cps.%player%} to false
+            send "§eCompteur de §lcps §4désactiver.."
+            send action bar "" to player 
+        else if {config.cps.%player%} is false:
+            set {config.cps.%player%} to true
+            send "§eCompteur de §lcps §2activer."

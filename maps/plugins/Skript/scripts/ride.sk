@@ -1,0 +1,12 @@
+command /ride [<player>] [<player>]:
+    permission: op
+    trigger:
+        if arg-1 is set:
+            if arg-2 is not set:
+                make player ride arg-1
+            else if arg-2 is player:
+                make arg-1 ride arg-2
+            else:
+                send "§cIs not player !"
+        else:
+            send "§cEnter Player !"

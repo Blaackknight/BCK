@@ -1,0 +1,3 @@
+on first join:
+    moneyAdd(player, {config.join.money}, true)
+    defaultPermission(player)

@@ -1,0 +1,29 @@
+command /rs [<text>]:
+    permission: op
+    trigger:
+        #set {_a} to arg-1 parsed as block
+        if arg-1 contain "sign":
+            set {_t} to targeted block
+            if {_t} is any sign:
+                set {_l1} to line 1 of {_t}
+                set {_l1} to line 2 of {_t}
+                set {_l1} to line 3 of {_t}
+                set {_l1} to line 4 of {_t}
+                set {_l1} to colored {_l1}
+                set {_l2} to colored {_l2}
+                set {_l3} to colored {_l3}
+                set {_l4} to colored {_l4}
+
+                set {_t} to arg-1
+                wait 3 ticks
+                set line 1 of arg-1 to {_l1}
+                set line 2 of arg-1 to {_l2}
+                set line 3 of arg-1 to {_l3}
+                set line 4 of arg-1 to {_l4}
+            else:
+                send "§cPlease target any sign"
+        else:
+            send "§cEnter a sign block"
+
+on tab complete of "/rc"
+    set tab completions of position 1 to "oak_sign","spruce_sign","birch_sign","jungle_sign","acacia_sign","dark_oak_sign","mangrove_sign","crimson_sign" and "warped_sign"

@@ -1,0 +1,13 @@
+on right click on stair:
+  if player is not sneaking:
+    set {_o} to type of event-block
+    set {_locs::*} to getCoordinateSeparate("%location of event-block%")
+    set {_x} to getX({_locs::*})
+    set {_y} to getY({_locs::*})
+    set {_z} to getZ({_locs::*})
+    set {_w} to getWorld({_locs::*})
+    spawn 1 of armor stand at location(location of event-block's x-coordinate, location of event-block's y-coordinate - 1.25, location of event-block's z-coordinate, {_w})
+    set {_s} to last spawned entity
+    set {_nbt} to nbt of {_s}
+    send {_nbt} to player
+    make player ride {_s}

@@ -1,5 +1,5 @@
 function bckCoreLoad():
-    load yaml "plugins/Skript/scripts/BCK/core/config.yml" as "bck.manager.config"
+    load yaml "plugins/Skript/scripts/BCK/core/config.yml" as "bck.core.config"
 function bckRegisterSkripts():
     set {_sks::*} to fileList("/plugins/Skript/scripts/BCK/manager/")
     set {_bc::*} to fileList("/plugins/Skript/scripts/BCK/core/")

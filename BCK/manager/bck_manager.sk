@@ -8,196 +8,208 @@ on load:
     else:
         broadcast "§6[§4BCK§6/§5Manager§6]§r Script loading cancel It requires (core.sk)"
         unload script file "bck_manager.sk"
-# command /manager:
-#     trigger:
-#         # if hasPermission(player, "server.command.manager") is false:
-#         #     send "§c§lHey! §7Tu n'a pas la permission :|"
-#         #     stop
-#         set {_sus} to managerAddonExist("money")
-#         set {_acc} to managerAddonExist("account")
-#         set {_gn} to yaml value "data.gui.title" from "bck.manager.config"
-#         set {_gui} to genericGui({_gn}, 3)
-#         set {_susi} to paper named "§b⟪ Money ⟫"
-#         set {_ac} to writable book named "§d⟪ Account ⟫"
-#         if {_sus} is true:
-#             set {_sus_installed} to "§a§lInstallé§r"
-#         else:
-#             set {_ac_installed} to "§c§lNon Installé"
-#         if {_acc} is true:
-#             set {_ac_installed} to "§a§lInstallé§r"
-#         else:
-#             set {_ac_installed} to "§c§lNon Installé"
-#         set line 1 of lore of {_susi} to "§6Etat:§r %{_sus_installed}%"
-#         set line 1 of lore of {_ac} to "§6Etat:§r %{_ac_installed}%"
-#         set slot 11 of {_gui} to {_susi}
-#         set slot 13 of {_gui} to {_ac}
-#         open {_gui} to player
-#         set {inv.%player%} to "manager.main"
-# on inventory click:
-#     if {inv.%player%} is "manager.main":
-#         cancel event
-#         set {_i} to event-slot
-#         set {_t} to type of {_i}
-#         set {_n} to display name of {_i}
-#         set {_u} to uncolored {_n}
-#         if {_t} is not air:
-#             #send {_t} to player
-#             #send {_t} to player
-#             if "%{_t}%" contain "paper":
-#                 if {_u} contain "Money":
-#                     set {_susGui} to genericGui("§b§lMoney", 3, true)
-#                     set {_sus} to managerAddonExist("money")
-#                     set {_susA} to managerAddonExist("money", true)
-#                     set {_install} to minecart named "§2§lInstaller"
-#                     if {_sus} is true:
-#                         set line 1 of lore of {_install} to "§7Déja installer"
-#                     else:
-#                         set line 1 of lore of {_install} to "§7Prêt à l'installation"
-#                     set {_uninstall} to tnt named "§4§lDésinstaller"
-#                     set {_active} to lever named "§6§lActiver/Désactiver"
-#                     if {_susA} is true:
-#                         set {_actived} to "§c§lDésactivé"
-#                     else:
-#                         set {_actived} to "§a§lActivé"
-#                     set line 1 of lore of {_active} to "§6Etat:§r %{_actived}%"
-#                     set slot 11 of {_susGui} to {_install}
-#                     set slot 13 of {_susGui} to {_active}
-#                     set slot 15 of {_susGui} to {_uninstall}
-#                     open {_susGui} to player
-#                     set {inv.%player%} to "manager.money.main"
-#             else if "%{_t}%" is "writable book":
-#                 if {_u} contain "Account":
-#                     set {_acGui} to genericGui("§d§lAccount", 3, true)
-#                     set {_ac} to managerAddonExist("account")
-#                     set {_acc} to managerAddonExist("account", true)
-#                     set {_install} to minecart named "§2§lInstaller"
-#                     if {_ac} is true:
-#                         set line 1 of lore of {_install} to "§7Déja installer"
-#                     else:
-#                         set line 1 of lore of {_install} to "§7Prêt à l'installation"
-#                     set {_uninstall} to tnt named "§4§lDésinstaller"
-#                     set {_active} to lever named "§6§lActiver/Désactiver"
-#                     if {_acc} is true:
-#                         set {_actived} to "§c§lDésactivé"
-#                     else:
-#                         set {_actived} to "§a§lActivé"
-#                     set line 1 of lore of {_active} to "§6Etat:§r %{_actived}%"
-#                     set slot 11 of {_acGui} to {_install}
-#                     set slot 13 of {_acGui} to {_active}
-#                     set slot 15 of {_acGui} to {_uninstall}
-#                     open {_acGui} to player
-#                     set {inv.%player%} to "manager.account.main"
-#     else if {inv.%player%} is "manager.money.main":
-#         cancel event
-#         set {_i} to event-slot
-#         set {_t} to type of {_i}
-#         set {_n} to display name of {_i}
-#         set {_u} to uncolored {_n}
-#         if {_t} is not air:
-#             if "%{_t}%" contain "barrier":
-#                 if {_u} contain "Back":
-#                     set {_sus} to managerAddonExist("money")
-#                     set {_acc} to managerAddonExist("account")
-#                     set {_gui} to genericGui("§4§lBCK Manager", 3)
-#                     set {_susi} to paper named "§b⟪ Money ⟫"
-#                     set {_ac} to writable book named "§d⟪ Account ⟫"
-#                     if {_sus} is true:
-#                         set {_sus_installed} to "§a§lInstallé§r"
-#                     else:
-#                         set {_ac_installed} to "§c§lNon Installé"
-#                     if {_acc} is true:
-#                         set {_ac_installed} to "§a§lInstallé§r"
-#                     else:
-#                         set {_sus_installed} to "§c§lNon Installé"
-#                     set line 1 of lore of {_susi} to "§6Etat:§r %{_sus_installed}%"
-#                     set line 1 of lore of {_ac} to "§6Etat:§r %{_ac_installed}%"
-#                     set slot 11 of {_gui} to {_susi}
-#                     set slot 13 of {_gui} to {_ac}
-#                     open {_gui} to player
-#                     set {inv.%player%} to "manager.main"
-#             else if "%{_t}%" is "minecart":
-#                 if {_u} contain "Installer":
-#                     set {_lore::*} to uncolored lore of {_i}
-#                     if {_lore::*} doesn't contain "Déja installer":
-#                         send "§6[§4BCK§6/§bMoney§6]§r §2§lInstallation.."
-#             else if "%{_t}%" contain "lever":
-#                 if {_u} contain "Activer":
-#                     set {_susA} to managerAddonExist("money", true)
-#                     if {_susA} is false:
-#                         set {_list::*} to fileList("plugins/Skript/scripts/BCK/manager/money/")
-#                         #broadcast "%{_list::*}%"
-#                         loop {_list::*}:
-#                             disable skript "BCK/manager/money/%loop-value%"
-#                         set {_active} to lever named "§6§lActiver/Désactiver"
-#                         set {_actived} to "§c§lDésactivé"
-#                         set line 1 of lore of {_active} to "§6Etat:§r %{_actived}%"
-#                         set {_g} to player's current inventory
-#                         set slot 13 of {_g} to {_active}
-#                         send "§6[§4BCK§6/§bMoney§6]§e §cDésactivation§e réussi !"
-#                     else if {_susA} is true:
-#                         set {_list::*} to fileList("plugins/Skript/scripts/BCK/manager/money/")
-#                         loop {_list::*}:
-#                             enable skript "BCK/manager/money/%loop-value%"
-#                         set {_active} to lever named "§6§lActiver/Désactiver"
-#                         set {_actived} to "§a§lActivé"
-#                         set line 1 of lore of {_active} to "§6Etat:§r %{_actived}%"
-#                         set {_g} to player's current inventory
-#                         set slot 13 of {_g} to {_active}
-#                         send "§6[§4BCK§6/§bMoney§6]§e §aActivation§e réussi !"
-#     else if {inv.%player%} is "manager.account.main":
-#         cancel event
-#         set {_i} to event-slot
-#         set {_t} to type of {_i}
-#         set {_n} to display name of {_i}
-#         set {_u} to uncolored {_n}
-#         if {_t} is not air:
-#             if "%{_t}%" contain "barrier":
-#                 if {_u} contain "Back":
-#                     set {_sus} to managerAddonExist("money")
-#                     set {_acc} to managerAddonExist("account")
-#                     set {_gui} to genericGui("§4§lBCK Manager", 3)
-#                     set {_susi} to paper named "§b⟪ Money ⟫"
-#                     set {_ac} to writable book named "§d⟪ Account ⟫"
-#                     if {_sus} is true:
-#                         set {_sus_installed} to "§a§lInstallé§r"
-#                     else:
-#                         set {_ac_installed} to "§c§lNon Installé"
-#                     if {_acc} is true:
-#                         set {_ac_installed} to "§a§lInstallé§r"
-#                     else:
-#                         set {_sus_installed} to "§c§lNon Installé"
-#                     set line 1 of lore of {_susi} to "§6Etat:§r %{_sus_installed}%"
-#                     set line 1 of lore of {_ac} to "§6Etat:§r %{_ac_installed}%"
-#                     set slot 11 of {_gui} to {_susi}
-#                     set slot 13 of {_gui} to {_ac}
-#                     open {_gui} to player
-#                     set {inv.%player%} to "manager.main"
-#             else if "%{_t}%" is "minecart":
-#                 if {_u} contain "Installer":
-#                     set {_lore::*} to uncolored lore of {_i}
-#                     if {_lore::*} doesn't contain "Déja installer":
-#                         send "§6[§4BCK§6/§dAccount§6]§r §2§lInstallation.."
-#             else if "%{_t}%" contain "lever":
-#                 if {_u} contain "Activer":
-#                     set {_susA} to managerAddonExist("account", true)
-#                     if {_susA} is false:
-#                         set {_list::*} to fileList("plugins/Skript/scripts/BCK/manager/account/")
-#                         #broadcast "%{_list::*}%"
-#                         loop {_list::*}:
-#                             disable skript "BCK/manager/account/%loop-value%"
-#                         set {_active} to lever named "§6§lActiver/Désactiver"
-#                         set {_actived} to "§c§lDésactivé"
-#                         set line 1 of lore of {_active} to "§6Etat:§r %{_actived}%"
-#                         set {_g} to player's current inventory
-#                         set slot 13 of {_g} to {_active}
-#                         send "§6[§4BCK§6/§dAccount§6]§e §cDésactivation§e réussi !"
-#                     else if {_susA} is true:
-#                         set {_list::*} to fileList("plugins/Skript/scripts/BCK/manager/account/")
-#                         loop {_list::*}:
-#                             enable skript "BCK/manager/account/%loop-value%"
-#                         set {_active} to lever named "§6§lActiver/Désactiver"
-#                         set {_actived} to "§a§lActivé"
-#                         set line 1 of lore of {_active} to "§6Etat:§r %{_actived}%"
-#                         set {_g} to player's current inventory
-#                         set slot 13 of {_g} to {_active}
-#                         send "§6[§4BCK§6/§dAccount§6]§e §aActivation§e réussi !"
+function managerGuiMain(player: player):
+    set {_list::*} to folderList("plugins/Skript/scripts/BCK/manager/")
+
+    loop {_list::*}:
+        set {_f} to loop-value
+        #broadcast "%{_f}%"
+        set {_v} to managerAddonExist({_f})
+        if {_v} is true:
+            add {_f} to {_verif::*}
+    #broadcast "%{_verif::*}%"
+    set {_gn} to yaml value "data.gui.title" from "bck.manager.config"
+    set {_gs} to yaml value "data.gui.size" from "bck.manager.config"
+    set {_gs} to "%{_gs}%" parsed as number
+    set {_gui} to genericGui({_gn}, {_gs})
+    set {_slot} to 10
+    loop {_verif::*}:
+        set {_ii} to yaml value "data.gui.%loop-value%.item" from "bck.manager.config"
+        set {_nn} to yaml value "data.gui.%loop-value%.name" from "bck.manager.config"
+        if {_ii} is not set:
+            set {_i} to barrier
+        else:
+            set {_i} to {_ii} parsed as item
+        if {_nn} is not set:
+            set {_n} to type of {_i}
+        else:
+            set {_n} to {_nn}
+        #broadcast "%{_i}%"
+        #broadcast "%{_n}%"
+        set {_i} to {_i} named {_n}
+        #broadcast "%{_i}%"
+        set {_lore::*} to yaml list "data.gui.%loop-value%.lore" from "bck.manager.config"
+        if {_lore::*} is set:
+            set {_n} to 1
+            loop {_lore::*}:
+                add 1 to {_n}
+            loop {_n} times:
+                set {_id} to loop-number
+                set line {_id} of lore of {_i} to {_lore::%{_id}%}
+        set slot {_slot} of {_gui} to {_i}
+        if {_slot} = 16 or 23 or 30 or 37 or 44 or 51 or 58:
+            add 2 to {_slot}
+        else:
+            add 1 to {_slot}
+        
+        #broadcast {_i}
+        #give {_i} to {_player}
+    open {_gui} to {_player}
+    set {inv.%{_player}%} to "manager.main"
+
+command /managerbis:
+    trigger:
+        managerGuiMain(player)
+        # set {_sus} to managerAddonExist("money")
+        # set {_acc} to managerAddonExist("account")
+        # set {_gn} to yaml value "data.gui.title" from "bck.manager.config"
+        # set {_gui} to genericGui({_gn}, 3)
+        # set {_susi} to paper named "§b⟪ Money ⟫"
+        # set {_ac} to writable book named "§d⟪ Account ⟫"
+        # if {_sus} is true:
+        #     set {_sus_installed} to "§a§lInstallé§r"
+        # else:
+        #     set {_ac_installed} to "§c§lNon Installé"
+        # if {_acc} is true:
+        #     set {_ac_installed} to "§a§lInstallé§r"
+        # else:
+        #     set {_ac_installed} to "§c§lNon Installé"
+        # set line 1 of lore of {_susi} to "§6Etat:§r %{_sus_installed}%"
+        # set line 1 of lore of {_ac} to "§6Etat:§r %{_ac_installed}%"
+        # set slot 11 of {_gui} to {_susi}
+        # set slot 13 of {_gui} to {_ac}
+        # open {_gui} to player
+        # set {inv.%player%} to "manager.main"
+on inventory click:
+    if {inv.%player%} is "manager.main":
+        cancel event
+        set {_i} to event-slot
+        set {_t} to type of {_i}
+        set {_n} to display name of {_i}
+        set {_u} to uncolored {_n}
+        if {_t} is not air:
+            #send {_t} to player
+            #send {_t} to player
+            if "%{_t}%" contain "paper":
+                if {_u} contain "Money":
+                    set {_susGui} to genericGui("§b§lMoney", 3, true)
+                    set {_sus} to managerAddonExist("money")
+                    set {_susA} to managerAddonExist("money", true)
+                    set {_install} to minecart named "§2§lInstaller"
+                    if {_sus} is true:
+                        set line 1 of lore of {_install} to "§7Déja installer"
+                    else:
+                        set line 1 of lore of {_install} to "§7Prêt à l'installation"
+                    set {_uninstall} to tnt named "§4§lDésinstaller"
+                    set {_active} to lever named "§6§lActiver/Désactiver"
+                    if {_susA} is true:
+                        set {_actived} to "§c§lDésactivé"
+                    else:
+                        set {_actived} to "§a§lActivé"
+                    set line 1 of lore of {_active} to "§6Etat:§r %{_actived}%"
+                    set slot 11 of {_susGui} to {_install}
+                    set slot 13 of {_susGui} to {_active}
+                    set slot 15 of {_susGui} to {_uninstall}
+                    open {_susGui} to player
+                    set {inv.%player%} to "manager.money.main"
+            else if "%{_t}%" is "writable book":
+                if {_u} contain "Account":
+                    set {_acGui} to genericGui("§d§lAccount", 3, true)
+                    set {_ac} to managerAddonExist("account")
+                    set {_acc} to managerAddonExist("account", true)
+                    set {_install} to minecart named "§2§lInstaller"
+                    if {_ac} is true:
+                        set line 1 of lore of {_install} to "§7Déja installer"
+                    else:
+                        set line 1 of lore of {_install} to "§7Prêt à l'installation"
+                    set {_uninstall} to tnt named "§4§lDésinstaller"
+                    set {_active} to lever named "§6§lActiver/Désactiver"
+                    if {_acc} is true:
+                        set {_actived} to "§c§lDésactivé"
+                    else:
+                        set {_actived} to "§a§lActivé"
+                    set line 1 of lore of {_active} to "§6Etat:§r %{_actived}%"
+                    set slot 11 of {_acGui} to {_install}
+                    set slot 13 of {_acGui} to {_active}
+                    set slot 15 of {_acGui} to {_uninstall}
+                    open {_acGui} to player
+                    set {inv.%player%} to "manager.account.main"
+    else if {inv.%player%} is "manager.money.main":
+        cancel event
+        set {_i} to event-slot
+        set {_t} to type of {_i}
+        set {_n} to display name of {_i}
+        set {_u} to uncolored {_n}
+        if {_t} is not air:
+            if "%{_t}%" contain "barrier":
+                if {_u} contain "Back":
+                    managerGuiMain(player)
+            else if "%{_t}%" is "minecart":
+                if {_u} contain "Installer":
+                    set {_lore::*} to uncolored lore of {_i}
+                    if {_lore::*} doesn't contain "Déja installer":
+                        send "§6[§4BCK§6/§bMoney§6]§r §2§lInstallation.."
+            else if "%{_t}%" contain "lever":
+                if {_u} contain "Activer":
+                    set {_susA} to managerAddonExist("money", true)
+                    if {_susA} is false:
+                        set {_list::*} to fileList("plugins/Skript/scripts/BCK/manager/money/")
+                        #broadcast "%{_list::*}%"
+                        loop {_list::*}:
+                            disable skript "BCK/manager/money/%loop-value%"
+                        set {_active} to lever named "§6§lActiver/Désactiver"
+                        set {_actived} to "§c§lDésactivé"
+                        set line 1 of lore of {_active} to "§6Etat:§r %{_actived}%"
+                        set {_g} to player's current inventory
+                        set slot 13 of {_g} to {_active}
+                        send "§6[§4BCK§6/§bMoney§6]§e §cDésactivation§e réussi !"
+                    else if {_susA} is true:
+                        set {_list::*} to fileList("plugins/Skript/scripts/BCK/manager/money/")
+                        loop {_list::*}:
+                            enable skript "BCK/manager/money/%loop-value%"
+                        set {_active} to lever named "§6§lActiver/Désactiver"
+                        set {_actived} to "§a§lActivé"
+                        set line 1 of lore of {_active} to "§6Etat:§r %{_actived}%"
+                        set {_g} to player's current inventory
+                        set slot 13 of {_g} to {_active}
+                        send "§6[§4BCK§6/§bMoney§6]§e §aActivation§e réussi !"
+    else if {inv.%player%} is "manager.account.main":
+        cancel event
+        set {_i} to event-slot
+        set {_t} to type of {_i}
+        set {_n} to display name of {_i}
+        set {_u} to uncolored {_n}
+        if {_t} is not air:
+            if "%{_t}%" contain "barrier":
+                if {_u} contain "Back":
+                    close player's inventory
+                    managerGuiMain(player)
+            else if "%{_t}%" is "minecart":
+                if {_u} contain "Installer":
+                    set {_lore::*} to uncolored lore of {_i}
+                    if {_lore::*} doesn't contain "Déja installer":
+                        send "§6[§4BCK§6/§dAccount§6]§r §2§lInstallation.."
+            else if "%{_t}%" contain "lever":
+                if {_u} contain "Activer":
+                    set {_susA} to managerAddonExist("account", true)
+                    if {_susA} is false:
+                        set {_list::*} to fileList("plugins/Skript/scripts/BCK/manager/account/")
+                        #broadcast "%{_list::*}%"
+                        loop {_list::*}:
+                            disable skript "BCK/manager/account/%loop-value%"
+                        set {_active} to lever named "§6§lActiver/Désactiver"
+                        set {_actived} to "§c§lDésactivé"
+                        set line 1 of lore of {_active} to "§6Etat:§r %{_actived}%"
+                        set {_g} to player's current inventory
+                        set slot 13 of {_g} to {_active}
+                        send "§6[§4BCK§6/§dAccount§6]§e §cDésactivation§e réussi !"
+                    else if {_susA} is true:
+                        set {_list::*} to fileList("plugins/Skript/scripts/BCK/manager/account/")
+                        loop {_list::*}:
+                            enable skript "BCK/manager/account/%loop-value%"
+                        set {_active} to lever named "§6§lActiver/Désactiver"
+                        set {_actived} to "§a§lActivé"
+                        set line 1 of lore of {_active} to "§6Etat:§r %{_actived}%"
+                        set {_g} to player's current inventory
+                        set slot 13 of {_g} to {_active}
+                        send "§6[§4BCK§6/§dAccount§6]§e §aActivation§e réussi !"

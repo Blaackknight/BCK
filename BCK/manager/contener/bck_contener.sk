@@ -6,4 +6,7 @@ on load:
         load yaml "plugins/Skript/scripts/BCK/manager/contener/data.yml" as "bck.manager.contener.data"
     else:
         broadcast "§6[§4BCK§6/§3Contener§6]§r Script loading cancel It requires (§lcore.sk§r and §lbck_manager.sk§r)"
-        unload script file "bck_clan.sk"
+        unload script file "bck_contener.sk"
+        unload script file "bck_drawer.sk"
+        unload script file "bck_bank.sk"
+        unload script file "bck_xbbank.sk"

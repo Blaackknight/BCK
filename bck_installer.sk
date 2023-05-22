@@ -43,6 +43,9 @@ on load:
 	download file from "%{_link}%/manager/clan/data.yml" to file "plugins/Skript/scripts/BCK/manager/clan/data.yml"
 
 	download file from "%{_link}%/manager/contener/bck_contener.sk" to file "plugins/Skript/scripts/BCK/manager/contener/bck_contener.sk"
+	download file from "%{_link}%/manager/contener/bck_drawer.sk" to file "plugins/Skript/scripts/BCK/manager/contener/bck_drawer.sk"
+	download file from "%{_link}%/manager/contener/bck_bank.sk" to file "plugins/Skript/scripts/BCK/manager/contener/bck_bank.sk"
+	download file from "%{_link}%/manager/contener/bck_xpbank.sk" to file "plugins/Skript/scripts/BCK/manager/contener/bck_xpbank.sk"
 	download file from "%{_link}%/manager/contener/config.yml" to file "plugins/Skript/scripts/BCK/manager/contener/config.yml"
 	download file from "%{_link}%/manager/contener/data.yml" to file "plugins/Skript/scripts/BCK/manager/contener/data.yml"
 

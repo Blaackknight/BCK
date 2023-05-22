@@ -1,5 +1,5 @@
 on load:
-    if {skripts::*} contains "core.sk" and "core.sk":
+    if {skripts::*} contains "core.sk" and "bck_manager.sk":
         send "§6[§4BCK§6]§r Loading hammer..." to console
         send "§6[§4BCK§6/§8Hammer§6]§r Loaded successfully !" to console
         load yaml "plugins/Skript/scripts/BCK/manager/hammer/config.yml" as "bck.manager.hammer.config"

@@ -7,23 +7,28 @@ data:
             item: writable book
             name: "§d⟪ Account ⟫"
             lore:
-            - "test"
-            - "xd"
         clan:
             item: player head
             name: "§1⟪ Clan ⟫"
+            lore:
         contener:
             item: chest
             name: "§3⟪ Contener ⟫"
+            lore:
         elevator:
             item: red wool
             name: "§7⟪ Elevator ⟫"
+            lore:
         hammer:
             item: netherite pickaxe
             name: "§8⟪ Hammer ⟫"
+            lore:
         money:
             item: paper
             name: "§b⟪ Money ⟫"
+            lore:
         other:
             item: feather
             name: "§f⟪ Other ⟫"
+            lore:
+            - "§fOther System.."

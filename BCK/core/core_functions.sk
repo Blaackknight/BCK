@@ -113,11 +113,7 @@ function fileList(dir: text, extention: text=".sk") :: objects:
     loop directory "%{_dir}%"'s files:
         if loop-value ends with "%{_extention}%":
             set {_f} to loop-value
-            #set {_fi} to substring of {_f} from 0 to 1
-            #set {_fi} to "$"
             set {_f} to substring of {_f} from 2 to length of {_f}
-            #replace "/" with "" in {_f}
-            #broadcast "file: %{_f}%"
             set {_data::*} to {_f} split by "/"
             if {_data::6} contain {_extention}:
                 #broadcast "%{_data::6}%"
@@ -149,19 +145,6 @@ function fileList(dir: text, extention: text=".sk") :: objects:
             else if {_data::15} contain {_extention}:
                 #broadcast "%{_data::15}%"
                 set {_r} to {_data::15}
-            # if "%{_data::8}%" is not "":
-            #     broadcast "8 -> %{_data::8}%"
-            #     set {_r} to {_data::8}
-            # else if "%{_data::7}%" is not "":
-            #     broadcast "7 -> %{_data::7}%"
-            #     set {_r} to {_data::7}
-            # else if "%{_data::6}%" is not "":
-            #     broadcast "6 -> %{_data::6}%"
-            #     set {_r} to {_data::6}
-            # else:
-            #     broadcast "5 -> %{_data::5}%"
-            #     set {_r} to {_data::5}
-            
             add {_r} to {_files::*}
     return {_files::*}
 #                                                                                                                #

@@ -1,9 +1,9 @@
 data:
     drawer:
-        line: &8&m---⟮&r
-        uline: &8&m⟯---&r
+        line: "&8&m---⟮&r"
+        uline: "&8&m⟯---&r"
     bank:
-        line: &8&m---&r
+        line: "&8&m---&r"
     xpbank:
-        line: &8&m---⟮&r
-        uline: &8&m⟯---&r
+        line: "&8&m---⟮&r"
+        uline: "&8&m⟯---&r"

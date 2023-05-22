@@ -65,7 +65,7 @@ function managerGuiSelected(player: player):
 function loadUserData(player: player):
     load yaml "plugins/Skript/scripts/BCK/manager/userdata/%{_player}'s uuid%.sk" as "bck.userdata.%{_player}'s uuid%"
 function userData(player: player, find: text="data", mode: text="extract", data: text="") :: text:
-    if file "plugins/Skript/scripts/BCK/manager/userdata/%{_player}'s uuid%.sk" exist:
+    if file "plugins/Skript/scripts/BCK/manager/userdata/%{_player}'s uuid%.sk" exists:
     else:
         create file "plugins/Skript/scripts/BCK/manager/userdata/%{_player}'s uuid%.sk"
         set yaml value "data.username" from "bck.userdata.%{_player}'s uuid%" to {_player}'s display name
@@ -77,18 +77,18 @@ function userData(player: player, find: text="data", mode: text="extract", data:
         set yaml value "data.inv" from "bck.userdata.%{_player}'s uuid%" to false
     loadUserData({_player})
     if {_mode} is "extract":
-        set {_result} to yaml value "%{_find}%" from "bck.userdata.%player's uuid%"
+        set {_result} to yaml value "%{_find}%" from "bck.userdata.%{_player}'s uuid%"
         if {_result} isn't set:
             if {_data} isn't empty:
-            set {_result} to {_data}
+                set {_result} to {_data}
     else if {_mode} is "delete":
-        set {_result} to yaml value "%{_find}%" from "bck.userdata.%player's uuid%"
+        set {_result} to yaml value "%{_find}%" from "bck.userdata.%{_player}'s uuid%"
         if {_result} is set:
-            delete yaml value "%{_find}%" from "bck.userdata.%player's uuid%"
-            save yaml "bck.userdata.%player's uuid%"
+            delete yaml value "%{_find}%" from "bck.userdata.%{_player}'s uuid%"
+            save yaml "bck.userdata.%{_player}'s uuid%"
         else:
-            set yaml value "%{_find}%" from "bck.userdata.%player's uuid%" to {_data}
-            save yaml "bck.userdata.%player's uuid%"
+            set yaml value "%{_find}%" from "bck.userdata.%{_player}'s uuid%" to {_data}
+            save yaml "bck.userdata.%{_player}'s uuid%"
     return {_result}
 on inventory click:
     if {inv.%player%} is "manager.main":

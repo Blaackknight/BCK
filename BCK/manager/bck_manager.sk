@@ -57,29 +57,9 @@ function managerGuiMain(player: player):
     open {_gui} to {_player}
     set {inv.%{_player}%} to "manager.main"
 
-command /managerbis:
+command /manager:
     trigger:
         managerGuiMain(player)
-        # set {_sus} to managerAddonExist("money")
-        # set {_acc} to managerAddonExist("account")
-        # set {_gn} to yaml value "data.gui.title" from "bck.manager.config"
-        # set {_gui} to genericGui({_gn}, 3)
-        # set {_susi} to paper named "§b⟪ Money ⟫"
-        # set {_ac} to writable book named "§d⟪ Account ⟫"
-        # if {_sus} is true:
-        #     set {_sus_installed} to "§a§lInstallé§r"
-        # else:
-        #     set {_ac_installed} to "§c§lNon Installé"
-        # if {_acc} is true:
-        #     set {_ac_installed} to "§a§lInstallé§r"
-        # else:
-        #     set {_ac_installed} to "§c§lNon Installé"
-        # set line 1 of lore of {_susi} to "§6Etat:§r %{_sus_installed}%"
-        # set line 1 of lore of {_ac} to "§6Etat:§r %{_ac_installed}%"
-        # set slot 11 of {_gui} to {_susi}
-        # set slot 13 of {_gui} to {_ac}
-        # open {_gui} to player
-        # set {inv.%player%} to "manager.main"
 on inventory click:
     if {inv.%player%} is "manager.main":
         cancel event

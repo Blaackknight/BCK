@@ -55,18 +55,23 @@ function managerGuiMain(player: player):
         #broadcast {_i}
         #give {_i} to {_player}
     open {_gui} to {_player}
-    set {inv.%{_player}%} to "manager.main"
+    userData({_player}, "data.inv", "set", "manager.main")
 
 command /manager:
     trigger:
         managerGuiMain(player)
+command /managerbis:
+    trigger:
+        set {_x} to userData(player, "data.money")
+        broadcast "%{_x}%"
 function managerGuiSelected(player: player):
-
+    
 function loadUserData(player: player):
-    load yaml "plugins/Skript/scripts/BCK/manager/userdata/%{_player}'s uuid%.sk" as "bck.userdata.%{_player}'s uuid%"
-function userData(player: player, find: text="data", mode: text="extract", data: text="") :: text:
-    if "plugins/Skript/scripts/BCK/manager/userdata/%{_player}'s uuid%.sk" doesn't exist:
-        create file "plugins/Skript/scripts/BCK/manager/userdata/%{_player}'s uuid%.sk"
+    load yaml "plugins/Skript/scripts/BCK/manager/userdata/%{_player}'s uuid%.yml" as "bck.userdata.%{_player}'s uuid%"
+function userData(player: player, find: text="data", mode: text="extract", data: text="", type: text="string") :: text:
+    if file "plugins/Skript/scripts/BCK/manager/userdata/%{_player}'s uuid%.yml" doesn't exist:
+        create file "plugins/Skript/scripts/BCK/manager/userdata/%{_player}'s uuid%.yml"
+        loadUserData({_player})
         set yaml value "data.username" from "bck.userdata.%{_player}'s uuid%" to {_player}'s display name
         set yaml value "data.uuid" from "bck.userdata.%{_player}'s uuid%" to {_player}'s uuid
         set yaml value "data.inv" from "bck.userdata.%{_player}'s uuid%" to false
@@ -74,6 +79,7 @@ function userData(player: player, find: text="data", mode: text="extract", data:
         set yaml value "data.coordinate" from "bck.userdata.%{_player}'s uuid%" to false
         set yaml value "data.permissions" from "bck.userdata.%{_player}'s uuid%" to {_r}
         set yaml value "data.inv" from "bck.userdata.%{_player}'s uuid%" to false
+        save yaml "bck.userdata.%{_player}'s uuid%"
     loadUserData({_player})
     if {_mode} is "extract":
         set {_result} to yaml value "%{_find}%" from "bck.userdata.%{_player}'s uuid%"
@@ -88,9 +94,12 @@ function userData(player: player, find: text="data", mode: text="extract", data:
         else:
             set yaml value "%{_find}%" from "bck.userdata.%{_player}'s uuid%" to {_data}
             save yaml "bck.userdata.%{_player}'s uuid%"
-    return {_result}
+    else if {_mode} is "set":
+        set yaml value "%{_find}%" from "bck.userdata.%{_player}'s uuid%" to {_data}
+        save yaml "bck.userdata.%{_player}'s uuid%"
+    return "%{_result}%"
 on inventory click:
-    if {inv.%player%} is "manager.main":
+    if userData(player, "data.inv") is "manager.main":
         cancel event
         set {_i} to event-slot
         set {_t} to type of {_i}

@@ -2,3 +2,28 @@ data:
     money: "₣"
     gui:
         title: "§4§lBCK Manager"
+        size: 5
+        account:
+            item: writable book
+            name: "§d⟪ Account ⟫"
+            lore:
+            - "test"
+            - "xd"
+        clan:
+            item: player head
+            name: "§1⟪ Clan ⟫"
+        contener:
+            item: chest
+            name: "§3⟪ Contener ⟫"
+        elevator:
+            item: red wool
+            name: "§7⟪ Elevator ⟫"
+        hammer:
+            item: netherite pickaxe
+            name: "§8⟪ Hammer ⟫"
+        money:
+            item: paper
+            name: "§b⟪ Money ⟫"
+        other:
+            item: feather
+            name: "§f⟪ Other ⟫"

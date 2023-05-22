@@ -4,6 +4,7 @@ on load:
     bckRegisterSkripts()
     bckRegisterCommands()
     bckLettersLoad()
+    broadcast {skripts::*}
 
 command /permission [<offlineplayer>] [<text>] [<text>]:
     trigger:

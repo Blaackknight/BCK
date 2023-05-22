@@ -5,6 +5,10 @@ function bckRegisterSkripts():
     set {_bc::*} to fileList("/plugins/Skript/scripts/BCK/core/")
     set {_mon::*} to fileList("/plugins/Skript/scripts/BCK/manager/money/")
     set {_acc::*} to fileList("/plugins/Skript/scripts/BCK/manager/account/")
+    set {_acc::*} to fileList("/plugins/Skript/scripts/BCK/manager/clan/")
+    set {_acc::*} to fileList("/plugins/Skript/scripts/BCK/manager/contener/")
+    set {_acc::*} to fileList("/plugins/Skript/scripts/BCK/manager/elevator/")
+    set {_acc::*} to fileList("/plugins/Skript/scripts/BCK/manager/hammer/")
     loop {_bc::*}:
         add "%loop-value%" to {skripts::*}
     loop {_sks::*}:

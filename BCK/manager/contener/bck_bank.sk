@@ -1,29 +1,29 @@
-options:
-    line: &8&m---⟮&r
-    uline: &8&m⟯---&r
 on sign change:
-    if line 1 is "xp bank":
-        if hasPermission(player, "xp_bank.create") is false:
+    set {_line} to yaml value "data.drawer.line" from "bck.manager.contener.config"
+    if line 1 is "bank":
+        if hasPermission(player, "bank.create") is false:
             cancel event
             send "§c§lHey! §7Tu n'a pas la permission :|"
             set line 1 to ""
             stop
         if {money.%player's uuid%} >= 1000:
             moneyRemove(player, 1000, true)
-            set line 1 to "§6[§aXp Bank§6]"
+            set line 1 to "§6[§aBank§6]"
             set line 2 to "<player>"
             set line 3 to ""
-            logCustom("%selector(event-player)% has just created a xp bank at %event-location%", 3)
-            logCustom("%selector(event-player)% has just created a xp bank at %event-location%", 4)
-            logCustom("%selector(event-player)% has just created a xp bank at %event-location%", 5)
+            logCustom("%selector(event-player)% has just created a bank at %event-location%", 3)
+            logCustom("%selector(event-player)% has just created a bank at %event-location%", 4)
+            logCustom("%selector(event-player)% has just created a bank at %event-location%", 5)
         else:
             set {_r} to 1000 - {money.%player's uuid%}
             set line 1 to ""
-            send "{@line} §6Xp Bank§r {@uline}" to player
+            send "%{_line}% §6Bank§r %{_line}%" to player
             send "§cVous n'avez pas assez d'agent, il vous manque %{_r}%%{sbm}%"
+
 on right click on sign:
-    if line 1 is "§6[§aXp Bank§6]":
-        if hasPermission(player, "xp_bank.use") is false:
+    set {_line} to yaml value "data.drawer.line" from "bck.manager.contener.config"
+    if line 1 is "§6[§aBank§6]":
+        if hasPermission(player, "bank.use") is false:
             cancel event
             send "§c§lHey! §7Tu n'a pas la permission :|"
             stop
@@ -32,42 +32,43 @@ on right click on sign:
             
             set {_h} to player's tool
             set {_p} to line 2 parsed as player
-            set {_n} to player's level
+            set {_n} to {money.%player's uuid%}
                 
                 #send "Number: %{_n}% / %{_i}%" to player
             if line 2 is "<player>":
-                if {_n} >= 10:
+                if {_n} >= 100:
                     set line 2 to "%player%"
                     set {_num} to line 3 parsed as integer
-                    set line 3 to "%{_num} + 10%"
-                    set player's level to player's level - 10
+                    set line 3 to "%{_num} + 100%"
+                    moneyRemove(player, 100, true)
                 else:
                     set line 2 to "%player%"
                     set {_num} to line 3 parsed as integer
                     set line 3 to "%{_num} + {_n}%"
-                    set player's level to player's level - {_n}
+                    if {_n} is not 0:
+                        moneyRemove(player, {_n}, true)
                         
             else if line 2 is not "<player>":
-                if {_n} >= 10:
-                    set {_type} to line 2
-                    set {_ii} to "%{_p}%"
-                    if player = {_p}:
+                if player = {_p}:
+                    if {_n} >= 1000:
+                        set {_type} to line 2
+                        set {_ii} to "%player%"
+                        set line 2 to "%player%"
+                        set {_num} to line 3 parsed as integer
+                        set line 3 to "%{_num} + 1000%"
+                        moneyRemove(player, 1000, true)
+                    else:
                         set line 2 to "%{_p}%"
                         set {_num} to line 3 parsed as integer
-                        set line 3 to "%{_num} + 10%"
-                        set player's level to player's level - 10
-                    else:
-                        send "§6[§aXp Bank§6] §cThis sign is not yours.."
+                        set line 3 to "%{_num} + {_n}%"
+                        if {_n} is not 0:
+                            moneyRemove(player, {_n}, true)
                 else:
-                    set line 2 to "%{_p}%"
-                    set {_num} to line 3 parsed as integer
-                    set line 3 to "%{_num} + {_n}%"
-                    set player's level to player's level - {_n}
+                    send "§6[§aBank§6] §cThis sign is not yours.."
         else:
-            
             set {_h} to player's tool
             set {_p} to line 2 parsed as player
-            set {_n} to player's level
+            set {_n} to {money.%player's uuid%}
                 
                 #send "Number: %{_n}% / %{_i}%" to player
             if line 2 is "<player>":
@@ -75,69 +76,69 @@ on right click on sign:
                     set line 2 to "%player%"
                     set {_num} to line 3 parsed as integer
                     set line 3 to "%{_num} + 1%"
-                    set player's level to player's level - 1
+                    moneyRemove(player, 1, true)
             else if line 2 is not "<player>":
-                if {_n} >= 1:
-                    set {_type} to line 2
-                    set {_ii} to "%{_p}%"
-                    if player = {_p}:
-                        set line 2 to "%{_p}%"
+                if player = {_p}:
+                    if {_n} >= 1:
+                        set {_type} to line 2
+                        set {_ii} to "%player%"
+                        set line 2 to "%player%"
                         set {_num} to line 3 parsed as integer
                         set line 3 to "%{_num} + 1%"
-                        set player's level to player's level - 1
-                    else:
-                        send "§6[§aXp Bank§6] §cThis sign is not yours.."
+                        moneyRemove(player, 1, true)
+                else:
+                    send "§6[§aBank§6] §cThis sign is not yours.."
 on left click on sign:
+    set {_line} to yaml value "data.drawer.line" from "bck.manager.contener.config"
     if player's gamemode is creative:
         stop
-    if line 1 is "§6[§aXp Bank§6]":
-        if hasPermission(player, "xp_bank.use") is false:
+    if line 1 is "§6[§aBank§6]":
+        if hasPermission(player, "bank.use") is false:
             cancel event
             send "§c§lHey! §7Tu n'a pas la permission :|"
             stop
         if player is sneaking:
             set {_h} to player's tool
-            set {_n} to player's level
+            set {_n} to {money.%player's uuid%}
             set {_p} to line 2 parsed as player
             set {_num} to line 3 parsed as integer
             if line 2 is not "<player>":
-                if player is {_p}:
+                if player = {_p}:
                     if {_num} >= 1:
                         if {_num} = 1:
-                            set player's level to player's level + 1
+                            moneyAdd({_p}, 1, true)
                             #add 1 of {_i} to player's inventory
                             set line 3 to "%{_num} - 1%"
-                        else if {_num} < 10:
-                            set player's level to player's level + {_num}
+                        else if {_num} < 100:
+                            moneyAdd({_p}, {_num}, true)
                             #add {_num} of {_i} to player's inventory
                             set line 3 to "%{_num} - {_num}%"
-                        else if {_num} >= 10:
-                            set player's level to player's level + 10
+                        else if {_num} >= 100:
+                            moneyAdd({_p}, 100, true)
                             #add 64 of {_i} to player's inventory
-                            set line 3 to "%{_num} - 10%"
+                            set line 3 to "%{_num} - 100%"
                     else:
                         set line 2 to "<player>"
                         set line 3 to ""
                 else:
-                    send "§6[§aXp Bank§6] §cThis sign is not yours.."
+                    send "§6[§aBank§6] §cThis sign is not yours.."
             #send "§6[§aDrawer§6]§r §7left click §r%player% sneak, (%event-block%)" to player
         else:
             set {_h} to player's tool
-            set {_n} to player's level
+            set {_n} to {money.%player's uuid%}
             set {_p} to line 2 parsed as player
             set {_num} to line 3 parsed as integer
             if line 2 is not "<player>":
-                if player is {_p}:
+                if player = {_p}:
                     if {_num} >= 1:
-                        #moneyAdd({_p}, 1, true)
-                        set player's level to player's level + 1
+                        moneyAdd({_p}, 1, true)
                         #add 1 of {_i} to player's inventory
                         set line 3 to "%{_num} - 1%"
                     else:
                         set line 2 to "<player>"
                         set line 3 to ""
                 else:
-                    send "§6[§aXp Bank§6] §cThis sign is not yours.."
+                    send "§6[§aBank§6] §cThis sign is not yours.."
             #send "Number: %{_n}%" to player
             #send "§6[§aDrawer§6]§r §7left click §r%player% not sneak with %player's tool%, (%event-block%)" to player
             #send "§6[§aDrawer§6]§r §7left click §r%player% not sneak, (%event-block%)" to player   
@@ -146,7 +147,7 @@ on break of sign:
     set {_l2} to line 2
     set {_l3} to line 3
     set {_l4} to line 4
-    if line 1 is "§6[§aXp Bank§6]":
+    if line 1 is "§6[§aBank§6]":
         if player's gamemode is creative:
             cancel event
             wait 3 ticks
@@ -164,7 +165,6 @@ on break of sign:
             if {_l3} is set:
                 set {_n} to "%{_l3}%" parsed as integer
             if player = {_p}:
-                set {_p}'s level to {_p}'s level + {_n}
+                moneyAdd({_p}, {_n}, true)
             else:
-                send "§6[§aXp Bank§6] §cThis sign is not yours.."  
-                cancel event                       
+                send "§6[§aBank§6] §cThis sign is not yours.."                         

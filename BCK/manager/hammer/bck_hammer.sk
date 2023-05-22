@@ -1,0 +1,259 @@
+on load:
+    if {skripts::*} contains "bck_core.sk" and "core.sk":
+        send "§6[§4BCK§6]§r Loading hammer..." to console
+        send "§6[§4BCK§6/§8Hammer§6]§r Loaded successfully !" to console
+        load yaml "plugins/Skript/scripts/BCK/manager/hammer/config.yml" as "bck.manager.hammer.config"
+        load yaml "plugins/Skript/scripts/BCK/manager/hammer/data.yml" as "bck.manager.hammer.data"
+    else:
+        broadcast "§6[§4BCK§6/§8Hammer§6]§r Script loading cancel It requires (§lcore.sk§r and §lbck_manager.sk§r)"
+        unload script file "bck_clan.sk"
+on break:
+	set {_list::*} to lore of player's tool
+	if "%{_list::*}%" contains "§3Miner §aI":
+		if hasPermission(player, "hammer.use") is false:
+			send "§c§lHey! §7Tu n'a pas la permission :|"
+			stop
+		set {_1} to event-block's location
+		set {_2} to event-block's location
+		set {_count} to 0
+		if player's pitch is between -50 and 50:
+			add 1 to y-coord of {_1}
+			subtract 1 from y-coord of {_2}
+			if player's horizontal facing is west or east:
+				add 1 to z-coord of {_1}
+				subtract 1 from z-coord of {_2}
+				loop all blocks within {_1} and {_2}:
+					#set loop-block to air
+					if loop-block isn't air: 
+						add 1 to {_count}
+					break loop-block naturally using player's tool
+					if loop-block is coal ore or iron ore or gold ore or lapis lazuli ore or lit redstone ore or redstone ore or diamond ore or emerald ore or nether gold ore or quartz ore:
+						set {_xp} to random number between 6 and 12
+						spawn {_xp} of experience orb at loop-block
+				#send {_count}
+				damage player's tool by {_count}
+				if durability of player's tool >= 1561:
+					set player's tool to air
+					play sound "entity.item.break" with volume 0.3 at player
+			else if player's horizontal facing is north or south:
+				add 1 to x-coord of {_1}
+				subtract 1 from x-coord of {_2}
+				loop all blocks within {_1} and {_2}:
+					if loop-block isn't air: 
+						add 1 to {_count}
+					break loop-block naturally using player's tool
+					if loop-block is coal ore or iron ore or gold ore or lapis lazuli ore or lit redstone ore or redstone ore or diamond ore or emerald ore or nether gold ore or quartz ore:
+						set {_xp} to random number between 6 and 12
+						spawn {_xp} of experience orb at loop-block
+				#send {_count}
+				damage player's tool by {_count}
+				if durability of player's tool >= 1561:
+					set player's tool to air
+					play sound "entity.item.break" with volume 0.3 at player
+		else:
+			add 1 to x-coord of {_1}
+			add 1 to z-coord of {_1}
+			subtract 1 from x-coord of {_2}
+			subtract 1 from z-coord of {_2}
+			loop all blocks within {_1} and {_2}:
+				if loop-block isn't air: 
+					add 1 to {_count}
+				break loop-block naturally using player's tool
+				if loop-block is coal ore or iron ore or gold ore or lapis lazuli ore or lit redstone ore or redstone ore or diamond ore or emerald ore or nether gold ore or quartz ore:
+					set {_xp} to random number between 6 and 12
+					spawn {_xp} of experience orb at loop-block
+			#send {_count}
+			damage player's tool by {_count}
+			if durability of player's tool >= 1561:
+				set player's tool to air
+				play sound "entity.item.break" with volume 0.3 at player
+	else if "%{_list::*}%" contains "§3Miner §bII":
+		if hasPermission(player, "hammer.use") is false:
+			send "§c§lHey! §7Tu n'a pas la permission :|"
+			stop
+		set {_1} to event-block's location
+		set {_2} to event-block's location
+		set {_count} to 0
+		if player's pitch is between -50 and 50:
+			add 2 to y-coord of {_1}
+			subtract 2 from y-coord of {_2}
+			if player's horizontal facing is west or east:
+				add 2 to z-coord of {_1}
+				subtract 2 from z-coord of {_2}
+				loop all blocks within {_1} and {_2}:
+					#set loop-block to air
+					if loop-block isn't air: 
+						add 1 to {_count}
+					break loop-block naturally using player's tool
+					if loop-block is coal ore or iron ore or gold ore or lapis lazuli ore or lit redstone ore or redstone ore or diamond ore or emerald ore or nether gold ore or quartz ore:
+						set {_xp} to random number between 6 and 12
+						spawn {_xp} of experience orb at loop-block
+				#send {_count}
+				damage player's tool by {_count}
+				if durability of player's tool >= 1561:
+					set player's tool to air
+					play sound "entity.item.break" with volume 0.3 at player
+			else if player's horizontal facing is north or south:
+				add 2 to x-coord of {_1}
+				subtract 2 from x-coord of {_2}
+				loop all blocks within {_1} and {_2}:
+					if loop-block isn't air: 
+						add 1 to {_count}
+					break loop-block naturally using player's tool
+					if loop-block is coal ore or iron ore or gold ore or lapis lazuli ore or lit redstone ore or redstone ore or diamond ore or emerald ore or nether gold ore or quartz ore:
+						set {_xp} to random number between 6 and 12
+						spawn {_xp} of experience orb at loop-block
+				#send {_count}
+				damage player's tool by {_count}
+				if durability of player's tool >= 1561:
+					set player's tool to air
+					play sound "entity.item.break" with volume 0.3 at player
+		else:
+			add 2 to x-coord of {_1}
+			add 2 to z-coord of {_1}
+			subtract 2 from x-coord of {_2}
+			subtract 2 from z-coord of {_2}
+			loop all blocks within {_1} and {_2}:
+				if loop-block isn't air: 
+					add 1 to {_count}
+				break loop-block naturally using player's tool
+				if loop-block is coal ore or iron ore or gold ore or lapis lazuli ore or lit redstone ore or redstone ore or diamond ore or emerald ore or nether gold ore or quartz ore:
+					set {_xp} to random number between 6 and 12
+					spawn {_xp} of experience orb at loop-block
+			#send {_count}
+			damage player's tool by {_count}
+			if durability of player's tool >= 1561:
+				set player's tool to air
+				play sound "entity.item.break" with volume 0.3 at player
+	else if "%{_list::*}%" contains "§3Miner §eIII":
+		if hasPermission(player, "hammer.use") is false:
+			send "§c§lHey! §7Tu n'a pas la permission :|"
+			stop
+		set {_1} to event-block's location
+		set {_2} to event-block's location
+		set {_count} to 0
+		if player's pitch is between -50 and 50:
+			add 4 to y-coord of {_1}
+			subtract 4 from y-coord of {_2}
+			if player's horizontal facing is west or east:
+				add 4 to z-coord of {_1}
+				subtract 4 from z-coord of {_2}
+				loop all blocks within {_1} and {_2}:
+					#set loop-block to air
+					if loop-block isn't air: 
+						add 1 to {_count}
+					break loop-block naturally using player's tool
+					if loop-block is coal ore or iron ore or gold ore or lapis lazuli ore or lit redstone ore or redstone ore or diamond ore or emerald ore or nether gold ore or quartz ore:
+						set {_xp} to random number between 6 and 12
+						spawn {_xp} of experience orb at loop-block
+				#send {_count}
+				damage player's tool by {_count}
+				if durability of player's tool >= 1561:
+					set player's tool to air
+					play sound "entity.item.break" with volume 0.3 at player
+				#send "Durability -> %durability of player's tool%"
+			else if player's horizontal facing is north or south:
+				add 4 to x-coord of {_1}
+				subtract 4 from x-coord of {_2}
+				loop all blocks within {_1} and {_2}:
+					if loop-block isn't air: 
+						add 1 to {_count}
+					break loop-block naturally using player's tool
+					if loop-block is coal ore or iron ore or gold ore or lapis lazuli ore or lit redstone ore or redstone ore or diamond ore or emerald ore or nether gold ore or quartz ore:
+						set {_xp} to random number between 6 and 12
+						spawn {_xp} of experience orb at loop-block
+				#send {_count}
+				damage player's tool by {_count}
+				if durability of player's tool >= 1561:
+					set player's tool to air
+					play sound "entity.item.break" with volume 0.3 at player
+				#send "Durability -> %durability of player's tool%"
+		else:
+			add 4 to x-coord of {_1}
+			add 4 to z-coord of {_1}
+			subtract 4 from x-coord of {_2}
+			subtract 4 from z-coord of {_2}
+			loop all blocks within {_1} and {_2}:
+				if loop-block isn't air: 
+					add 1 to {_count}
+				break loop-block naturally using player's tool
+				if loop-block is coal ore or iron ore or gold ore or lapis lazuli ore or lit redstone ore or redstone ore or diamond ore or emerald ore or nether gold ore or quartz ore:
+					set {_xp} to random number between 6 and 12
+					spawn {_xp} of experience orb at loop-block
+			#send {_count}
+			damage player's tool by {_count}
+			if durability of player's tool >= 1561:
+				set player's tool to air
+				play sound "entity.item.break" with volume 0.3 at player
+
+command /hammerGive [<text= "3x3">]:
+	trigger:
+		set {_line} to 1
+		set {_lineN} to 0
+		set {_list::*} to "3x3", "4x4" and "7x7"
+		if line 1 of lore of player's tool is set:
+			set {_line} to 2
+			set {_lineN} to 1
+		if line 2 of lore of player's tool is set:
+			set {_line} to 3
+			set {_lineN} to 2
+		if line 3 of lore of player's tool is set:
+			set {_line} to 4
+			set {_lineN} to 3
+		if line 4 of lore of player's tool is set:
+			set {_line} to 5
+			set {_lineN} to 4
+		if line 5 of lore of player's tool is set:
+			set {_line} to 6
+			set {_lineN} to 5
+		if line 6 of lore of player's tool is set:
+			set {_line} to 7
+			set {_lineN} to 6
+		if line 7 of lore of player's tool is set:
+			set {_line} to 8
+			set {_lineN} to 7
+		if arg-1 is "3x3":
+			if line {_lineN} of lore of player's tool contains "§3Miner §aI":
+				send action bar "§eVous avez déja cet amélioration sur votre §c%player's tool%" to player
+			else if line {_lineN} of lore of player's tool contains "§3Miner §bII":
+				set line {_lineN} of lore of player's tool to "§3Miner §aI"
+				play sound "entity.experience_orb.pickup" with volume 0.3 at player
+			else if line {_lineN} of lore of player's tool contains "§3Miner §cIII":
+				set line {_lineN} of lore of player's tool to "§3Miner §aI"
+				play sound "entity.experience_orb.pickup" with volume 0.3 at player
+			else:
+				if player's tool is not air:
+					set line {_line} of lore of player's tool to "§3Miner §aI"
+					play sound "entity.experience_orb.pickup" with volume 0.3 at player
+		else if arg-1 is "4x4":
+			if line {_lineN} of lore of player's tool contains "§3Miner §bII":
+				send action bar "§eVous avez déja cet amélioration sur votre §c%player's tool%" to player
+			else if line {_lineN} of lore of player's tool contains "§3Miner §cIII":
+				set line {_lineN} of lore of player's tool to "§3Miner §bII"
+				play sound "entity.experience_orb.pickup" with volume 0.3 at player
+			else if line {_lineN} of lore of player's tool contains "§3Miner §aI":
+				set line {_lineN} of lore of player's tool to "§3Miner §bII"
+				play sound "entity.experience_orb.pickup" with volume 0.3 at player
+			else:
+				if player's tool is not air:
+					set line {_line} of lore of player's tool to "§3Miner §bII"
+					play sound "entity.experience_orb.pickup" with volume 0.3 at player
+		else if arg-1 is "7x7":
+			if line {_lineN} of lore of player's tool contains "§3Miner §eIII":
+				send action bar "§eVous avez déja cet amélioration sur votre §c%player's tool%" to player
+			else if line {_lineN} of lore of player's tool contains "§3Miner §aI":
+				set line {_lineN} of lore of player's tool to "§3Miner §eIII"
+				play sound "entity.experience_orb.pickup" with volume 0.3 at player
+			else if line {_lineN} of lore of player's tool contains "§3Miner §bII":
+				set line {_lineN} of lore of player's tool to "§3Miner §eIII"
+				play sound "entity.experience_orb.pickup" with volume 0.3 at player
+			else:
+				if player's tool is not air:
+					set line {_line} of lore of player's tool to "§3Miner §eIII"
+					play sound "entity.experience_orb.pickup" with volume 0.3 at player
+		else:
+			send "§cErreur de syntaxe !"
+on tab complete of "/hammerGive":
+	if hasPermission(player, "server.command.hammerGive") is false:
+		stop
+	set tab completions for position 1 to "3x3", "4x4" and "7x7"

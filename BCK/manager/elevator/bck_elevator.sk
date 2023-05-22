@@ -1,0 +1,9 @@
+on load:
+    if {skripts::*} contains "bck_core.sk" and "core.sk":
+        send "§6[§4BCK§6]§r Loading elevator..." to console
+        send "§6[§4BCK§6/§7Elevator§6]§r Loaded successfully !" to console
+        load yaml "plugins/Skript/scripts/BCK/manager/elevator/config.yml" as "bck.manager.elevator.config"
+        load yaml "plugins/Skript/scripts/BCK/manager/elevator/data.yml" as "bck.manager.elevator.data"
+    else:
+        broadcast "§6[§4BCK§6/§7Elevator§6]§r Script loading cancel It requires (§lcore.sk§r and §lbck_manager.sk§r)"
+        unload script file "bck_elevator.sk"

@@ -1,5 +1,5 @@
 on load:
-    if {skripts::*} contains "bck_core.sk" and "core.sk":
+    if {skripts::*} contains "core.sk" and "core.sk":
         send "§6[§4BCK§6]§r Loading contener..." to console
         send "§6[§4BCK§6/§3Contener§6]§r Loaded successfully !" to console
         load yaml "plugins/Skript/scripts/BCK/manager/contener/config.yml" as "bck.manager.contener.config"

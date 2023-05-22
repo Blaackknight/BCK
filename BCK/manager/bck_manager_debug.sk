@@ -69,13 +69,29 @@ on break:
         set {_player} to "Server"
     else:
         set {_player} to selector(player)
-    logCustom("%{_player}% has just breaking the §7%event-block%", 5)
+    if hasPermission(player, "block.break") is false:
+        cancel event
+        send "§c§lHey! §7Tu n'a pas la permission :|"
+    else:
+        logCustom("%{_player}% has just breaking the §7%event-block%", 5)
 on place:
     if player is not set:
         set {_player} to "Server"
     else:
         set {_player} to selector(player)
-    logCustom("%{_player}% has just placing the §7%event-block%", 5)
+    if hasPermission(player, "block.place") is false:
+        cancel event
+        send "§c§lHey! §7Tu n'a pas la permission :|"
+    else:
+        logCustom("%{_player}% has just placing the §7%event-block%", 5)
+on drop:
+    if hasPermission(player, "item.drop") is false:
+        cancel event
+        send "§c§lHey! §7Tu n'a pas la permission :|"
+on pickup:
+    if hasPermission(player, "item.pickup") is false:
+        cancel event
+        #send "§c§lHey! §7Tu n'a pas la permission :|"
 on command:
     set {_args::*} to arguments
     set {_v} to false

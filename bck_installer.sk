@@ -11,6 +11,14 @@ on load:
 	delete file "plugins/Skript/scripts/BCK/manager/money/temp.txt"
 	create script "plugins/Skript/scripts/BCK/manager/account/temp.txt"
 	delete file "plugins/Skript/scripts/BCK/manager/account/temp.txt"
+	create script "plugins/Skript/scripts/BCK/manager/clan/temp.txt"
+	delete file "plugins/Skript/scripts/BCK/manager/clan/temp.txt"
+	create script "plugins/Skript/scripts/BCK/manager/contener/temp.txt"
+	delete file "plugins/Skript/scripts/BCK/manager/contener/temp.txt"
+	create script "plugins/Skript/scripts/BCK/manager/elevator/temp.txt"
+	delete file "plugins/Skript/scripts/BCK/manager/elevator/temp.txt"
+	create script "plugins/Skript/scripts/BCK/manager/hammer/temp.txt"
+	delete file "plugins/Skript/scripts/BCK/manager/hammer/temp.txt"
 	wait 5 tick
 	download file from "%{_link}%/core/core.sk" to file "plugins/Skript/scripts/BCK/core/core.sk"
 	download file from "%{_link}%/core/core_functions.sk" to file "plugins/Skript/scripts/BCK/core/core_functions.sk"
@@ -29,6 +37,22 @@ on load:
 	download file from "%{_link}%/manager/account/bck_account.sk" to file "plugins/Skript/scripts/BCK/manager/account/bck_account.sk"
 	download file from "%{_link}%/manager/account/config.yml" to file "plugins/Skript/scripts/BCK/manager/account/config.yml"
 	download file from "%{_link}%/manager/account/data.yml" to file "plugins/Skript/scripts/BCK/manager/account/data.yml"
+
+	download file from "%{_link}%/manager/clan/bck_clan.sk" to file "plugins/Skript/scripts/BCK/manager/clan/bck_clan.sk"
+	download file from "%{_link}%/manager/clan/config.yml" to file "plugins/Skript/scripts/BCK/manager/clan/config.yml"
+	download file from "%{_link}%/manager/clan/data.yml" to file "plugins/Skript/scripts/BCK/manager/clan/data.yml"
+
+	download file from "%{_link}%/manager/contener/bck_contener.sk" to file "plugins/Skript/scripts/BCK/manager/contener/bck_contener.sk"
+	download file from "%{_link}%/manager/contener/config.yml" to file "plugins/Skript/scripts/BCK/manager/contener/config.yml"
+	download file from "%{_link}%/manager/contener/data.yml" to file "plugins/Skript/scripts/BCK/manager/contener/data.yml"
+
+	download file from "%{_link}%/manager/elevator/bck_elevator.sk" to file "plugins/Skript/scripts/BCK/manager/elevator/bck_elevator.sk"
+	download file from "%{_link}%/manager/elevator/config.yml" to file "plugins/Skript/scripts/BCK/manager/elevator/config.yml"
+	download file from "%{_link}%/manager/elevator/data.yml" to file "plugins/Skript/scripts/BCK/manager/elevator/data.yml"
+
+	download file from "%{_link}%/manager/hammer/bck_hammer.sk" to file "plugins/Skript/scripts/BCK/manager/hammer/bck_hammer.sk"
+	download file from "%{_link}%/manager/hammer/config.yml" to file "plugins/Skript/scripts/BCK/manager/hammer/config.yml"
+	download file from "%{_link}%/manager/hammer/data.yml" to file "plugins/Skript/scripts/BCK/manager/hammer/data.yml"
 	wait 0.5 seconds
 	delete file "plugins/Skript/scripts/bck_installer.sk"
 	unload script file "bck_installer.sk"

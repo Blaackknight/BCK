@@ -15,7 +15,8 @@ command /manager:
         #     stop
         set {_sus} to managerAddonExist("money")
         set {_acc} to managerAddonExist("account")
-        set {_gui} to genericGui("§4§lBCK Manager", 3)
+        set {_gn} to yaml value "data.gui.title" form "bck.manager.config"
+        set {_gui} to genericGui({_gn}, 3)
         set {_susi} to paper named "§b⟪ Money ⟫"
         set {_ac} to writable book named "§d⟪ Account ⟫"
         if {_sus} is true:

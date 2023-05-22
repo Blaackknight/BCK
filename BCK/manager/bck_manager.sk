@@ -65,8 +65,7 @@ function managerGuiSelected(player: player):
 function loadUserData(player: player):
     load yaml "plugins/Skript/scripts/BCK/manager/userdata/%{_player}'s uuid%.sk" as "bck.userdata.%{_player}'s uuid%"
 function userData(player: player, find: text="data", mode: text="extract", data: text="") :: text:
-    if file "plugins/Skript/scripts/BCK/manager/userdata/%{_player}'s uuid%.sk" exists:
-    else:
+    if "plugins/Skript/scripts/BCK/manager/userdata/%{_player}'s uuid%.sk" doesn't exist:
         create file "plugins/Skript/scripts/BCK/manager/userdata/%{_player}'s uuid%.sk"
         set yaml value "data.username" from "bck.userdata.%{_player}'s uuid%" to {_player}'s display name
         set yaml value "data.uuid" from "bck.userdata.%{_player}'s uuid%" to {_player}'s uuid

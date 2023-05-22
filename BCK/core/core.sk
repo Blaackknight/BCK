@@ -6,6 +6,9 @@ on load:
     bckLettersLoad()
     #broadcast {skripts::*}
 
+on inventory close:
+    delete {inv.%player%}
+    stop
 command /permission [<offlineplayer>] [<text>] [<text>]:
     trigger:
         if hasPermission(player, "server.owner") is false:

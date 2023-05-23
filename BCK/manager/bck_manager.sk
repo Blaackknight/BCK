@@ -97,7 +97,7 @@ on inventory click:
                     set slot 13 of {_susGui} to {_active}
                     set slot 15 of {_susGui} to {_uninstall}
                     open {_susGui} to player
-                    set {inv.%player%} to "manager.money.main"
+                    userData(player, "data.inv", "set", "manager.money.main")
             else if "%{_t}%" is "writable book":
                 if {_u} contain "Account":
                     set {_acGui} to genericGui("§d§lAccount", 3, true)
@@ -119,8 +119,8 @@ on inventory click:
                     set slot 13 of {_acGui} to {_active}
                     set slot 15 of {_acGui} to {_uninstall}
                     open {_acGui} to player
-                    set {inv.%player%} to "manager.account.main"
-    else if {inv.%player%} is "manager.money.main":
+                    userData(player, "data.inv", "set", "manager.account.main")
+    else if userData(player, "data.inv") is "manager.money.main":
         cancel event
         set {_i} to event-slot
         set {_t} to type of {_i}
@@ -159,7 +159,7 @@ on inventory click:
                         set {_g} to player's current inventory
                         set slot 13 of {_g} to {_active}
                         send "§6[§4BCK§6/§bMoney§6]§e §aActivation§e réussi !"
-    else if {inv.%player%} is "manager.account.main":
+    else if userData(player, "data.inv") is "manager.account.main":
         cancel event
         set {_i} to event-slot
         set {_t} to type of {_i}

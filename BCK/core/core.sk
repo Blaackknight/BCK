@@ -7,7 +7,7 @@ on load:
     #broadcast {skripts::*}
 
 on inventory close:
-    delete {inv.%player%}
+    userData(player, "data.inv", "set", "false")
     stop
 command /permission [<offlineplayer>] [<text>] [<text>]:
     trigger:

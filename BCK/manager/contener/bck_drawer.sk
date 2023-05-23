@@ -7,7 +7,7 @@ on sign change:
             send "§c§lHey! §7Tu n'a pas la permission :|"
             set line 1 to ""
             stop
-        if userData(player, "data.money") >= 1000:
+        if userDataNumber(player, "data.money") >= 1000:
             moneyRemove(player, 1000, true)
             set line 1 to "§6[§aDrawer§6]"
             set line 2 to "<id>"

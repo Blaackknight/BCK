@@ -55,10 +55,10 @@ command /sendMoney [<offlineplayer>] [<integer>]:
             if arg-2 < 1:
                 send "§cSpecify a number above 1 !"
                 stop
-            if userData(player, "data.money") < arg-2:
+            if userDataNumber(player, "data.money") < arg-2:
                 send "§eTu n'as pas assez de ₣"
                 stop
-            else if userData(player, "data.money") >= arg-2:
+            else if userDataNumber(player, "data.money") >= arg-2:
                 sendMoney(player, arg-1, arg-2, true)
                 set {_s} to managerData("data.money")
                 send "§eTu vient d'envoyer §8%arg-2%%{_s}% §eà %arg-1%" to player
@@ -68,7 +68,7 @@ command /setmoney [<player>] [<integer=1>]:
     aliases: moneyset
     trigger:
         if arg-1 is set:
-            set {_money} to userData(arg-1, "data.money")
+            set {_money} to userDataNumber(arg-1, "data.money")
             userData(arg-1, "data.money", "set", arg-2)
             set {_s} to managerData("data.money")
             send "Money de %arg-1% définie sur %arg-2%%{_s}%"

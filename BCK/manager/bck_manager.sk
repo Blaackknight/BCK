@@ -117,7 +117,7 @@ function moneyGuiMain(player: player):
     userData({_player}, "data.inv", "set", "manager.money.main")
 function otherGuiMain( player: player):
 on inventory click:
-    if userData(player, "data.inv") is "manager.main":
+    if 8; is "manager.main":
         cancel event
         set {_i} to event-slot
         set {_t} to type of {_i}

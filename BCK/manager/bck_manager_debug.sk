@@ -48,6 +48,7 @@ on load:
     addServerPermission("xp_bank.create")
     addServerPermission("elevator.delete")
     addServerPermission("elevator.create")
+    addServerPermission("server.command.money.check")
 
     set {spawnCoordinates::*} to getCoordinateSeparate("%{spawn}%")
 

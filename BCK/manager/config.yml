@@ -21,6 +21,10 @@ data:
                 item: tnt
                 name: "§4§lDésinstaller"
                 needInstallLore: "§7Doit être installer"
+            other:
+                item: book
+            userdata:
+                item: player head
         account:
             item: writable book
             name: "§d⟪ Account ⟫"

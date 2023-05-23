@@ -72,7 +72,7 @@ function moneyAdd(player: player, number: integer=1, callback: boolean=false):
 function moneyRemove(player: player, number: integer=1, callback: boolean=false):
     set {_money} to userDataNumber({_player}, "data.money")
     set {_r} to {_money} - {_number}
-    userData({_player}, "data.money", "set", {_r})
+    userDataNumber({_player}, "data.money", "set", {_r})
     if {_callback} is true:
         send "[POTOR] %{_number}%₣ removed from %{_player}%" to console
     logCustom("%{_number}%₣ removed from %{_player}%", 4)
@@ -162,7 +162,21 @@ function genericGui(name: text="Default Inventory", lign: integer=1, backButton:
         else if {_lign} is 3:
             set slot 31 of {_gui} to barrier named "§l§4Back" with lore "§7Previous page"
         else if {_lign} is 4:
-            set slot 39 of {_gui} to barrier named "§l§4Back" with lore "§7Previous page"       
+            set slot 39 of {_gui} to barrier named "§l§4Back" with lore "§7Previous page"
+        else if {_lign} is 5:
+            set slot 48 of {_gui} to barrier named "§l§4Back" with lore "§7Previous page"
+        else if {_lign} is 6:
+            set slot 57 of {_gui} to barrier named "§l§4Back" with lore "§7Previous page"   
+        else if {_lign} is 7:
+            set slot 66 of {_gui} to barrier named "§l§4Back" with lore "§7Previous page"    
+        else if {_lign} is 8:
+            set slot 75 of {_gui} to barrier named "§l§4Back" with lore "§7Previous page"
+        else if {_lign} is 9:
+            set slot 84 of {_gui} to barrier named "§l§4Back" with lore "§7Previous page"
+        else if {_lign} is 10:
+            set slot 93 of {_gui} to barrier named "§l§4Back" with lore "§7Previous page"
+        else if {_lign} is 11:
+            set slot 100 of {_gui} to barrier named "§l§4Back" with lore "§7Previous page"
     return {_gui}
 #                                                                                                                #
 function materialsAdd(item: item, display: text, price: number=1):

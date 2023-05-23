@@ -19,7 +19,7 @@ command /money [<player>]:
             else:
                 send "§cTu n'as pas la permission."
         else:
-            set {_money} to userData(arg-1, "data.money")
+            set {_money} to userData(player, "data.money")
             set {_m} to numFormat("%{_money}%")
             set {_s} to managerConfig("data.money")
             send "§eTu a §l§7%{_m}%%{_s}% §e!"

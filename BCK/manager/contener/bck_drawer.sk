@@ -20,7 +20,7 @@ on sign change:
             set {_r} to 1000 - userDataNumber(player, "data.money")
             set line 1 to ""
             send "%{_line}% §6Drawer§r %{_uline}%" to player
-            set {_s} to managerData("data.money")
+            set {_s} to managerConfig("data.money")
             send "§cVous n'avez pas assez d'agent, il vous manque %{_r}%%{_s}%"
 
 on right click on sign:

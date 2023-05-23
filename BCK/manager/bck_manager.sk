@@ -64,58 +64,95 @@ command /managerbis:
     trigger:
         set {_x} to userData(player, "data.money")
         broadcast "%{_x}%"
-function accountGuiMain(player: player):
+function guiMain(player: player, type: text):
+    if {_type} is "other":
+        set {_others::*} to fileList("plugins/Skript/scripts/BCK/manager/other/")
+        set {_gn} to managerConfig("data.gui.%{_type}%.guiName")
+        set {_gs} to listCounter({_others::*}) / 2
+        set {_oItem} to managerConfig("data.gui.config.%{_type}%.item")
+        set {_oItem} to {_oItem} parsed as item
+        set {_gui} to genericGui({_gn}, {_gs}, true)
+        set {_slot} to 0
+        loop {_others::*}:
+            set {_l} to loop-value
+            set {_n} to loop-value
+            replace ".sk" with "" in {_n}
 
-function clanGuiMain(player: player):
-
-function contenerGuiMain(player: player):
-
-function elevatorGuiMain(player: player):
-
-function hammerGuiMain(player: player):
-
-function moneyGuiMain(player: player):
-    set {_gn} to yaml value "data.gui.money.guiName" from "bck.manager.config"
-    set {_gs} to yaml value "data.gui.config.size" from "bck.manager.config"
-    set {_iItem} to yaml value "data.gui.config.install.item" from "bck.manager.config"
-    set {_iName} to yaml value "data.gui.config.install.name" from "bck.manager.config"
-    set {_iItem} to "%{_iItem}%" parsed as item
-    set {_sItem} to yaml value "data.gui.config.switch.item" from "bck.manager.config"
-    set {_sName} to yaml value "data.gui.config.switch.name" from "bck.manager.config"
-    set {_sItem} to {_sItem} parsed as item
-    set {_uItem} to yaml value "data.gui.config.uninstall.item" from "bck.manager.config"
-    set {_uName} to yaml value "data.gui.config.uninstall.name" from "bck.manager.config"
-    set {_uItem} to {_uItem} parsed as item
-    set {_gs} to "%{_gs}%" parsed as number
-    set {_need} to yaml value "data.gui.config.install.needInstallLore" from "bck.manager.config"
-    set {_desactivated} to yaml value "data.gui.config.install.desactivatedLore" from "bck.manager.config"
-    set {_already} to yaml value "data.gui.config.install.alreadyInstalledLore" from "bck.manager.config"
-    set {_sactivated} to yaml value "data.gui.config.switch.activatedLore" from "bck.manager.config"
-    set {_sdesactivated} to yaml value "data.gui.config.switch.desactivatedLore" from "bck.manager.config"
-    set {_notInstalled} to yaml value "data.gui.config.switch.notInstalledLore" from "bck.manager.config"
-    set {_money} to managerAddonExist("money")
-    set {_moneybis} to managerAddonExist("money", true)
-    set {_gui} to genericGui({_gn}, {_gs}, true)
-    set {_install} to {_iItem} named "%{_iName}%"
-    set {_switch} to {_sItem} named "%{_sName}%"
-    set {_uninstall} to {_uItem} named "%{_uName}%"
-    if {_money} is true:
-        set line 1 of lore of {_install} to "%{_already}%"
-        set line 1 of lore of {_switch} to "%{_sactivated}%"
-    else if {_moneybis} is true:
-        set line 1 of lore of {_install} to "%{_desactivated}%"
-        set line 1 of lore of {_switch} to "%{_sdesactivated}%"
-    else:
-        set line 1 of lore of {_install} to "%{_need}%"
-        set line 1 of lore of {_switch} to "%{_notInstalled}%"
+            set {_i} to {_oItem} named {_n}
+            set slot {_slot} of {_gui} to {_i}
+            add 1 to {_slot}
         
-    broadcast {_moneybis}
-    set slot 11 of {_gui} to {_install}
-    set slot 13 of {_gui} to {_switch}
-    set slot 15 of {_gui} to {_uninstall}
-    open {_gui} to {_player}
-    userData({_player}, "data.inv", "set", "manager.money.main")
-function otherGuiMain( player: player):
+        open {_gui} to {_player}
+        userData({_player}, "data.inv", "set", "manager.%{_type}%.main")
+    else if {_type} is "userdata":
+        set {_userdatas::*} to fileList("plugins/Skript/scripts/BCK/manager/userdata/", "yml")
+        set {_gn} to managerConfig("data.gui.%{_type}%.guiName")
+        set {_gs} to  managerConfig("data.gui.config.size")
+        set {_gs} to {_gs} parsed as number
+        if {_gs} >= 10:
+            set {_gs} to listCounter({_userdatas::*}) / 2
+        set {_oItem} to managerConfig("data.gui.config.%{_type}%.item")
+        set {_oItem} to {_oItem} parsed as item
+        set {_gui} to genericGui({_gn}, {_gs}, true)
+        set {_slot} to 0
+        loop {_userdatas::*}:
+            set {_l} to loop-value
+            set {_n} to loop-value
+            replace ".yml" with "" in {_n}
+            set {_p} to {_n} parsed as offlineplayer
+            set {_i} to {_p}'s skull named {_n}
+            loop yaml node keys "data" from "bck.userdata.%{_n}%":
+                add loop-node to {_list::*}
+            set {_line} to 1
+            loop {_list::*}:
+                set {_t} to userData({_p}, "%loop-value-2%")
+                set line {_line} of lore of {_i} to "§b§l%loop-value-2%: §7%{_t}%"
+                add 1 to {_line}
+            set slot {_slot} of {_gui} to {_i}
+            add 1 to {_slot}
+        
+        open {_gui} to {_player}
+        userData({_player}, "data.inv", "set", "manager.%{_type}%.main")
+    else:
+        set {_gn} to managerConfig("data.gui.%{_type}%.guiName")
+        set {_gs} to managerConfig("data.gui.config.size")
+        set {_iItem} to managerConfig("data.gui.config.install.item")
+        set {_iName} to managerConfig("data.gui.config.install.name")
+        set {_iItem} to "%{_iItem}%" parsed as item
+        set {_sItem} to managerConfig("data.gui.config.switch.item")
+        set {_sName} to managerConfig("data.gui.config.switch.name")
+        set {_sItem} to {_sItem} parsed as item
+        set {_uItem} to managerConfig("data.gui.config.uninstall.item")
+        set {_uName} to managerConfig("data.gui.config.uninstall.name")
+        set {_uItem} to {_uItem} parsed as item
+        set {_gs} to "%{_gs}%" parsed as number
+        set {_need} to managerConfig("data.gui.config.install.needInstallLore")
+        set {_desactivated} to managerConfig("data.gui.config.install.desactivatedLore")
+        set {_already} to managerConfig("data.gui.config.install.alreadyInstalledLore")
+        set {_sactivated} to managerConfig("data.gui.config.switch.activatedLore")
+        set {_sdesactivated} to managerConfig("data.gui.config.switch.desactivatedLore")
+        set {_notInstalled} to managerConfig("data.gui.config.switch.notInstalledLore")
+        set {_money} to managerAddonExist("%{_type}%")
+        set {_moneybis} to managerAddonExist("%{_type}%", true)
+        set {_gui} to genericGui({_gn}, {_gs}, true)
+        set {_install} to {_iItem} named "%{_iName}%"
+        set {_switch} to {_sItem} named "%{_sName}%"
+        set {_uninstall} to {_uItem} named "%{_uName}%"
+        if {_money} is true:
+            set line 1 of lore of {_install} to "%{_already}%"
+            set line 1 of lore of {_switch} to "%{_sactivated}%"
+        else if {_moneybis} is true:
+            set line 1 of lore of {_install} to "%{_desactivated}%"
+            set line 1 of lore of {_switch} to "%{_sdesactivated}%"
+        else:
+            set line 1 of lore of {_install} to "%{_need}%"
+            set line 1 of lore of {_switch} to "%{_notInstalled}%"
+        
+        set slot 11 of {_gui} to {_install}
+        set slot 13 of {_gui} to {_switch}
+        set slot 15 of {_gui} to {_uninstall}
+        open {_gui} to {_player}
+        userData({_player}, "data.inv", "set", "manager.%{_type}%.main")
 on inventory click:
     if userData(player, "data.inv") is "manager.main":
         cancel event
@@ -128,49 +165,28 @@ on inventory click:
             #send {_t} to player
             if "%{_t}%" contain "paper":
                 if {_u} contain "Money":
-                    moneyGuiMain(player)
-                    # set {_susGui} to genericGui("§b§lMoney", 3, true)
-                    # set {_sus} to managerAddonExist("money")
-                    # set {_susA} to managerAddonExist("money", true)
-                    # set {_install} to minecart named "§2§lInstaller"
-                    # if {_sus} is true:
-                    #     set line 1 of lore of {_install} to "§7Déja installer"
-                    # else:
-                    #     set line 1 of lore of {_install} to "§7Prêt à l'installation"
-                    # set {_uninstall} to tnt named "§4§lDésinstaller"
-                    # set {_active} to lever named "§6§lActiver/Désactiver"
-                    # if {_susA} is true:
-                    #     set {_actived} to "§c§lDésactivé"
-                    # else:
-                    #     set {_actived} to "§a§lActivé"
-                    # set line 1 of lore of {_active} to "§6Etat:§r %{_actived}%"
-                    # set slot 11 of {_susGui} to {_install}
-                    # set slot 13 of {_susGui} to {_active}
-                    # set slot 15 of {_susGui} to {_uninstall}
-                    # open {_susGui} to player
-                    # userData(player, "data.inv", "set", "manager.money.main")
+                    guiMain(player, "money")
             else if "%{_t}%" is "writable book":
                 if {_u} contain "Account":
-                    set {_acGui} to genericGui("§d§lAccount", 3, true)
-                    set {_ac} to managerAddonExist("account")
-                    set {_acc} to managerAddonExist("account", true)
-                    set {_install} to minecart named "§2§lInstaller"
-                    if {_ac} is true:
-                        set line 1 of lore of {_install} to "§7Déja installer"
-                    else:
-                        set line 1 of lore of {_install} to "§7Prêt à l'installation"
-                    set {_uninstall} to tnt named "§4§lDésinstaller"
-                    set {_active} to lever named "§6§lActiver/Désactiver"
-                    if {_acc} is true:
-                        set {_actived} to "§c§lDésactivé"
-                    else:
-                        set {_actived} to "§a§lActivé"
-                    set line 1 of lore of {_active} to "§6Etat:§r %{_actived}%"
-                    set slot 11 of {_acGui} to {_install}
-                    set slot 13 of {_acGui} to {_active}
-                    set slot 15 of {_acGui} to {_uninstall}
-                    open {_acGui} to player
-                    userData(player, "data.inv", "set", "manager.account.main")
+                    guiMain(player, "account")
+            else if "%{_t}%" contain "player head":
+                if {_u} contain "Clan":
+                    guiMain(player, "clan")
+            else if "%{_t}%" is "chest":
+                if {_u} contain "Contener":
+                    guiMain(player, "contener")
+            else if "%{_t}%" is "red wool":
+                if {_u} contain "Elevator":
+                    guiMain(player, "elevator")
+            else if "%{_t}%" is "netherite pickaxe":
+                if {_u} contain "Hammer":
+                    guiMain(player, "hammer")
+            else if "%{_t}%" is "feather":
+                if {_u} contain "Other":
+                    guiMain(player, "other")
+            else if "%{_t}%" is "nametag":
+                if {_u} contain "Userdata":
+                    guiMain(player, "userdata")
     else if userData(player, "data.inv") is "manager.money.main":
         cancel event
         set {_i} to event-slot
@@ -250,3 +266,25 @@ on inventory click:
                         set {_g} to player's current inventory
                         set slot 13 of {_g} to {_active}
                         send "§6[§4BCK§6/§dAccount§6]§e §aActivation§e réussi !"
+    else if userData(player, "data.inv") is "manager.other.main":
+        cancel event
+        set {_i} to event-slot
+        set {_t} to type of {_i}
+        set {_n} to display name of {_i}
+        set {_u} to uncolored {_n}
+        if {_t} is not air:
+            if "%{_t}%" contain "barrier":
+                if {_u} contain "Back":
+                    close player's inventory
+                    managerGuiMain(player)
+    else if userData(player, "data.inv") is "manager.userdata.main":
+        cancel event
+        set {_i} to event-slot
+        set {_t} to type of {_i}
+        set {_n} to display name of {_i}
+        set {_u} to uncolored {_n}
+        if {_t} is not air:
+            if "%{_t}%" contain "barrier":
+                if {_u} contain "Back":
+                    close player's inventory
+                    managerGuiMain(player)

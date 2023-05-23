@@ -63,7 +63,7 @@ function formatted(text: text, player: player):
 function moneyAdd(player: player, number: integer=1, callback: boolean=false):
     set {_money} to userDataNumber({_player}, "data.money")
     set {_r} to {_money} + {_number}
-    userData({_player}, "data.money", "set", {_r})
+    userDataNumber({_player}, "data.money", "set", {_r})
     if {_callback} is true:
         send "[POTOR] %{_number}%₣ added to %{_player}%" to console
     logCustom("%{_number}%₣ added to %{_player}%", 4)
@@ -83,8 +83,8 @@ function sendMoney(sender: player, receiver: player, amount: integer, callback: 
     set {_rmoney} to userDataNumber({_receiver}, "data.money")
     set {_smoney} to {_smoney} - {_amount}
     set {_rmoney} to {_rmoney} + {_amount}
-    userData({_sender}, "data.money", "set", {_smoney})
-    userData({_receiver}, "data.money", "set", {_rmoney})
+    userDataNumber({_sender}, "data.money", "set", {_smoney})
+    userDataNumber({_receiver}, "data.money", "set", {_rmoney})
     if {_callback} is true:
         send "[POTOR] %{_sender}% send %{_amount}%₣ to %{_receiver}%" to console
     logCustom("%{_sender}% send %{_amount}%₣ to %{_receiver}%", 4)
@@ -799,7 +799,7 @@ function userData(player: player, find: text="data", mode: text="extract", data:
         set yaml value "%{_find}%" from "bck.userdata.%{_player}'s uuid%" to {_data}
         save yaml "bck.userdata.%{_player}'s uuid%"
     return "%{_result}%"
-function userDataNumber(player: player, find: text="data", mode: text="extract", data: text="", type: text="string") :: number:
+function userDataNumber(player: player, find: text="data", mode: text="extract", data: number=0, type: text="string") :: number:
     if file "plugins/Skript/scripts/BCK/manager/userdata/%{_player}'s uuid%.yml" doesn't exist:
         create file "plugins/Skript/scripts/BCK/manager/userdata/%{_player}'s uuid%.yml"
         loadUserData({_player})

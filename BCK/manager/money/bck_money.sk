@@ -69,6 +69,6 @@ command /setmoney [<player>] [<integer=1>]:
     trigger:
         if arg-1 is set:
             set {_money} to userDataNumber(arg-1, "data.money")
-            userData(arg-1, "data.money", "set", arg-2)
+            userDataNumber(arg-1, "data.money", "set", arg-2)
             set {_s} to managerData("data.money")
             send "Money de %arg-1% définie sur %arg-2%%{_s}%"

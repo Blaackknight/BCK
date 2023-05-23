@@ -3,32 +3,63 @@ data:
     gui:
         title: "§4§lBCK Manager"
         size: 5
+        config:
+            size: 3
+            install:
+                item: minecart
+                name: "§2§lInstaller"
+                needInstallLore: "§7Prêt à l'installation"
+                desactivatedLore: "§7Désactivé"
+                alreadyInstalledLore: "§7Déja installer"
+            switch:
+                item: lever
+                name: "§6§lActivé/Désactivé"
+                activatedLore: "§eEtat: §aActivé"
+                desactivatedLore: "§eEtat: §cDésactivé"
+                notInstalledLore: "§eEtat: §7Non Installé"
+            uninstall:
+                item: tnt
+                name: "§4§lDésinstaller"
+                needInstallLore: "§7Doit être installer"
         account:
             item: writable book
             name: "§d⟪ Account ⟫"
+            guiName: "§dAccount"
             lore:
         clan:
             item: player head
             name: "§1⟪ Clan ⟫"
+            guiName: "§1Clan"
             lore:
         contener:
             item: chest
             name: "§3⟪ Contener ⟫"
+            guiName: "§3Contener"
             lore:
         elevator:
             item: red wool
             name: "§7⟪ Elevator ⟫"
+            guiName: "§7Elevator"
             lore:
         hammer:
             item: netherite pickaxe
             name: "§8⟪ Hammer ⟫"
+            guiName: "§8Hammer"
             lore:
         money:
             item: paper
             name: "§b⟪ Money ⟫"
+            guiName: "§bMoney"
             lore:
         other:
             item: feather
             name: "§f⟪ Other ⟫"
+            guiName: "§fOther"
             lore:
             - "§fOther System.."
+        userdata:
+            item: name tag
+            name: "§e⟪ Userdata ⟫"
+            guiName: "§eUserdata"
+            lore:
+            - "§fUsers Database"

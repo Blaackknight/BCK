@@ -1,3 +1,9 @@
 data:
-    Blaackknight:
-        location: location of player
+    server:
+        account: false
+        clan: false
+        contener: false
+        elevator: false
+        hammer: false
+        money: false
+        other: false

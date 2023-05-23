@@ -7,7 +7,7 @@ on sign change:
             send "§c§lHey! §7Tu n'a pas la permission :|"
             set line 1 to ""
             stop
-        if {money.%player's uuid%} >= 1000:
+        if userData(player, "data.money") >= 1000:
             moneyRemove(player, 1000, true)
             set line 1 to "§6[§aDrawer§6]"
             set line 2 to "<id>"
@@ -17,10 +17,11 @@ on sign change:
             logCustom("%selector(event-player)% has just created a drawer at %event-location%", 4)
             logCustom("%selector(event-player)% has just created a drawer at %event-location%", 5)
         else:
-            set {_r} to 1000 - {money.%player's uuid%}
+            set {_r} to 1000 - userData(player, "data.money")
             set line 1 to ""
             send "%{_line}% §6Drawer§r %{_uline}%" to player
-            send "§cVous n'avez pas assez d'agent, il vous manque %{_r}%%{sbm}%"
+            set {_s} to managerData("data.money")
+            send "§cVous n'avez pas assez d'agent, il vous manque %{_r}%%{_s}%"
 
 on right click on sign:
     set {_line} to yaml value "data.drawer.line" from "bck.manager.contener.config"

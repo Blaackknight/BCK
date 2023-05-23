@@ -833,6 +833,7 @@ function userDataNumber(player: player, find: text="data", mode: text="extract",
 function loadManagerData(player: player):
     load yaml "plugins/Skript/scripts/BCK/manager/data.yml" as "bck.manager.data"
 function managerData(find: text="data", mode: text="extract", data: text="") :: text:
+    loadManagerData({_player})
     if {_mode} is "extract":
         set {_result} to yaml value "%{_find}%" from "bck.manager.data"
         if {_result} isn't set:

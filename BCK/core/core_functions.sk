@@ -830,10 +830,10 @@ function userDataNumber(player: player, find: text="data", mode: text="extract",
         save yaml "bck.userdata.%{_player}'s uuid%"
     set {_result} to "%{_result}%" parsed as number
     return {_result}
-function loadManagerData(player: player):
+function loadManagerData():
     load yaml "plugins/Skript/scripts/BCK/manager/data.yml" as "bck.manager.data"
 function managerData(find: text="data", mode: text="extract", data: text="") :: text:
-    loadManagerData({_player})
+    loadManagerData()
     if {_mode} is "extract":
         set {_result} to yaml value "%{_find}%" from "bck.manager.data"
         if {_result} isn't set:

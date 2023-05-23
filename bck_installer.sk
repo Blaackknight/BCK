@@ -105,6 +105,6 @@ on load:
 	unload script file "bck_installer.sk"
 	wait 0.5 seconds
 	make console execute command "/sk reload scripts"
-	wait 1 seconds
+	wait 3 seconds
 	send "§6[§4BCK§6]§r Finish..." to console
 	stop

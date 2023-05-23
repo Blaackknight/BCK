@@ -65,39 +65,7 @@ command /managerbis:
         set {_x} to userData(player, "data.money")
         broadcast "%{_x}%"
 function managerGuiSelected(player: player):
-    
-function loadUserData(player: player):
-    load yaml "plugins/Skript/scripts/BCK/manager/userdata/%{_player}'s uuid%.yml" as "bck.userdata.%{_player}'s uuid%"
-function userData(player: player, find: text="data", mode: text="extract", data: text="", type: text="string") :: text:
-    if file "plugins/Skript/scripts/BCK/manager/userdata/%{_player}'s uuid%.yml" doesn't exist:
-        create file "plugins/Skript/scripts/BCK/manager/userdata/%{_player}'s uuid%.yml"
-        loadUserData({_player})
-        set yaml value "data.username" from "bck.userdata.%{_player}'s uuid%" to {_player}'s display name
-        set yaml value "data.uuid" from "bck.userdata.%{_player}'s uuid%" to {_player}'s uuid
-        set yaml value "data.inv" from "bck.userdata.%{_player}'s uuid%" to false
-        set yaml value "data.money" from "bck.userdata.%{_player}'s uuid%" to 0
-        set yaml value "data.coordinate" from "bck.userdata.%{_player}'s uuid%" to false
-        set yaml value "data.permissions" from "bck.userdata.%{_player}'s uuid%" to {_r}
-        set yaml value "data.inv" from "bck.userdata.%{_player}'s uuid%" to false
-        save yaml "bck.userdata.%{_player}'s uuid%"
-    loadUserData({_player})
-    if {_mode} is "extract":
-        set {_result} to yaml value "%{_find}%" from "bck.userdata.%{_player}'s uuid%"
-        if {_result} isn't set:
-            if {_data} isn't empty:
-                set {_result} to {_data}
-    else if {_mode} is "delete":
-        set {_result} to yaml value "%{_find}%" from "bck.userdata.%{_player}'s uuid%"
-        if {_result} is set:
-            delete yaml value "%{_find}%" from "bck.userdata.%{_player}'s uuid%"
-            save yaml "bck.userdata.%{_player}'s uuid%"
-        else:
-            set yaml value "%{_find}%" from "bck.userdata.%{_player}'s uuid%" to {_data}
-            save yaml "bck.userdata.%{_player}'s uuid%"
-    else if {_mode} is "set":
-        set yaml value "%{_find}%" from "bck.userdata.%{_player}'s uuid%" to {_data}
-        save yaml "bck.userdata.%{_player}'s uuid%"
-    return "%{_result}%"
+
 on inventory click:
     if userData(player, "data.inv") is "manager.main":
         cancel event

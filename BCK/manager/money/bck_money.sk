@@ -14,14 +14,14 @@ command /money [<player>]:
             if hasPermission(player, "server.command.money.check") is true:
                 set {_money} to userData(arg-1, "data.money")
                 set {_m} to numFormat("%{_money}%")
-                set {_s} to managerData("data.money")
+                set {_s} to managerConfig("data.money")
                 send "§e%arg-1% a §l§7%{_m}%%{_s}% §e!"
             else:
                 send "§cTu n'as pas la permission."
         else:
             set {_money} to userData(arg-1, "data.money")
             set {_m} to numFormat("%{_money}%")
-            set {_s} to managerData("data.money")
+            set {_s} to managerConfig("data.money")
             send "§eTu a §l§7%{_m}%%{_s}% §e!"
 command /moneyadd [<player>] [<integer=1>]:
     trigger:
@@ -30,7 +30,7 @@ command /moneyadd [<player>] [<integer=1>]:
                 send "§cSpécifie un nombre au dessus de 0 !"
                 stop
             moneyAdd(arg-1, arg-2, true)
-            set {_s} to managerData("data.money")
+            set {_s} to managerConfig("data.money")
             send "§b%arg-2%§8%{_s}% §2ajouté §ra %arg-1%"
         else:
             send "§c/moneyadd <joueur> <montant>"
@@ -41,7 +41,7 @@ command /moneyremove [<player>] [<integer=1>]:
                 send "§cSpecify a number above 1 !"
                 stop
             moneyRemove(arg-1, arg-2, true)
-            set {_s} to managerData("data.money")
+            set {_s} to managerConfig("data.money")
             send "§b%arg-2%§8%{_s}% §4enlevé §rde %arg-1%"
 command /sendMoney [<offlineplayer>] [<integer>]:
     cooldown: 1 minute
@@ -60,7 +60,7 @@ command /sendMoney [<offlineplayer>] [<integer>]:
                 stop
             else if userDataNumber(player, "data.money") >= arg-2:
                 sendMoney(player, arg-1, arg-2, true)
-                set {_s} to managerData("data.money")
+                set {_s} to managerConfig("data.money")
                 send "§eTu vient d'envoyer §8%arg-2%%{_s}% §eà %arg-1%" to player
                 send "§eTu vient de recevoir §8%arg-2%%{_s}% §ede %player%" to arg-1
 command /setmoney [<player>] [<integer=1>]:
@@ -70,5 +70,5 @@ command /setmoney [<player>] [<integer=1>]:
         if arg-1 is set:
             set {_money} to userDataNumber(arg-1, "data.money")
             userDataNumber(arg-1, "data.money", "set", arg-2)
-            set {_s} to managerData("data.money")
+            set {_s} to managerConfig("data.money")
             send "Money de %arg-1% définie sur %arg-2%%{_s}%"

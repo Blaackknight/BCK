@@ -832,6 +832,8 @@ function userDataNumber(player: player, find: text="data", mode: text="extract",
     return {_result}
 function loadManagerData():
     load yaml "plugins/Skript/scripts/BCK/manager/data.yml" as "bck.manager.data"
+function loadManagerConfig():
+    load yaml "plugins/Skript/scripts/BCK/manager/config.yml" as "bck.manager.config"
 function managerData(find: text="data", mode: text="extract", data: text="") :: text:
     loadManagerData()
     if {_mode} is "extract":
@@ -850,4 +852,25 @@ function managerData(find: text="data", mode: text="extract", data: text="") :: 
     else if {_mode} is "set":
         set yaml value "%{_find}%" from "bck.manager.data" to {_data}
         save yaml "bck.manager.data"
+    
+    return "%{_result}%"
+function managerConfig(find: text="data", mode: text="extract", data: text="") :: text:
+    loadManagerConfig()
+    if {_mode} is "extract":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.config"
+        if {_result} isn't set:
+            if {_data} isn't empty:
+                set {_result} to {_data}
+    else if {_mode} is "delete":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.config"
+        if {_result} is set:
+            delete yaml value "%{_find}%" from "bck.manager.config"
+            save yaml "bck.manager.config"
+        else:
+            set yaml value "%{_find}%" from "bck.manager.config" to {_data}
+            save yaml "bck.manager.config"
+    else if {_mode} is "set":
+        set yaml value "%{_find}%" from "bck.manager.config" to {_data}
+        save yaml "bck.manager.config"
+    
     return "%{_result}%"

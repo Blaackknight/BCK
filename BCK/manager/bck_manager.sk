@@ -204,8 +204,21 @@ on inventory click:
             else if "%{_t}%" is "minecart":
                 if {_u} contain "Installer":
                     set {_lore::*} to uncolored lore of {_i}
-                    if {_lore::*} doesn't contain "Déja installer":
+                    set {_al} to managerConfig("data.gui.config.install.alreadyInstalledLore")
+                    set {_des} to managerConfig("data.gui.config.install.desactivatedLore")
+                    if {_lore::*} doesn't contains "%{_al}%" or "%{_des}%":
                         send "§6[§4BCK§6/§bMoney§6]§r §2§lInstallation.."
+                        set {_link} to "https://raw.githubusercontent.com/Blaackknight/BCK/main/BCK"
+                        if file "plugins/Skript/scripts/BCK/manager/money/bck_money.sk" doesn't exist:
+                            download file from "%{_link}%/manager/money/bck_money.sk" to file "plugins/Skript/scripts/BCK/manager/money/bck_money.sk"
+                        if file "plugins/Skript/scripts/BCK/manager/money/config.yml" doesn't exist:
+	                        download file from "%{_link}%/manager/money/config.yml" to file "plugins/Skript/scripts/BCK/manager/money/config.yml"
+                        if file "plugins/Skript/scripts/BCK/manager/money/data.yml" doesn't exist:
+	                        download file from "%{_link}%/manager/money/data.yml" to file "plugins/Skript/scripts/BCK/manager/money/data.yml"
+                        if file "plugins/Skript/scripts/BCK/manager/money/func.sk" doesn't exist:
+	                        download file from "%{_link}%/manager/money/func.sk" to file "plugins/Skript/scripts/BCK/manager/money/func.sk"
+                        wait 1 seconds
+                        send "§6[§4BCK§6/§bMoney§6]§r §2Installation §eréussi."
             else if "%{_t}%" contain "lever":
                 if {_u} contain "Activé":
                     set {_susA} to managerAddonExist("money", true)

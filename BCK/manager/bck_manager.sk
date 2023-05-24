@@ -185,28 +185,58 @@ function guiUpdater(player: player, cat: text):
     set slot 11 of {_gui} to {_ii}
     set slot 13 of {_gui} to {_ss}
     set slot 15 of {_gui} to {_u}
-function fileInstaller(cat: text):
-    set {_link} to "https://raw.githubusercontent.com/Blaackknight/BCK/main/BCK"
-    if file "plugins/Skript/scripts/BCK/manager/%{_cat}%/bck_%{_cat}%.sk" doesn't exist:
-        download file from "%{_link}%/manager/%{_cat}%/bck_%{_cat}%.sk" to file "plugins/Skript/scripts/BCK/manager/%{_cat}%/bck_%{_cat}%.sk"
-    if file "plugins/Skript/scripts/BCK/manager/%{_cat}%/config.yml" doesn't exist:
-        download file from "%{_link}%/manager/%{_cat}%/config.yml" to file "plugins/Skript/scripts/BCK/manager/%{_cat}%/config.yml"
-    if file "plugins/Skript/scripts/BCK/manager/%{_cat}%/data.yml" doesn't exist:
-        download file from "%{_link}%/manager/%{_cat}%/data.yml" to file "plugins/Skript/scripts/BCK/manager/%{_cat}%/data.yml"
+function addonInstaller(player: player, item: item, cat: text):
+    set {_lore::*} to uncolored lore of {_item}
+    set {_al} to managerConfig("data.gui.config.install.alreadyInstalledLore")
+    set {_des} to managerConfig("data.gui.config.install.desactivatedLore")
+    set {_al} to uncolored "%{_al}%"
+    set {_des} to uncolored "%{_des}%"
+    if {_lore::*} doesn't contain "%{_al}%":
+        if {_lore::*} doesn't contain "%{_des}%":
+            set {_gn} to managerConfig("data.gui.%{_cat}%.guiName")
+            send "§6[§4BCK§6/%{_gn}%§6]§r §2§lInstallation.." to {_player}
+            set {_link} to "https://raw.githubusercontent.com/Blaackknight/BCK/main/BCK"
+            if file "plugins/Skript/scripts/BCK/manager/%{_cat}%/bck_%{_cat}%.sk" doesn't exist:
+                download file from "%{_link}%/manager/%{_cat}%/bck_%{_cat}%.sk" to file "plugins/Skript/scripts/BCK/manager/%{_cat}%/bck_%{_cat}%.sk"
+            if file "plugins/Skript/scripts/BCK/manager/%{_cat}%/config.yml" doesn't exist:
+                download file from "%{_link}%/manager/%{_cat}%/config.yml" to file "plugins/Skript/scripts/BCK/manager/%{_cat}%/config.yml"
+            if file "plugins/Skript/scripts/BCK/manager/%{_cat}%/data.yml" doesn't exist:
+                download file from "%{_link}%/manager/%{_cat}%/data.yml" to file "plugins/Skript/scripts/BCK/manager/%{_cat}%/data.yml"
+            wait 1 seconds
+            send "§6[§4BCK§6/%{_gn}%§6]§r §2Installation §eréussi." to {_player}
+            guiUpdater({_player}, {_cat})
 function fileSwitch(player: player, cat: text):
     set {_sw} to managerAddonExist({_cat})
     set {_list::*} to fileList("plugins/Skript/scripts/BCK/manager/%{_cat}%/")
+    set {_gn} to managerConfig("data.gui.%{_cat}%.guiName")
     if {_sw} is true:
         loop {_list::*}:
             disable skript "BCK/manager/%{_cat}%/%loop-value%"
-        send "§6[§4BCK§6/§bMoney§6]§e §cDésactivation§e réussi !" to {_player}
+        send "§6[§4BCK§6/%{_gn}%§6]§r §cDésactivation§e réussi !" to {_player}
         wait 0.1 seconds
-        guiUpdater({_player}, "money")
+        guiUpdater({_player}, {_cat})
     else:
+        if file "plugins/Skript/scripts/BCK/manager/%{_cat}%/bck_%{_cat}%.sk" doesn't exist:
+            if file "plugins/Skript/scripts/BCK/manager/%{_cat}%/-bck_%{_cat}%.sk" doesn't exist:
+                stop
         loop {_list::*}:
             enable skript "BCK/manager/%{_cat}%/%loop-value%"
-        send "§6[§4BCK§6/§bMoney§6]§e §aActivation§e réussi !" to {_player}
+        send "§6[§4BCK§6/%{_gn}%§6]§r §aActivation§e réussi !" to {_player}
         wait 0.1 seconds
+        guiUpdater({_player}, {_cat})
+function addonDeleter(player: player, cat: text):
+    set {_dw} to managerAddonExist({_cat})
+    set {_list::*} to fileList("plugins/Skript/scripts/BCK/manager/%{_cat}%/", ".sk", true)
+    if {_dw} is true:
+        set {_gn} to managerConfig("data.gui.%{_cat}%.guiName")
+        send "§6[§4BCK§6/%{_gn}%§6]§r §4Suppréssion§e de money.." to {_player}
+        loop {_list::*}:
+            set {_l} to loop-value
+            set {_data::*} to {_l} split by "/"
+            set {_r} to "%{_data::3}%/%{_data::4}%/%{_data::5}%/%{_data::6}%/%{_data::7}%/%{_cat}%/%{_data::9}%"
+            delete file "%{_r}%"
+        wait 1 second
+        send "§6[§4BCK§6/%{_gn}%§6]§r §4Suppréssion §aréussi§e !" to {_player}
         guiUpdater({_player}, "money")
 on inventory click: 
     if userData(player, "data.inv") is "manager.main":
@@ -230,7 +260,7 @@ on inventory click:
             else if "%{_t}%" is "chest":
                 if {_u} contain "Contener":
                     guiMain(player, "contener")
-            else if "%{_t}%" is "red wool":
+            else if "%{_t}%" contain "red wool":
                 if {_u} contain "Elevator":
                     guiMain(player, "elevator")
             else if "%{_t}%" is "netherite pickaxe":
@@ -257,24 +287,13 @@ on inventory click:
                     managerGuiMain(player)
             else if "%{_t}%" is {_ins}:
                 if {_u} contain "Installer":
-                    set {_lore::*} to uncolored lore of {_i}
-                    set {_al} to managerConfig("data.gui.config.install.alreadyInstalledLore")
-                    set {_des} to managerConfig("data.gui.config.install.desactivatedLore")
-                    set {_al} to uncolored "%{_al}%"
-                    set {_des} to uncolored "%{_des}%"
-                    if {_lore::*} doesn't contain "%{_al}%":
-                        if {_lore::*} doesn't contain "%{_des}%":
-                            send "§6[§4BCK§6/§bMoney§6]§r §2§lInstallation.."
-                            fileInstaller("money")
-                            wait 1 seconds
-                            send "§6[§4BCK§6/§bMoney§6]§r §2Installation §eréussi."
-                            guiUpdater(player, "money")
+                    addonInstaller(player, {_i}, "money")
             else if "%{_t}%" contain {_swi}:
-                if {_u} contains "Activé":
+                if {_u} contain "Activé":
                     fileSwitch(player, "money")
-            else if "%{_t}%" is {_uni}:
+            else if "%{_t}%" contain {_uni}:
                 if {_u} contain "Désinstaller":
-
+                    addonDeleter(player, "money")
     else if userData(player, "data.inv") is "manager.account.main":
         cancel event
         set {_i} to event-slot
@@ -282,39 +301,109 @@ on inventory click:
         set {_n} to display name of {_i}
         set {_u} to uncolored {_n}
         if {_t} is not air:
+            set {_ins} to managerConfig("data.gui.config.install.item")
+            set {_swi} to managerConfig("data.gui.config.switch.item")
+            set {_uni} to managerConfig("data.gui.config.uninstall.item")
             if "%{_t}%" contain "barrier":
                 if {_u} contain "Back":
-                    close player's inventory
                     managerGuiMain(player)
-            else if "%{_t}%" is "minecart":
+            else if "%{_t}%" is {_ins}:
                 if {_u} contain "Installer":
-                    set {_lore::*} to uncolored lore of {_i}
-                    if {_lore::*} doesn't contain "Déja installer":
-                        send "§6[§4BCK§6/§dAccount§6]§r §2§lInstallation.."
-            else if "%{_t}%" contain "lever":
-                if {_u} contain "Activer":
-                    set {_susA} to managerAddonExist("account", true)
-                    if {_susA} is false:
-                        set {_list::*} to fileList("plugins/Skript/scripts/BCK/manager/account/")
-                        #broadcast "%{_list::*}%"
-                        loop {_list::*}:
-                            disable skript "BCK/manager/account/%loop-value%"
-                        set {_active} to lever named "§6§lActiver/Désactiver"
-                        set {_actived} to "§c§lDésactivé"
-                        set line 1 of lore of {_active} to "§6Etat:§r %{_actived}%"
-                        set {_g} to player's current inventory
-                        set slot 13 of {_g} to {_active}
-                        send "§6[§4BCK§6/§dAccount§6]§e §cDésactivation§e réussi !"
-                    else if {_susA} is true:
-                        set {_list::*} to fileList("plugins/Skript/scripts/BCK/manager/account/")
-                        loop {_list::*}:
-                            enable skript "BCK/manager/account/%loop-value%"
-                        set {_active} to lever named "§6§lActiver/Désactiver"
-                        set {_actived} to "§a§lActivé"
-                        set line 1 of lore of {_active} to "§6Etat:§r %{_actived}%"
-                        set {_g} to player's current inventory
-                        set slot 13 of {_g} to {_active}
-                        send "§6[§4BCK§6/§dAccount§6]§e §aActivation§e réussi !"
+                    addonInstaller(player, {_i}, "account")
+            else if "%{_t}%" contain {_swi}:
+                if {_u} contain "Activé":
+                    fileSwitch(player, "account")
+            else if "%{_t}%" contain {_uni}:
+                if {_u} contain "Désinstaller":
+                    addonDeleter(player, "account")
+    else if userData(player, "data.inv") is "manager.clan.main":
+        cancel event
+        set {_i} to event-slot
+        set {_t} to type of {_i}
+        set {_n} to display name of {_i}
+        set {_u} to uncolored {_n}
+        if {_t} is not air:
+            set {_ins} to managerConfig("data.gui.config.install.item")
+            set {_swi} to managerConfig("data.gui.config.switch.item")
+            set {_uni} to managerConfig("data.gui.config.uninstall.item")
+            if "%{_t}%" contain "barrier":
+                if {_u} contain "Back":
+                    managerGuiMain(player)
+            else if "%{_t}%" is {_ins}:
+                if {_u} contain "Installer":
+                    addonInstaller(player, {_i}, "clan")
+            else if "%{_t}%" contain {_swi}:
+                if {_u} contain "Activé":
+                    fileSwitch(player, "clan")
+            else if "%{_t}%" contain {_uni}:
+                if {_u} contain "Désinstaller":
+                    addonDeleter(player, "clan")
+    else if userData(player, "data.inv") is "manager.contener.main":
+        cancel event
+        set {_i} to event-slot
+        set {_t} to type of {_i}
+        set {_n} to display name of {_i}
+        set {_u} to uncolored {_n}
+        if {_t} is not air:
+            set {_ins} to managerConfig("data.gui.config.install.item")
+            set {_swi} to managerConfig("data.gui.config.switch.item")
+            set {_uni} to managerConfig("data.gui.config.uninstall.item")
+            if "%{_t}%" contain "barrier":
+                if {_u} contain "Back":
+                    managerGuiMain(player)
+            else if "%{_t}%" is {_ins}:
+                if {_u} contain "Installer":
+                    addonInstaller(player, {_i}, "contener")
+            else if "%{_t}%" contain {_swi}:
+                if {_u} contain "Activé":
+                    fileSwitch(player, "contener")
+            else if "%{_t}%" contain {_uni}:
+                if {_u} contain "Désinstaller":
+                    addonDeleter(player, "contener")
+    else if userData(player, "data.inv") is "manager.elevator.main":
+        cancel event
+        set {_i} to event-slot
+        set {_t} to type of {_i}
+        set {_n} to display name of {_i}
+        set {_u} to uncolored {_n}
+        if {_t} is not air:
+            set {_ins} to managerConfig("data.gui.config.install.item")
+            set {_swi} to managerConfig("data.gui.config.switch.item")
+            set {_uni} to managerConfig("data.gui.config.uninstall.item")
+            if "%{_t}%" contain "barrier":
+                if {_u} contain "Back":
+                    managerGuiMain(player)
+            else if "%{_t}%" is {_ins}:
+                if {_u} contain "Installer":
+                    addonInstaller(player, {_i}, "elevator")
+            else if "%{_t}%" contain {_swi}:
+                if {_u} contain "Activé":
+                    fileSwitch(player, "elevator")
+            else if "%{_t}%" contain {_uni}:
+                if {_u} contain "Désinstaller":
+                    addonDeleter(player, "elevator")
+    else if userData(player, "data.inv") is "manager.hammer.main":
+        cancel event
+        set {_i} to event-slot
+        set {_t} to type of {_i}
+        set {_n} to display name of {_i}
+        set {_u} to uncolored {_n}
+        if {_t} is not air:
+            set {_ins} to managerConfig("data.gui.config.install.item")
+            set {_swi} to managerConfig("data.gui.config.switch.item")
+            set {_uni} to managerConfig("data.gui.config.uninstall.item")
+            if "%{_t}%" contain "barrier":
+                if {_u} contain "Back":
+                    managerGuiMain(player)
+            else if "%{_t}%" is {_ins}:
+                if {_u} contain "Installer":
+                    addonInstaller(player, {_i}, "hammer")
+            else if "%{_t}%" contain {_swi}:
+                if {_u} contain "Activé":
+                    fileSwitch(player, "hammer")
+            else if "%{_t}%" contain {_uni}:
+                if {_u} contain "Désinstaller":
+                    addonDeleter(player, "hammer")
     else if userData(player, "data.inv") is "manager.other.main":
         cancel event
         set {_i} to event-slot
@@ -322,9 +411,11 @@ on inventory click:
         set {_n} to display name of {_i}
         set {_u} to uncolored {_n}
         if {_t} is not air:
+            set {_ins} to managerConfig("data.gui.config.install.item")
+            set {_swi} to managerConfig("data.gui.config.switch.item")
+            set {_uni} to managerConfig("data.gui.config.uninstall.item")
             if "%{_t}%" contain "barrier":
                 if {_u} contain "Back":
-                    close player's inventory
                     managerGuiMain(player)
     else if userData(player, "data.inv") is "manager.userdata.main":
         cancel event
@@ -333,7 +424,9 @@ on inventory click:
         set {_n} to display name of {_i}
         set {_u} to uncolored {_n}
         if {_t} is not air:
+            set {_ins} to managerConfig("data.gui.config.install.item")
+            set {_swi} to managerConfig("data.gui.config.switch.item")
+            set {_uni} to managerConfig("data.gui.config.uninstall.item")
             if "%{_t}%" contain "barrier":
                 if {_u} contain "Back":
-                    close player's inventory
                     managerGuiMain(player)

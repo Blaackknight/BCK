@@ -119,7 +119,7 @@ function logCustom(msg: text, lvl: integer=1):
         loop {log.tier5::*}:
             send formatted "§6[§4BCK§6]§r %{_msg}%" to loop-value
 #                                                                                                                #
-function fileList(dir: text, extention: text=".sk") :: objects:
+function fileList(dir: text, extention: text=".sk", add: boolean=false) :: objects:
     loop directory "%{_dir}%"'s files:
         if loop-value ends with "%{_extention}%":
             set {_f} to loop-value
@@ -155,7 +155,10 @@ function fileList(dir: text, extention: text=".sk") :: objects:
             else if {_data::15} contain {_extention}:
                 #broadcast "%{_data::15}%"
                 set {_r} to {_data::15}
-            add {_r} to {_files::*}
+            if {_add} is true:
+                add {_f} to {_files::*}
+            else:
+                add {_r} to {_files::*}
     return {_files::*}
 #                                                                                                                #
 function genericGui(name: text="Default Inventory", lign: number=1, backButton: boolean=false) :: inventory:
@@ -790,19 +793,20 @@ function folderList(dir: text, extention: text=".sk") :: objects:
         # add {_r} to {_files::*}
     return {_files::*}
 function loadUserData(player: player):
-    load yaml "plugins/Skript/scripts/BCK/manager/userdata/%{_player}'s uuid%.yml" as "bck.userdata.%{_player}'s uuid%"
+    set {_uuid} to {_player}'s uuid
+    load yaml "plugins/Skript/scripts/BCK/manager/userdata/%{_uuid}%.yml" as "bck.userdata.%{_uuid}%"
 function userData(player: player, find: text="data", mode: text="extract", data: text="", type: text="string") :: text:
-    if file "plugins/Skript/scripts/BCK/manager/userdata/%{_player}'s uuid%.yml" doesn't exist:
-        create file "plugins/Skript/scripts/BCK/manager/userdata/%{_player}'s uuid%.yml"
-        loadUserData({_player})
-        set yaml value "data.username" from "bck.userdata.%{_player}'s uuid%" to {_player}'s display name
-        set yaml value "data.uuid" from "bck.userdata.%{_player}'s uuid%" to {_player}'s uuid
-        set yaml value "data.inv" from "bck.userdata.%{_player}'s uuid%" to false
-        set yaml value "data.money" from "bck.userdata.%{_player}'s uuid%" to 0
-        set yaml value "data.coordinate" from "bck.userdata.%{_player}'s uuid%" to false
-        set yaml value "data.permissions" from "bck.userdata.%{_player}'s uuid%" to {_r}
-        set yaml value "data.inv" from "bck.userdata.%{_player}'s uuid%" to false
-        save yaml "bck.userdata.%{_player}'s uuid%"
+    set {_uuid} to {_player}'s uuid
+    if file "plugins/Skript/scripts/BCK/manager/userdata/%{_uuid}%.yml" doesn't exist:
+        create file "plugins/Skript/scripts/BCK/manager/userdata/%{_uuid}%.yml"
+        set yaml value "data.username" from "bck.userdata.%{_uuid}%" to {_player}'s display name
+        set yaml value "data.uuid" from "bck.userdata.%{_uuid}%" to {_player}'s uuid
+        set yaml value "data.inv" from "bck.userdata.%{_uuid}%" to false
+        set yaml value "data.money" from "bck.userdata.%{_uuid}%" to 0
+        set yaml value "data.coordinate" from "bck.userdata.%{_uuid}%" to false
+        set yaml value "data.permissions" from "bck.userdata.%{_uuid}%" to {_r}
+        set yaml value "data.inv" from "bck.userdata.%{_uuid}%" to false
+        save yaml "bck.userdata.%{_uuid}%"
     loadUserData({_player})
     if {_mode} is "extract":
         set {_result} to yaml value "%{_find}%" from "bck.userdata.%{_player}'s uuid%"

@@ -68,7 +68,11 @@ function guiMain(player: player, type: text):
     if {_type} is "other":
         set {_others::*} to fileList("plugins/Skript/scripts/BCK/manager/other/")
         set {_gn} to managerConfig("data.gui.%{_type}%.guiName")
-        set {_gs} to listCounter({_others::*}) / 2
+        set {_gs} to listCounter({_others::*}) / 9
+        set {_data::*} to "%{_gs}%" split by "."
+        set {_gs} to {_data::1}
+        set {_gs} to {_gs} parsed as number
+        set {_gs} to {_gs} + 2
         set {_oItem} to managerConfig("data.gui.config.%{_type}%.item")
         set {_oItem} to {_oItem} parsed as item
         set {_gui} to genericGui({_gn}, {_gs}, true)

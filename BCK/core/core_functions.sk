@@ -150,7 +150,7 @@ function fileList(dir: text, extention: text=".sk") :: objects:
             add {_r} to {_files::*}
     return {_files::*}
 #                                                                                                                #
-function genericGui(name: text="Default Inventory", lign: integer=1, backButton: boolean=false) :: inventory:
+function genericGui(name: text="Default Inventory", lign: number=1, backButton: boolean=false) :: inventory:
     set {_gui} to a new chest inventory with {_lign} row named {_name}
     if {_backButton} is true:
         if {_lign} is 1:
@@ -164,19 +164,19 @@ function genericGui(name: text="Default Inventory", lign: integer=1, backButton:
         else if {_lign} is 4:
             set slot 39 of {_gui} to barrier named "§l§4Back" with lore "§7Previous page"
         else if {_lign} is 5:
-            set slot 48 of {_gui} to barrier named "§l§4Back" with lore "§7Previous page"
+            set slot 41 of {_gui} to barrier named "§l§4Back" with lore "§7Previous page"
         else if {_lign} is 6:
-            set slot 57 of {_gui} to barrier named "§l§4Back" with lore "§7Previous page"   
+            set slot 49 of {_gui} to barrier named "§l§4Back" with lore "§7Previous page"   
         else if {_lign} is 7:
-            set slot 66 of {_gui} to barrier named "§l§4Back" with lore "§7Previous page"    
+            set slot 57 of {_gui} to barrier named "§l§4Back" with lore "§7Previous page"    
         else if {_lign} is 8:
-            set slot 75 of {_gui} to barrier named "§l§4Back" with lore "§7Previous page"
+            set slot 65 of {_gui} to barrier named "§l§4Back" with lore "§7Previous page"
         else if {_lign} is 9:
-            set slot 84 of {_gui} to barrier named "§l§4Back" with lore "§7Previous page"
+            set slot 73 of {_gui} to barrier named "§l§4Back" with lore "§7Previous page"
         else if {_lign} is 10:
-            set slot 93 of {_gui} to barrier named "§l§4Back" with lore "§7Previous page"
+            set slot 81 of {_gui} to barrier named "§l§4Back" with lore "§7Previous page"
         else if {_lign} is 11:
-            set slot 100 of {_gui} to barrier named "§l§4Back" with lore "§7Previous page"
+            set slot 90 of {_gui} to barrier named "§l§4Back" with lore "§7Previous page"
     return {_gui}
 #                                                                                                                #
 function materialsAdd(item: item, display: text, price: number=1):

@@ -5,10 +5,10 @@ function bckRegisterSkripts():
     set {_bc::*} to fileList("/plugins/Skript/scripts/BCK/core/")
     set {_mon::*} to fileList("/plugins/Skript/scripts/BCK/manager/money/")
     set {_acc::*} to fileList("/plugins/Skript/scripts/BCK/manager/account/")
-    set {_acc::*} to fileList("/plugins/Skript/scripts/BCK/manager/clan/")
-    set {_acc::*} to fileList("/plugins/Skript/scripts/BCK/manager/contener/")
-    set {_acc::*} to fileList("/plugins/Skript/scripts/BCK/manager/elevator/")
-    set {_acc::*} to fileList("/plugins/Skript/scripts/BCK/manager/hammer/")
+    set {_cla::*} to fileList("/plugins/Skript/scripts/BCK/manager/clan/")
+    set {_con::*} to fileList("/plugins/Skript/scripts/BCK/manager/contener/")
+    set {_ele::*} to fileList("/plugins/Skript/scripts/BCK/manager/elevator/")
+    set {_ham::*} to fileList("/plugins/Skript/scripts/BCK/manager/hammer/")
     loop {_bc::*}:
         add "%loop-value%" to {skripts::*}
     loop {_sks::*}:
@@ -16,6 +16,14 @@ function bckRegisterSkripts():
     loop {_mon::*}:
         add "%loop-value%" to {skripts::*}
     loop {_acc::*}:
+        add "%loop-value%" to {skripts::*}
+    loop {_cla::*}:
+        add "%loop-value%" to {skripts::*}
+    loop {_con::*}:
+        add "%loop-value%" to {skripts::*}
+    loop {_ele::*}:
+        add "%loop-value%" to {skripts::*}
+    loop {_ham::*}:
         add "%loop-value%" to {skripts::*}
 function bckRegisterCommands():
     set {cmds::*} to all registered commands

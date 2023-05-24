@@ -2,8 +2,11 @@ data:
     drawer:
         line: "&8&m---⟮&r"
         uline: "&8&m⟯---&r"
+        price: 1000
     bank:
         line: "&8&m---&r"
+        price: 1000
     xpbank:
         line: "&8&m---⟮&r"
         uline: "&8&m⟯---&r"
+        price: 1000

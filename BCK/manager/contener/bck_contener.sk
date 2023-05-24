@@ -2,11 +2,87 @@ on load:
     if {skripts::*} contains "core.sk" and "bck_manager.sk":
         send "§6[§4BCK§6]§r Loading contener..." to console
         send "§6[§4BCK§6/§3Contener§6]§r Loaded successfully !" to console
-        load yaml "plugins/Skript/scripts/BCK/manager/contener/config.yml" as "bck.manager.contener.config"
-        load yaml "plugins/Skript/scripts/BCK/manager/contener/data.yml" as "bck.manager.contener.data"
+        loadContener()
     else:
         broadcast "§6[§4BCK§6/§3Contener§6]§r Script loading cancel It requires (§lcore.sk§r and §lbck_manager.sk§r)"
         unload script file "bck_contener.sk"
         unload script file "bck_drawer.sk"
         unload script file "bck_bank.sk"
-        unload script file "bck_xbbank.sk"
+        unload script file "bck_xpbank.sk"
+function loadContener():
+    load yaml "plugins/Skript/scripts/BCK/manager/contener/config.yml" as "bck.manager.contener.config"
+    load yaml "plugins/Skript/scripts/BCK/manager/contener/data.yml" as "bck.manager.contener.data"
+function contenerConfig(find: text, mode: "extract", data="") :: text:
+    if {_mode} is "extract":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.contener.config"
+        if {_result} isn't set:
+            if {_data} isn't empty:
+                set {_result} to {_data}
+    else if {_mode} is "delete":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.contener.config"
+        if {_result} is set:
+            delete yaml value "%{_find}%" from "bck.manager.contener.config"
+            save yaml "bck.manager.contener.config"
+        else:
+            set yaml value "%{_find}%" from "bck.manager.contener.config" to {_data}
+            save yaml "bck.manager.contener.config"
+    else if {_mode} is "set":
+        set yaml value "%{_find}%" from "bck.manager.contener.config" to {_data}
+        save yaml "bck.manager.contener.config"
+    return "%{_result}%"
+function contenerData(find: text, mode: "extract", data="") :: text:
+    if {_mode} is "extract":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.contener.data"
+        if {_result} isn't set:
+            if {_data} isn't empty:
+                set {_result} to {_data}
+    else if {_mode} is "delete":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.contener.data"
+        if {_result} is set:
+            delete yaml value "%{_find}%" from "bck.manager.contener.data"
+            save yaml "bck.manager.contener.data"
+        else:
+            set yaml value "%{_find}%" from "bck.manager.contener.data" to {_data}
+            save yaml "bck.manager.contener.data"
+    else if {_mode} is "set":
+        set yaml value "%{_find}%" from "bck.manager.contener.data" to {_data}
+        save yaml "bck.manager.contener.data"
+    return "%{_result}%"
+function contenerConfigNumber(find: text, mode: "extract", data="") :: number:
+    if {_mode} is "extract":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.contener.config"
+        if {_result} isn't set:
+            if {_data} isn't empty:
+                set {_result} to {_data}
+    else if {_mode} is "delete":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.contener.config"
+        if {_result} is set:
+            delete yaml value "%{_find}%" from "bck.manager.contener.config"
+            save yaml "bck.manager.contener.config"
+        else:
+            set yaml value "%{_find}%" from "bck.manager.contener.config" to {_data}
+            save yaml "bck.manager.contener.config"
+    else if {_mode} is "set":
+        set yaml value "%{_find}%" from "bck.manager.contener.config" to {_data}
+        save yaml "bck.manager.contener.config"
+    set {_r} to "%{_result}%" parsed as number
+    return {_r}
+function contenerDataNumber(find: text, mode: "extract", data="") :: number:
+    if {_mode} is "extract":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.contener.data"
+        if {_result} isn't set:
+            if {_data} isn't empty:
+                set {_result} to {_data}
+    else if {_mode} is "delete":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.contener.data"
+        if {_result} is set:
+            delete yaml value "%{_find}%" from "bck.manager.contener.data"
+            save yaml "bck.manager.contener.data"
+        else:
+            set yaml value "%{_find}%" from "bck.manager.contener.data" to {_data}
+            save yaml "bck.manager.contener.data"
+    else if {_mode} is "set":
+        set yaml value "%{_find}%" from "bck.manager.contener.data" to {_data}
+        save yaml "bck.manager.contener.data"
+    set {_r} to "%{_result}%" parsed as number
+    return {_r}

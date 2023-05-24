@@ -1,14 +1,14 @@
 on sign change:
-    set {_line} to yaml value "data.drawer.line" from "bck.manager.contener.config"
-    set {_uline} to yaml value "data.drawer.uline" from "bck.manager.contener.config"
+    set {_line} to contenerConfig("data.drawer.line")
+    set {_uline} to contenerConfig("data.drawer.uline")
     if line 1 is "drawer":
         if hasPermission(player, "drawer.create") is false:
             cancel event
             send "§c§lHey! §7Tu n'a pas la permission :|"
             set line 1 to ""
             stop
-        if userDataNumber(player, "data.money") >= 1000:
-            moneyRemove(player, 1000, true)
+        if userDataNumber(player, "data.money") >= contenerConfigNumber("data.drawer.price"):
+            moneyRemove(player, contenerConfigNumber("data.drawer.price"), true)
             set line 1 to "§6[§aDrawer§6]"
             set line 2 to "<id>"
             set line 3 to ""
@@ -17,7 +17,7 @@ on sign change:
             logCustom("%selector(event-player)% has just created a drawer at %event-location%", 4)
             logCustom("%selector(event-player)% has just created a drawer at %event-location%", 5)
         else:
-            set {_r} to 1000 - userDataNumber(player, "data.money")
+            set {_r} to contenerConfigNumber("data.drawer.price") - userDataNumber(player, "data.money")
             set line 1 to ""
             send "%{_line}% §6Drawer§r %{_uline}%" to player
             set {_s} to managerConfig("data.money")

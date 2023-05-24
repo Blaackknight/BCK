@@ -61,6 +61,12 @@ data:
             guiName: "§fOther"
             lore:
             - "§fOther System.."
+        recipe:
+            item: knowledge book
+            name: "§a⟪ Recipe ⟫"
+            guiName: "§aRecipe"
+            lore:
+            - "§aRecipe System.."
         userdata:
             item: name tag
             name: "§e⟪ Userdata ⟫"

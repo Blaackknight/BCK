@@ -106,7 +106,71 @@ function guiMain(player: player, type: text):
                 set {_n} to {_data::3}
                 set {_t} to {_t} parsed as item
                 set {_i} to {_t} named colored {_n}
+                set {_give} to 1
                 #broadcast "%{_t}% | %{_n}% -> %{_i}%"
+                set {_l1} to line 1 of lore of {_i}
+                set {_l2} to line 2 of lore of {_i}
+                set {_l3} to line 3 of lore of {_i}
+                set {_l4} to line 4 of lore of {_i}
+                set {_l5} to line 5 of lore of {_i}
+                set {_l6} to line 6 of lore of {_i}
+                set {_l7} to line 7 of lore of {_i}
+                set {_l8} to line 8 of lore of {_i}
+                set {_l9} to line 9 of lore of {_i}
+                set {_l10} to line 10 of lore of {_i}
+                set {_l11} to line 11 of lore of {_i}
+                set {_l12} to line 12 of lore of {_i}
+                set {_l13} to line 13 of lore of {_i}
+                set {_l14} to line 14 of lore of {_i}
+                set {_l15} to line 15 of lore of {_i}
+                set {_l16} to line 16 of lore of {_i}
+                set {_l17} to line 17 of lore of {_i}
+                set {_l18} to line 18 of lore of {_i}
+                set {_l19} to line 19 of lore of {_i}
+                set {_l20} to line 20 of lore of {_i}
+                if {_l20} is set:
+                    set {_give} to 21
+                else if {_l19} is set:
+                    set {_give} to 20
+                else if {_l19} is set:
+                    set {_give} to 19
+                else if {_l19} is set:
+                    set {_give} to 18
+                else if {_l18} is set:
+                    set {_give} to 17
+                else if {_l17} is set:
+                    set {_give} to 16
+                else if {_l16} is set:
+                    set {_give} to 15
+                else if {_l15} is set:
+                    set {_give} to 14
+                else if {_l14} is set:
+                    set {_give} to 13
+                else if {_l13} is set:
+                    set {_give} to 12
+                else if {_l12} is set:
+                    set {_give} to 11
+                else if {_l11} is set:
+                    set {_give} to 10
+                else if {_l10} is set:
+                    set {_give} to 9
+                else if {_l9} is set:
+                    set {_give} to 8
+                else if {_l8} is set:
+                    set {_give} to 7
+                else if {_l7} is set:
+                    set {_give} to 6
+                else if {_l6} is set:
+                    set {_give} to 5
+                else if {_l5} is set:
+                    set {_give} to 4
+                else if {_l4} is set:
+                    set {_give} to 3
+                else if {_l3} is set:
+                    set {_give} to 2
+                else if {_l2} is set:
+                    set {_give} to 1
+                set line {_give} of lore of {_i} to managerConfig("data.gui.config.recipe.giveLore")
                 set slot {_slot} of {_gui} to {_i}
                 add 1 to {_slot}
             open {_gui} to {_player}
@@ -456,6 +520,30 @@ on inventory click:
             if "%{_t}%" contain "barrier":
                 if {_u} contain "Back":
                     managerGuiMain(player)
+            else:
+                set {_list::*} to yaml list "data.recipes" from "bck.manager.%{_type}%.data"
+                set {_iii} to {_t} named {_u}
+                send "%{_list::*}%"
+                loop {list::*}:
+                    set {_data::*} to loop-value split by "|"
+                    set {_t} to {_data::2}
+                    set {_n} to {_data::3}
+                    set {_t} to {_t} parsed as item
+                    set {_ii} to {_t} named {_n}
+                    send "%{_iii}%"
+                    send "%{_ii}%"
+                    if {_iii} is {_ii}:
+                        set {_lore::*} to lore of {_i}
+                        loop {_lore::*}:
+                            set {_lore} to managerConfig("data.gui.config.recipe.giveLore")
+                            send {_lore}
+                            if loop-value-2 is not {_lore}:
+                                add loop-value-2 to {_list::*}
+                        set {_line} to 1
+                        loop {_list::*}:
+                            set line {_line} of lore of {_i} to loop-value-2
+                            add 1 to {_line}
+                        give 1 of {_i} to player
     else if userData(player, "data.inv") is "manager.userdata.main":
         cancel event
         set {_i} to event-slot

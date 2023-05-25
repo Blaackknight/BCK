@@ -5,25 +5,35 @@ on load:
         send "§6[§4BCK§6/§aRecipe§6]§r Loaded successfully !" to console
         load yaml "plugins/Skript/scripts/BCK/manager/recipe/config.yml" as "bck.manager.recipe.config"
         load yaml "plugins/Skript/scripts/BCK/manager/recipe/data.yml" as "bck.manager.recipe.data"
-        set {_i} to dirt named "§l§dSuper §6§ldirt"
-        addCustomRecipe("bck_test", {_i}, dirt, dirt, dirt, dirt)
+        customRecipes()
     else:
         broadcast "§6[§4BCK§6/§aRecipe§6]§r Script loading cancel It requires (bck_manager.sk)"
         unload script file "bck_recipe.sk"
-function addCustomRecipe(id: text, result: item, slot1: item=air, slot2: item=air, slot3: item=air, slot4: item=air, slot5: item=air, slot6: item=air, slot7: item=air, slot8: item=air, slot9: item=air):
-    register new shapeless recipe for {_strong} using {_slot1}, {_slot2}, {_slot3}, {_slot4}, {_slot5}, {_slot6}, {_slot7}, {_slot8} and {_slot9} with id {_id}
-    add custom recipe {_id} to {_book}
+function customRecipes():
+    set {_super_dirt} to dirt named "§dSuper Dirt"
+    register new shaped recipe for {_super_dirt} using dirt, dirt, dirt and dirt with id "super_dirt"
+    registerRecipe("super_dirt", {_super_dirt})
+    set {_supra_dirt} to dirt named "§bSupra Dirt"
+    register new shaped recipe for {_supra_dirt} using dirt, dirt, dirt and dirt with id "supra_dirt"
+    registerRecipe("supra_dirt", {_supra_dirt})
+function registerRecipe(id: text, result: item):
     set {_list::*} to yaml list "data.recipes" from "bck.manager.recipe.data"
     if {_list::*} is set:
+        set {_t} to type of {_result}
+        set {_n} to display name of {_result}
+        if {_n} is not set:
+            set {_n} to {_t}
+        add "%{_id}%|%{_t}%|%{_n}%" to {_list::*}
         set yaml list "data.recipes" from "bck.manager.recipe.data" to {_list::*}
+        save yaml "bck.manager.recipe.data"
     else:
         set {_t} to type of {_result}
         set {_n} to display name of {_result}
         if {_n} is not set:
             set {_n} to {_t}
         add "%{_id}%|%{_t}%|%{_n}%" to {_list::*}
-        broadcast {_result}
         set yaml list "data.recipes" from "bck.manager.recipe.data" to {_list::*}
+        save yaml "bck.manager.recipe.data"
 function recipeConfig(find: text, mode: text="extract", data: text="") :: text:
     if {_mode} is "extract":
         set {_result} to yaml value "%{_find}%" from "bck.manager.recipe.config"

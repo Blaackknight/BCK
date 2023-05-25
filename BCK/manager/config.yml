@@ -25,6 +25,8 @@ data:
                 item: book
             userdata:
                 item: player head
+            recipe:
+                giveLore: "§aLeft click to give"
         account:
             item: writable book
             name: "§d⟪ Account ⟫"

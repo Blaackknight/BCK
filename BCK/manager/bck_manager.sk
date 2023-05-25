@@ -88,6 +88,29 @@ function guiMain(player: player, type: text):
         
         open {_gui} to {_player}
         userData({_player}, "data.inv", "set", "manager.%{_type}%.main")
+    else if {_type} is "recipe":
+        set {_r} to managerAddonExist({_type})
+        if {_r} is true:
+            set {_list::*} to yaml list "data.recipes" from "bck.manager.%{_type}%.data"
+            set {_gn} to managerConfig("data.gui.%{_type}%.guiName")
+            set {_gs} to  managerConfig("data.gui.config.size")
+            set {_gs} to {_gs} parsed as number
+            if {_gs} >= 10:
+                set {_gs} to listCounter({_list::*}) / 2
+            set {_slot} to 0
+            set {_gui} to genericGui({_gn}, {_gs}, true)
+            loop {_list::*}:
+                set {_l} to loop-value
+                set {_data::*} to {_l} split by "|"
+                set {_t} to {_data::2} 
+                set {_n} to {_data::3}
+                set {_t} to {_t} parsed as item
+                set {_i} to {_t} named colored {_n}
+                #broadcast "%{_t}% | %{_n}% -> %{_i}%"
+                set slot {_slot} of {_gui} to {_i}
+                add 1 to {_slot}
+            open {_gui} to {_player}
+            userData({_player}, "data.inv", "set", "manager.%{_type}%.main")
     else if {_type} is "userdata":
         set {_userdatas::*} to fileList("plugins/Skript/scripts/BCK/manager/userdata/", "yml")
         set {_gn} to managerConfig("data.gui.%{_type}%.guiName")
@@ -269,6 +292,9 @@ on inventory click:
             else if "%{_t}%" is "feather":
                 if {_u} contain "Other":
                     guiMain(player, "other")
+            else if "%{_t}%" is "knowledge book":
+                if {_u} contain "recipe":
+                    guiMain(player, "recipe")
             else if "%{_t}%" is "nametag":
                 if {_u} contain "Userdata":
                     guiMain(player, "userdata")
@@ -405,6 +431,19 @@ on inventory click:
                 if {_u} contain "Désinstaller":
                     addonDeleter(player, "hammer")
     else if userData(player, "data.inv") is "manager.other.main":
+        cancel event
+        set {_i} to event-slot
+        set {_t} to type of {_i}
+        set {_n} to display name of {_i}
+        set {_u} to uncolored {_n}
+        if {_t} is not air:
+            set {_ins} to managerConfig("data.gui.config.install.item")
+            set {_swi} to managerConfig("data.gui.config.switch.item")
+            set {_uni} to managerConfig("data.gui.config.uninstall.item")
+            if "%{_t}%" contain "barrier":
+                if {_u} contain "Back":
+                    managerGuiMain(player)
+    else if userData(player, "data.inv") is "manager.recipe.main":
         cancel event
         set {_i} to event-slot
         set {_t} to type of {_i}

@@ -12,7 +12,7 @@ on load:
 function loadContener():
     load yaml "plugins/Skript/scripts/BCK/manager/contener/config.yml" as "bck.manager.contener.config"
     load yaml "plugins/Skript/scripts/BCK/manager/contener/data.yml" as "bck.manager.contener.data"
-function contenerConfig(find: text, mode: "extract", data="") :: text:
+function contenerConfig(find: text, mode: text="extract", data: text="") :: text:
     if {_mode} is "extract":
         set {_result} to yaml value "%{_find}%" from "bck.manager.contener.config"
         if {_result} isn't set:
@@ -30,7 +30,8 @@ function contenerConfig(find: text, mode: "extract", data="") :: text:
         set yaml value "%{_find}%" from "bck.manager.contener.config" to {_data}
         save yaml "bck.manager.contener.config"
     return "%{_result}%"
-function contenerData(find: text, mode: "extract", data="") :: text:
+
+function contenerData(find: text, mode: text="extract", data: text="") :: text:
     if {_mode} is "extract":
         set {_result} to yaml value "%{_find}%" from "bck.manager.contener.data"
         if {_result} isn't set:
@@ -48,7 +49,8 @@ function contenerData(find: text, mode: "extract", data="") :: text:
         set yaml value "%{_find}%" from "bck.manager.contener.data" to {_data}
         save yaml "bck.manager.contener.data"
     return "%{_result}%"
-function contenerConfigNumber(find: text, mode: "extract", data="") :: number:
+
+function contenerConfigNumber(find: text, mode: text="extract", data: text="") :: number:
     if {_mode} is "extract":
         set {_result} to yaml value "%{_find}%" from "bck.manager.contener.config"
         if {_result} isn't set:
@@ -67,7 +69,7 @@ function contenerConfigNumber(find: text, mode: "extract", data="") :: number:
         save yaml "bck.manager.contener.config"
     set {_r} to "%{_result}%" parsed as number
     return {_r}
-function contenerDataNumber(find: text, mode: "extract", data="") :: number:
+function contenerDataNumber(find: text, mode: text="extract", data: text="") :: number:
     if {_mode} is "extract":
         set {_result} to yaml value "%{_find}%" from "bck.manager.contener.data"
         if {_result} isn't set:

@@ -521,29 +521,25 @@ on inventory click:
                 if {_u} contain "Back":
                     managerGuiMain(player)
             else:
-                set {_list::*} to yaml list "data.recipes" from "bck.manager.%{_type}%.data"
-                set {_iii} to {_t} named {_u}
-                send "%{_list::*}%"
-                loop {list::*}:
+                set {_list::*} to yaml list "data.recipes" from "bck.manager.recipe.data"
+                set {_iii} to {_t} named {_n}
+                loop {_list::*}:
                     set {_data::*} to loop-value split by "|"
-                    set {_t} to {_data::2}
+                    set {_tt} to {_data::2}
                     set {_n} to {_data::3}
-                    set {_t} to {_t} parsed as item
-                    set {_ii} to {_t} named {_n}
-                    send "%{_iii}%"
-                    send "%{_ii}%"
+                    set {_tt} to {_tt} parsed as item
+                    set {_ii} to {_tt} named colored {_n}
                     if {_iii} is {_ii}:
                         set {_lore::*} to lore of {_i}
-                        loop {_lore::*}:
-                            set {_lore} to managerConfig("data.gui.config.recipe.giveLore")
-                            send {_lore}
-                            if loop-value-2 is not {_lore}:
-                                add loop-value-2 to {_list::*}
+                        set {_lore} to managerConfig("data.gui.config.recipe.giveLore")
+                        if "%{_lores::*}%" doesn't contain {_lore}:
+                            add loop-value-2 to {_lists::*}
                         set {_line} to 1
-                        loop {_list::*}:
+                        loop {_lists::*}:
                             set line {_line} of lore of {_i} to loop-value-2
                             add 1 to {_line}
                         give 1 of {_i} to player
+                        exit loop
     else if userData(player, "data.inv") is "manager.userdata.main":
         cancel event
         set {_i} to event-slot

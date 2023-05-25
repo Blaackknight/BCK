@@ -9,6 +9,9 @@ on load:
     else:
         broadcast "§6[§4BCK§6/§aRecipe§6]§r Script loading cancel It requires (bck_manager.sk)"
         unload script file "bck_recipe.sk"
+on unload:
+    set yaml list "data.recipes" from "bck.manager.recipe.data" to {_l::*}
+    save yaml "bck.manager.recipe.data"
 function customRecipes():
     set {_super_dirt} to dirt named "§dSuper Dirt"
     register new shaped recipe for {_super_dirt} using dirt, dirt, dirt and dirt with id "super_dirt"
@@ -16,6 +19,10 @@ function customRecipes():
     set {_supra_dirt} to dirt named "§bSupra Dirt"
     register new shaped recipe for {_supra_dirt} using dirt, dirt, dirt and dirt with id "supra_dirt"
     registerRecipe("supra_dirt", {_supra_dirt})
+    set {_big_dirt} to dirt named "§aBig Dirt"
+    set line 1 of lore of {_big_dirt} to "§6TEST"
+    register new shaped recipe for {_big_dirt} using dirt, dirt, dirt and dirt with id "big_dirt"
+    registerRecipe("big_dirt", {_big_dirt})
 function registerRecipe(id: text, result: item):
     set {_list::*} to yaml list "data.recipes" from "bck.manager.recipe.data"
     if {_list::*} is set:

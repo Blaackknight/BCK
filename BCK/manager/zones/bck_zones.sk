@@ -1,0 +1,11 @@
+on load:
+    set {_list::*} to {skripts::*}
+    if {_list::*} contains "bck_manager.sk":
+        send "§6[§4BCK§6]§r Loading zones..." to console
+        send "§6[§4BCK§6/§2Zones§6]§r Loaded successfully !" to console
+        load yaml "plugins/Skript/scripts/BCK/manager/zones/config.yml" as "bck.manager.zones.config"
+        load yaml "plugins/Skript/scripts/BCK/manager/zones/data.yml" as "bck.manager.zones.data"
+        customRecipes()
+    else:
+        broadcast "§6[§4BCK§6/§2Zones§6]§r Script loading cancel It requires (bck_manager.sk)"
+        unload script file "bck_zones.sk"

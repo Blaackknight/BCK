@@ -19,6 +19,10 @@ on load:
 	delete file "plugins/Skript/scripts/BCK/manager/elevator/temp.txt"
 	create script "plugins/Skript/scripts/BCK/manager/hammer/temp.txt"
 	delete file "plugins/Skript/scripts/BCK/manager/hammer/temp.txt"
+	create script "plugins/Skript/scripts/BCK/manager/recipe/temp.txt"
+	delete file "plugins/Skript/scripts/BCK/manager/recipe/temp.txt"
+	create script "plugins/Skript/scripts/BCK/manager/zones/temp.txt"
+	delete file "plugins/Skript/scripts/BCK/manager/zones/temp.txt"
 	create script "plugins/Skript/scripts/BCK/manager/other/temp.txt"
 	delete file "plugins/Skript/scripts/BCK/manager/other/temp.txt"
 	wait 5 tick

@@ -8,6 +8,7 @@ on load:
     else:
         broadcast "§6[§4BCK§6/§5Manager§6]§r Script loading cancel It requires (core.sk)"
         unload script file "bck_manager.sk"
+        unload script file "bck_manager_debug.sk"
 function managerGuiMain(player: player):
     set {_list::*} to folderList("plugins/Skript/scripts/BCK/manager/")
 

@@ -1,0 +1,10 @@
+data:
+    area:
+        id:
+            name: "default"
+            radius: 10
+            location:
+                x: -311
+                y: 63
+                z: 530
+                world: world

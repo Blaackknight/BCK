@@ -19,11 +19,60 @@ on break:
             loop all blocks in radius {_radius} around {_loc}:
                 if location of loop-block is location of event-block:
                     cancel event
+                    send zonesConfig("data.messages.break") to player
+on right click on any block:
+    set {_list::*} to zonesCheck("bck.manager.zones.data", "data.area")
+    if {_list::*} is set:
+        loop {_list::*}:
+            set {_name} to zonesData("%loop-value%.name")
+            set {_radius} to zonesDataNumber("%loop-value%.radius")
+            set {_loc} to zonesDataLocation("%loop-value%")
+            loop all blocks in radius {_radius} around {_loc}:
+                if location of loop-block is location of event-block:
+                    cancel event
+                    send zonesConfig("data.messages.interact") to player
     stop
 function zonesCheck(id: text, key: text) :: objects:
     loop yaml node keys {_key} from {_id}:
         add loop-node to {_list::*}
     return {_list::*}
+function zonesConfig(find: text, mode: text="extract", data: text="") :: text:
+    if {_mode} is "extract":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.zones.config"
+        if {_result} isn't set:
+            if {_data} isn't empty:
+                set {_result} to {_data}
+    else if {_mode} is "delete":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.zones.config"
+        if {_result} is set:
+            delete yaml value "%{_find}%" from "bck.manager.zones.config"
+            save yaml "bck.manager.zones.config"
+        else:
+            set yaml value "%{_find}%" from "bck.manager.zones.config" to {_data}
+            save yaml "bck.manager.zones.config"
+    else if {_mode} is "set":
+        set yaml value "%{_find}%" from "bck.manager.zones.config" to {_data}
+        save yaml "bck.manager.zones.config"
+    return "%{_result}%"
+function zonesConfigNumber(find: text, mode: text="extract", data: text="") :: number:
+    if {_mode} is "extract":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.zones.config"
+        if {_result} isn't set:
+            if {_data} isn't empty:
+                set {_result} to {_data}
+    else if {_mode} is "delete":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.zones.config"
+        if {_result} is set:
+            delete yaml value "%{_find}%" from "bck.manager.zones.config"
+            save yaml "bck.manager.zones.config"
+        else:
+            set yaml value "%{_find}%" from "bck.manager.zones.config" to {_data}
+            save yaml "bck.manager.zones.config"
+    else if {_mode} is "set":
+        set yaml value "%{_find}%" from "bck.manager.zones.config" to {_data}
+        save yaml "bck.manager.zones.config"
+    set {_r} to "%{_result}%" parsed as number
+    return {_r}
 function zonesData(find: text, mode: text="extract", data: text="") :: text:
     if {_mode} is "extract":
         set {_result} to yaml value "%{_find}%" from "bck.manager.zones.data"

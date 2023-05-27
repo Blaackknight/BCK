@@ -1,0 +1,11 @@
+on load:
+    set {_list::*} to {skripts::*}
+    if {_list::*} contains "bck_manager.sk":
+        send "§6[§4BCK§6]§r Loading box..." to console
+        send "§6[§4BCK§6/§1Box§6]§r Loaded successfully !" to console
+        load yaml "plugins/Skript/scripts/BCK/manager/box/config.yml" as "bck.manager.box.config"
+        load yaml "plugins/Skript/scripts/BCK/manager/box/data.yml" as "bck.manager.box.data"
+        customRecipes()
+    else:
+        broadcast "§6[§4BCK§6/§1Box§6]§r Script loading cancel It requires (bck_manager.sk)"
+        unload script file "bck_box.sk"

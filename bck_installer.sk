@@ -11,6 +11,8 @@ on load:
 	delete file "plugins/Skript/scripts/BCK/manager/money/temp.txt"
 	create script "plugins/Skript/scripts/BCK/manager/account/temp.txt"
 	delete file "plugins/Skript/scripts/BCK/manager/account/temp.txt"
+	create script "plugins/Skript/scripts/BCK/manager/box/temp.txt"
+	delete file "plugins/Skript/scripts/BCK/manager/box/temp.txt"
 	create script "plugins/Skript/scripts/BCK/manager/clan/temp.txt"
 	delete file "plugins/Skript/scripts/BCK/manager/clan/temp.txt"
 	create script "plugins/Skript/scripts/BCK/manager/contener/temp.txt"
@@ -43,6 +45,10 @@ on load:
 	download file from "%{_link}%/manager/account/bck_account.sk" to file "plugins/Skript/scripts/BCK/manager/account/bck_account.sk"
 	download file from "%{_link}%/manager/account/config.yml" to file "plugins/Skript/scripts/BCK/manager/account/config.yml"
 	download file from "%{_link}%/manager/account/data.yml" to file "plugins/Skript/scripts/BCK/manager/account/data.yml"
+
+	download file from "%{_link}%/manager/box/bck_box.sk" to file "plugins/Skript/scripts/BCK/manager/box/bck_box.sk"
+	download file from "%{_link}%/manager/box/config.yml" to file "plugins/Skript/scripts/BCK/manager/box/config.yml"
+	download file from "%{_link}%/manager/box/data.yml" to file "plugins/Skript/scripts/BCK/manager/box/data.yml"
 
 	download file from "%{_link}%/manager/clan/bck_clan.sk" to file "plugins/Skript/scripts/BCK/manager/clan/bck_clan.sk"
 	download file from "%{_link}%/manager/clan/config.yml" to file "plugins/Skript/scripts/BCK/manager/clan/config.yml"

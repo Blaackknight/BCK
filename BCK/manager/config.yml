@@ -32,6 +32,11 @@ data:
             name: "§d⟪ Account ⟫"
             guiName: "§dAccount"
             lore:
+        box:
+            item: ender chest
+            name: "§1⟪ Box ⟫"
+            guiName: "§1Box"
+            lore:
         clan:
             item: player head
             name: "§1⟪ Clan ⟫"

@@ -8,3 +8,10 @@ data:
                 y: 63
                 z: 530
                 world: world
+            name: "spawn"
+            radius: 5
+            location:
+                x: -311
+                y: 63
+                z: 530
+                world: world

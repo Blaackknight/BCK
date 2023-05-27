@@ -20,19 +20,47 @@ on break:
                 if location of loop-block is location of event-block:
                     cancel event
                     send zonesConfig("data.messages.break") to player
-on right click on any block:
-    set {_list::*} to zonesCheck("bck.manager.zones.data", "data.area")
-    if {_list::*} is set:
-        loop {_list::*}:
-            set {_name} to zonesData("%loop-value%.name")
-            set {_radius} to zonesDataNumber("%loop-value%.radius")
-            set {_loc} to zonesDataLocation("%loop-value%")
-            loop all blocks in radius {_radius} around {_loc}:
-                if location of loop-block is location of event-block:
-                    cancel event
-                    send zonesConfig("data.messages.interact") to player
+on right click:
+    if clicked block is set:
+        set {_list::*} to zonesCheck("bck.manager.zones.data", "data.area")
+        if {_list::*} is set:
+            loop {_list::*}:
+                set {_name} to zonesData("%loop-value%.name")
+                set {_radius} to zonesDataNumber("%loop-value%.radius")
+                set {_loc} to zonesDataLocation("%loop-value%")
+                loop all blocks in radius {_radius} around {_loc}:
+                    if location of loop-block is location of event-block:
+                        cancel event
+                        send zonesConfig("data.messages.interact") to player
     stop
-command /
+command /zones [<text>]:
+    trigger:
+        if arg-1 is set:
+            if arg-1 is "add":
+            else if arg-1 is "remove":
+            else if arg-1 is "list":
+                set {_list::*} to zonesCheck("bck.manager.zones.data", "data.area")
+                if {_list::*} is set:
+                    set {_zn} to listCounter({_list::*})
+                    set {_zt} to "zone"
+                    if {_zn} > 1:
+                        set {_zt} to "zones" 
+                    send "§8----{ §2§lZones§r §8}----"
+                    loop {_list::*}:
+                        set {_name} to zonesData("%loop-value%.name")
+                        set {_radius} to zonesDataNumber("%loop-value%.radius")
+                        set {_loc} to zonesDataLocation("%loop-value%")
+                        send formatted colored "§8-> §bNom: §3%{_name}% §8-> §dRadius: §5%{_radius}% §8-> §aLocation: §2%{_loc}%"
+                    send "§6Total: §c§l§n%{_zn}%§r §e%{_zt}%"
+                    send {_list::*}
+                else:
+                    send "§eAucune zone n'as été trouver.."
+            else:
+                send "§cOption inconnue (%arg-1%)"
+        else:
+            send "§c/zones <options>"
+on tab complete of "/zones":
+    set tab completions for position 1 to "add", "remove" and "list"
 function zonesCheck(id: text, key: text) :: objects:
     loop yaml node keys {_key} from {_id}:
         add loop-node to {_list::*}

@@ -32,6 +32,7 @@ on right click on any block:
                     cancel event
                     send zonesConfig("data.messages.interact") to player
     stop
+command /
 function zonesCheck(id: text, key: text) :: objects:
     loop yaml node keys {_key} from {_id}:
         add loop-node to {_list::*}

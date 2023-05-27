@@ -111,7 +111,6 @@ on load:
 	download file from "%{_link}%/manager/other/war.sk" to file "plugins/Skript/scripts/BCK/manager/other/war.sk"
 	download file from "%{_link}%/manager/other/warps.sk" to file "plugins/Skript/scripts/BCK/manager/other/warps.sk"
 	download file from "%{_link}%/manager/other/xpSave.sk" to file "plugins/Skript/scripts/BCK/manager/other/xpSave.sk"
-	download file from "%{_link}%/manager/other/zones.sk" to file "plugins/Skript/scripts/BCK/manager/other/zones.sk"
 	
 	wait 0.5 seconds
 	delete file "plugins/Skript/scripts/bck_installer.sk"

@@ -205,6 +205,7 @@ function guiMain(player: player, type: text):
         
         open {_gui} to {_player}
         userData({_player}, "data.inv", "set", "manager.%{_type}%.main")
+    else if {_type} is "zones":
     else:
         set {_gn} to managerConfig("data.gui.%{_type}%.guiName")
         set {_gs} to managerConfig("data.gui.config.size")
@@ -363,6 +364,12 @@ on inventory click:
             else if "%{_t}%" is "nametag":
                 if {_u} contain "Userdata":
                     guiMain(player, "userdata")
+            else if "%{_t}%" is "brick wall":
+                if {_u} contain "Zones":
+                    guiMain(player, "zones")
+            else if "%{_t}%" is "ender chest":
+                if {_u} contain "Box":
+                    guiMain(player, "box")
     else if userData(player, "data.inv") is "manager.money.main":
         cancel event
         set {_i} to event-slot
@@ -407,6 +414,28 @@ on inventory click:
             else if "%{_t}%" contain {_uni}:
                 if {_u} contain "Désinstaller":
                     addonDeleter(player, "account")
+    else if userData(player, "data.inv") is "manager.box.main":
+        cancel event
+        set {_i} to event-slot
+        set {_t} to type of {_i}
+        set {_n} to display name of {_i}
+        set {_u} to uncolored {_n}
+        if {_t} is not air:
+            set {_ins} to managerConfig("data.gui.config.install.item")
+            set {_swi} to managerConfig("data.gui.config.switch.item")
+            set {_uni} to managerConfig("data.gui.config.uninstall.item")
+            if "%{_t}%" contain "barrier":
+                if {_u} contain "Back":
+                    managerGuiMain(player)
+            else if "%{_t}%" is {_ins}:
+                if {_u} contain "Installer":
+                    addonInstaller(player, {_i}, "box")
+            else if "%{_t}%" contain {_swi}:
+                if {_u} contain "Activé":
+                    fileSwitch(player, "box")
+            else if "%{_t}%" contain {_uni}:
+                if {_u} contain "Désinstaller":
+                    addonDeleter(player, "box")
     else if userData(player, "data.inv") is "manager.clan.main":
         cancel event
         set {_i} to event-slot
@@ -542,6 +571,19 @@ on inventory click:
                         give 1 of {_i} to player
                         exit loop
     else if userData(player, "data.inv") is "manager.userdata.main":
+        cancel event
+        set {_i} to event-slot
+        set {_t} to type of {_i}
+        set {_n} to display name of {_i}
+        set {_u} to uncolored {_n}
+        if {_t} is not air:
+            set {_ins} to managerConfig("data.gui.config.install.item")
+            set {_swi} to managerConfig("data.gui.config.switch.item")
+            set {_uni} to managerConfig("data.gui.config.uninstall.item")
+            if "%{_t}%" contain "barrier":
+                if {_u} contain "Back":
+                    managerGuiMain(player)
+    else if userData(player, "data.inv") is "manager.zones.main":
         cancel event
         set {_i} to event-slot
         set {_t} to type of {_i}

@@ -1,0 +1,38 @@
+data:
+    box:
+        dev:
+            rewards:
+                - iron ingot
+                - emerald
+                - diamond
+                - tnt
+                - gravel
+        test:
+            rewards:
+                - barrier
+                - barrel,
+                - iron block
+                - feather
+                - sandstone
+    config:
+        item: ender chest
+        name: "§1⦗ Box ⦘"
+        guiName: "§1Box §b<name>"
+        guiSize: 3
+        glasses:
+            - white stained glass pane
+            - orange stained glass pane
+            - magenta stained glass pane
+            - light blue stained glass pane
+            - yellow stained glass pane
+            - lime stained glass pane
+            - pink stained glass pane
+            - gray stained glass pane
+            - light gray stained glass pane
+            - cyan stained glass pane
+            - purple stained glass pane
+            - blue stained glass pane
+            - brown stained glass pane
+            - green stained glass pane
+            - red stained glass pane
+            - black stained glass pane

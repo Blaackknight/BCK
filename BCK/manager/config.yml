@@ -80,3 +80,8 @@ data:
             guiName: "§eUserdata"
             lore:
             - "§fUsers Database"
+        zones:
+            item: brick wall
+            name: "§2⟪ Zones ⟫"
+            guiName: "§2Zones"
+            lore:

@@ -7,13 +7,19 @@ data:
                 - diamond
                 - tnt
                 - gravel
+                - egg
+            maxStack: 64
         test:
             rewards:
                 - barrier
-                - barrel,
+                - barrel
                 - iron block
                 - feather
                 - sandstone
+            maxStack: 64
+        pute:
+            rewards:
+                - command block
     config:
         item: ender chest
         name: "§1⦗ Box ⦘"
@@ -36,3 +42,7 @@ data:
             - green stained glass pane
             - red stained glass pane
             - black stained glass pane
+        key: 
+            item: tripwire hook
+            name: "§bClé"
+        waitTime: 20

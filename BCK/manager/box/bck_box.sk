@@ -45,33 +45,92 @@ on break:
             #send "%locToText(event-location)% | %locToText({_loc})%"
             if locToText(event-location) is locToText({_loc}):
                 send "§6[§4BCK§6/§1Box§6]§r §eBox §b%{_box}%§r §eenlever !"
-                logCustom("§7%selector(player)%§r has been placed box §7§l%{_box}%", 4)
-                logCustom("§7%selector(player)%§r has been placed box §7§l%{_box}%", 5)
+                logCustom("§7%selector(player)%§r has been break box §7§l%{_box}%", 4)
+                logCustom("§7%selector(player)%§r has been break box §7§l%{_box}%", 5)
             else:
                 add loop-value to {_r::*}
         set yaml list "data.box.list" from "bck.manager.box.data" to {_r::*}
         save yaml "bck.manager.box.data"
 on right click:
     if clicked block is set:
-        set {_b} to event-block
-        set {_t} to type of {_b}
-        if "%{_t}%" contains boxConfig("data.config.item"):
-            set {_list::*} to yaml list "data.box.list" from "bck.manager.box.data"
-            loop {_list::*}:
-                set {_data::*} to loop-value split by "|"
-                set {_box} to {_data::1}
-                set {_loc} to textToLoc({_data::2})
-                if locToText(event-location) is locToText({_loc}):
-                    cancel event
-                    boxGuiMain(player, {_box})
+        if player is sneaking:
+            set {_b} to event-block
+            set {_t} to type of {_b}
+            if "%{_t}%" contains boxConfig("data.config.item"):
+                set {_list::*} to yaml list "data.box.list" from "bck.manager.box.data"
+                loop {_list::*}:
+                    set {_data::*} to loop-value split by "|"
+                    set {_box} to {_data::1}
+                    set {_loc} to textToLoc({_data::2})
+                    if locToText(event-location) is locToText({_loc}):
+                        cancel event
+                        boxGuiMain(player, {_box})
+        else:
+            set {_ii} to player's tool
+            set {_tt} to type of {_ii}
+            set {_nn} to display name of {_ii}
+            set {_lore} to uncolored line 1 of lore of {_ii}
+            
+            set {_b} to event-block
+            set {_l} to player's tool
+            set {_t} to type of {_b}
+            if "%{_t}%" contains boxConfig("data.config.item"):
+                set {_list::*} to yaml list "data.box.list" from "bck.manager.box.data"
+                loop {_list::*}:
+                    set {_data::*} to loop-value split by "|"
+                    set {_box} to {_data::1}
+                    set {_loc} to textToLoc({_data::2})
+                    if locToText(event-location) is locToText({_loc}):
+                        set {_i} to boxConfig("data.config.key.item")
+                        set {_i} to {_i} parsed as item
+                        set {_k} to {_i} named boxConfig("data.config.key.name")
+                        set {_size} to boxConfigNumber("data.config.guiSize")
+                        cancel event
+                        if {_l} is not {_k}:
+                            stop
+                        boxGuiMain(player, {_box}, false)
+                        set {_gui} to player's current inventory
+                        loop boxConfigNumber("data.config.waitTime") times:
+                            boxRandomizer({_gui}, {_size}, {_box})
+                            play sound "block.note_block.harp" with volume 1 with pitch 0.8 at player's location
+                            wait 0.11 seconds
+                            boxRandomizer({_gui}, {_size}, {_box})
+                            play sound "block.note_block.harp" with volume 1 with pitch 0.8 at player's location
+                            wait 0.11 seconds
+                        boxRandomizer({_gui},{_size},{_box},false)
+                        set {_lists::*} to yaml list "data.box.%{_box}%.rewards" from "bck.manager.box.config"
+                        set {_re} to random item out of listToItemList({_lists::*})
+                        set {_default} to boxConfigNumber("data.box.%{_box}%.maxStack")
+                        if {_default} < 1:
+                            set {_default} to 64
+                        else if {_default} is not set:
+                            set {_default} to 64
+                        set {_count} to random integer between 1 and {_default}
+                        set slot 13 of {_gui} to {_count} of {_re}
+                        set {_sloot} to slot 13 of {_gui}
+                        if player's inventory has space for {_sloot}:
+                            give {_sloot} to player
+                        else:
+                            drop {_sloot} at player
+                        play sound "block.note_block.pling" with volume 1 with pitch 1 at player's location
+                        wait 3 seconds
+                        if userData(player, "data.inv") is "manager.box.main":
+                            close the player's inventory
+
+                            
+                        
 on inventory click:
-    if userData({_player}, "data.inv") is "manager.box.main":
+    if userData(player, "data.inv") is "manager.box.main":
         cancel event
-function boxGuiMain(player: player, box: text):
+function boxGuiMain(player: player, box: text, items: boolean=true):
     set {_guiname} to boxConfig("data.config.guiName")
     set {_size} to boxConfigNumber("data.config.guiSize")
     replace "<name>" with {_box} in {_guiname}
     set {_gui} to genericGui({_guiname}, {_size})
+    boxRandomizer({_gui}, {_size}, {_box}, {_items})
+    open {_gui} to {_player}
+    userData({_player}, "data.inv", "set", "manager.box.main")
+function boxRandomizer(gui: inventory, size: number=3, box: text, items: boolean=true):
     set {_slotCount} to 0
     loop {_size} times:
         add 9 to {_slotCount}
@@ -81,16 +140,20 @@ function boxGuiMain(player: player, box: text):
         set slot {_slot} of {_gui} to random item out of listToItemList({_list::*})
         add 1 to {_slot}
     set {_slotItemCount} to {_slotCount} / 3
-    set {_slotItemCount} to {_slotItemCount} -2
-    set {_slotI} to {_slotItemCount} +3
+    set {_slotItemCount} to {_slotItemCount} - 2
+    set {_slotI} to {_slotItemCount} + 3
+    if {_items} is false:
+        stop
     loop {_slotItemCount} times:
         set {_lists::*} to yaml list "data.box.%{_box}%.rewards" from "bck.manager.box.config"
-        #broadcast "data.box.%{_box}%.rewards"
-        set slot {_slotI} of {_gui} to random item out of listToItemList({_lists::*})
+        set {_default} to boxConfigNumber("data.box.%{_box}%.maxStack")
+        if {_default} < 1:
+            set {_default} to 64
+        else if {_default} is not set:
+            set {_default} to 64
+        set {_count} to random integer between 1 and {_default}
+        set slot {_slotI} of {_gui} to {_count} of random item out of listToItemList({_lists::*})
         add 1 to {_slotI}
-    #broadcast {_slotCount}
-    open {_gui} to {_player}
-    userData({_player}, "data.inv", "set", "manager.box.main")
 function listToItemList(list: objects) :: objects:
     loop {_list::*}:
         set {_i} to loop-value parsed as item
@@ -111,12 +174,24 @@ command /box [<text>] [<text>]:
                         send "§cBox introuvable (%arg-2%)"
                 else:
                     send "§c/box %arg-1% <box>"
+            else if arg-1 is "key":
+                set {_i} to boxConfig("data.config.key.item")
+                set {_i} to {_i} parsed as item
+                set {_k} to {_i} named boxConfig("data.config.key.name")
+                give {_k} to player
             else if arg-1 is "list":
                 set {_b::*} to boxList()
                 send "§8---------{ §1§lBoxList§r §8}---------"
                 loop {_b::*}:
-                    set {_rew::*} to boxRewardsList("%loop-value%")
-                    send "§a%loop-value% §6->§r §b%{_rew::*}%"
+                    set {_rew::*} to yaml list "data.box.%loop-value%.rewards" from "bck.manager.box.config"
+                    set {_default} to boxConfigNumber("data.box.%loop-value%.maxStack")
+                    if {_default} < 1:
+                        set {_default} to "64 §o(défault)"
+                    else if {_default} is not set:
+                        set {_default} to "64 §o(défault)"
+                    else:
+                        set {_default} to "64 §o(custom)"
+                    send "§a%loop-value% §6->§r §b%{_rew::*}% §6-> §dmax: §c%{_default}%"
                 set {_t} to pluriel("Total", listCounter({_b::*}))
                 send "§6%{_t}%: §c%listCounter({_b::*})%"
             else:
@@ -124,7 +199,7 @@ command /box [<text>] [<text>]:
         else:
             send "§c/box <option>"
 on tab complete of "/box":
-    set tab completions for position 1 to "give" and "list"
+    set tab completions for position 1 to "give", "key" and "list"
     if tab arg-1 is "give":
         set tab completions for position 2 to boxList()
     if tab arg-2 is set:

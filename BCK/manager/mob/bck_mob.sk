@@ -1,0 +1,331 @@
+on load:
+    set {_list::*} to {skripts::*}
+    if {_list::*} contains "bck_manager.sk":
+        send "§6[§4BCK§6]§r Loading mob..." to console
+        send "§6[§4BCK§6/§aMob§6]§r Loaded successfully !" to console
+        load yaml "plugins/Skript/scripts/BCK/manager/mob/config.yml" as "bck.manager.mob.config"
+        load yaml "plugins/Skript/scripts/BCK/manager/mob/data.yml" as "bck.manager.mob.data"
+    else:
+        broadcast "§6[§4BCK§6/§aMob§6]§r Script loading cancel It requires (bck_manager.sk)"
+        unload script file "bck_mob.sk"
+        unload script file "bck_mob_debug.sk"
+command /mob [<text>] [<text>]:
+    trigger:
+        if arg-1 is set:
+            if arg-1 is "summon":
+                if arg-2 is set:
+                    if mobList() contains arg-2:
+                        set {_name} to mobConfig("data.mob.%arg-2%.name")
+                        set {_visibleName} to mobConfig("data.mob.%arg-2%.visibleName")
+                        set {_bossbar} to mobConfigBoolean("data.mob.%arg-2%.bossbar")
+                        set {_mobSource} to yaml value "data.mob.%arg-2%.mobSource" from "bck.manager.mob.config"
+                        set {_pv} to mobConfigNumber("data.mob.%arg-2%.pv")
+                        set {_speed} to mobConfigNumber("data.mob.%arg-2%.speed")
+                        set {_armor} to mobConfigNumber("data.mob.%arg-2%.armor")
+                        set {_armorToughness} to mobConfigNumber("data.mob.%arg-2%.armorToughness")
+                        set {_knockbackResistance} to mobConfigNumber("data.mob.%arg-2%.knockbackResistance")
+                        set {_attackKnockback} to mobConfigNumber("data.mob.%arg-2%.attackKnockback")
+                        set {_attackDamage} to mobConfigNumber("data.mob.%arg-2%.attackDamage")
+                        set {_attackSpeed} to mobConfigNumber("data.mob.%arg-2%.attackSpeed")
+
+                        set {_helmet} to mobConfig("data.mob.%arg-2%.helmet")
+                        set {_chestplate} to mobConfig("data.mob.%arg-2%.chetplate")
+                        set {_leggings} to mobConfig("data.mob.%arg-2%.leggings")
+                        set {_boots} to mobConfig("data.mob.%arg-2%.boots")
+                        set {_mainHand} to mobConfig("data.mob.%arg-2%.mainHand")
+                        set {_offHand} to mobConfig("data.mob.%arg-2%.offHand")
+
+                        if "%{_helmet}%" is "<none>":
+                            set {_helmet} to mobConfig("data.config.defaultHelmet")
+                        if "%{_chestplate}%" is "<none>":
+                            set {_chestplate} to mobConfig("data.config.defaultChestplate")
+                        if "%{_leggings}%" is "<none>":
+                            set {_leggings} to mobConfig("data.config.defaultLeggings")
+                        if "%{_boots}%" is "<none>":
+                            set {_boots} to mobConfig("data.config.defaultBoots")
+                        if {_mainHand} is not set:
+                            set {_mainHand} to mobConfig("data.config.defaultMainHand")
+                        if {_offHand} is not set:
+                            set {_offHand} to mobConfig("data.config.defaultOffHand")
+                        if "%{_name}%" is "<none>":
+                            set {_name} to mobConfig("data.config.defaultName")
+                        if {_visibleName} is not set:
+                            set {_visibleName} to mobConfig("data.config.defaultVisibleName")
+                        if {_bossbar} is not set:
+                            set {_bossbar} to mobConfig("data.config.defaultBossbar")
+                        if {_mobSource} is not set:
+                            set {_mobSource} to mobConfig("data.config.defaultMobSource")
+                        if {_pv} is not set:
+                            set {_pv} to mobConfig("data.config.defaultPv")
+                        if {_speed} is not set:
+                            set {_speed} to mobConfig("data.config.defaultSpeed")
+                        if {_armor} is not set:
+                            set {_armor} to mobConfig("data.config.defaultArmor")
+                        if {_armorToughness} is not set:
+                            set {_armorToughness} to mobConfig("data.config.defaultArmorToughness")
+                        if {_knockbackResistance} is not set:
+                            set {_knockbackResistance} to mobConfig("data.config.defaultKnockbackResistance")
+                        if {_attackKnockback} is not set:
+                            set {_attackKnockback} to mobConfig("data.config.defaultAttackKnockback")
+                        if {_attackDamage} is not set:
+                            set {_attackDamage} to mobConfig("data.config.defaultAttackDamage")
+                        if {_attackSpeed} is not set:
+                            set {_attackSpeed} to mobConfig("data.config.defaultAttackSpeed")
+                        
+                        set {_helmet} to {_helmet} parsed as item
+                        set {_chestplate} to {_chestplate} parsed as item
+                        set {_leggings} to {_leggings} parsed as item
+                        set {_boots} to {_boots} parsed as item
+                        set {_mainHand} to {_mainHand} parsed as item
+                        set {_offHand} to {_offHand} parsed as item
+
+                        set {_mobSource} to {_mobSource} parsed as entity type
+                        spawn {_mobSource} at player
+                        set {_mob} to last spawned mob 
+                        set display name of {_mob} to colored {_name}
+                        if {_visibleName} is "false":
+                            mobNbtEdit(player, "%{_mobSource}%", "CustomNameVisible", "0b")
+                        set max health of {_mob} to {_pv}
+                        mobMergeEdit(player, "%{_mobSource}%", "generic.movement_speed", "%{_speed}%")
+                        mobMergeEdit(player, "%{_mobSource}%", "generic.armor", "%{_armor}%")
+                        mobMergeEdit(player, "%{_mobSource}%", "generic.armor_toughness", "%{_armorToughness}%")
+                        mobMergeEdit(player, "%{_mobSource}%", "generic.knockback_resistance", "%{_knockbackResistance}%")
+                        mobMergeEdit(player, "%{_mobSource}%", "generic.attack_knockback", "%{_attackKnockback}%")
+                        mobMergeEdit(player, "%{_mobSource}%", "generic.attack_damage", "%{_attackDamage}%")
+                        mobMergeEdit(player, "%{_mobSource}%", "generic.attack_speed", "%{_attackSpeed}%")
+                        set {_maxPv} to maximum health of {_mob}
+                        if "%{_helmet}%" is not "<none>" or "false":
+                            set the helmet of {_mob} to {_helmet}
+                        if "%{_chestplate}%" is not "<none>" or "false":
+                            set the chestplate of {_mob} to {_chestplate}
+                        if "%{_leggings}%" is not "<none>" or "false":
+                            set the leggings of {_mob} to {_leggings}
+                        if "%{_boots}%" is not "<none>" or "false":
+                            set the boots of {_mob} to {_boots}
+                        if "%{_mainHand}%" is not "<none>" or "false":
+                            set {_mob}'s tool to {_mainHand}
+                        if "%{_offHand}%" is not "<none>" or "false":
+                            set {_mob}'s offhand tool to {_offHand}
+                    else:
+                        send "§cMob introuvable (%arg-2%)"
+                else:
+                    send "§c/mob %arg-1% <mob>"
+            else if arg-1 is "give":
+            else if arg-1 is "list":
+            else:
+                send "§cOption inconnue (%arg-1%)"
+        else:
+            send "§c/mob <option>"
+on tab complete of "/mob":
+    set tab completions for position 1 to "summon", "give" and "list"
+    if tab arg-1 is "summon":
+        set tab completions for position 2 to mobList()
+    else if tab arg-1 is "give":
+        set tab completions for position 2 to mobList()
+function mobList() :: objects:
+    set {_list::*} to yaml node keys "data.mob" from "bck.manager.mob.config"
+    loop {_list::*}:
+        add loop-value to {_r::*}
+    return {_r::*}
+function mobLootList(mob: text) :: objects:
+    set {_list::*} to yaml list "data.mob.%{_mob}%.loot" from "bck.manager.mob.config"
+    loop {_list::*}:
+        set {_l} to loop-value
+        set {_data::*} to "%{_l}%" split by "named"
+        set {_ii} to {_data::1}
+        set {_nn} to {_data::2}
+        replace " " with "" in {_ii}
+        set {_ii} to {_ii} parsed as item
+        set {_n} to substring of {_nn} from 2 to length of {_nn}
+        set {_i} to {_ii} named {_n}
+        add {_i} to {_r::*}
+    return {_r::*}
+function mobConfig(find: text, mode: text="extract", data: text="") :: text:
+    if {_mode} is "extract":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.mob.config"
+        if {_result} isn't set:
+            if {_data} isn't empty:
+                set {_result} to {_data}
+    else if {_mode} is "delete":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.mob.config"
+        if {_result} is set:
+            delete yaml value "%{_find}%" from "bck.manager.mob.config"
+            save yaml "bck.manager.mob.config"
+        else:
+            set yaml value "%{_find}%" from "bck.manager.mob.config" to {_data}
+            save yaml "bck.manager.mob.config"
+    else if {_mode} is "set":
+        set yaml value "%{_find}%" from "bck.manager.mob.config" to {_data}
+        save yaml "bck.manager.mob.config"
+    return "%{_result}%"
+function mobConfigNumber(find: text, mode: text="extract", data: text="") :: number:
+    if {_mode} is "extract":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.mob.config"
+        if {_result} isn't set:
+            if {_data} isn't empty:
+                set {_result} to {_data}
+    else if {_mode} is "delete":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.mob.config"
+        if {_result} is set:
+            delete yaml value "%{_find}%" from "bck.manager.mob.config"
+            save yaml "bck.manager.mob.config"
+        else:
+            set yaml value "%{_find}%" from "bck.manager.mob.config" to {_data}
+            save yaml "bck.manager.mob.config"
+    else if {_mode} is "set":
+        set yaml value "%{_find}%" from "bck.manager.mob.config" to {_data}
+        save yaml "bck.manager.mob.config"
+    set {_r} to "%{_result}%" parsed as number
+    return {_r}
+function mobConfigInteger(find: text, mode: text="extract", data: text="") :: integer:
+    if {_mode} is "extract":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.mob.config"
+        if {_result} isn't set:
+            if {_data} isn't empty:
+                set {_result} to {_data}
+    else if {_mode} is "delete":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.mob.config"
+        if {_result} is set:
+            delete yaml value "%{_find}%" from "bck.manager.mob.config"
+            save yaml "bck.manager.mob.config"
+        else:
+            set yaml value "%{_find}%" from "bck.manager.mob.config" to {_data}
+            save yaml "bck.manager.mob.config"
+    else if {_mode} is "set":
+        set yaml value "%{_find}%" from "bck.manager.mob.config" to {_data}
+        save yaml "bck.manager.mob.config"
+    set {_r} to {_result} parsed as integer
+    return {_r}
+function mobConfigBoolean(find: text, mode: text="extract", data: text="") :: boolean:
+    if {_mode} is "extract":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.mob.config"
+        if {_result} isn't set:
+            if {_data} isn't empty:
+                set {_result} to {_data}
+    else if {_mode} is "delete":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.mob.config"
+        if {_result} is set:
+            delete yaml value "%{_find}%" from "bck.manager.mob.config"
+            save yaml "bck.manager.mob.config"
+        else:
+            set yaml value "%{_find}%" from "bck.manager.mob.config" to {_data}
+            save yaml "bck.manager.mob.config"
+    else if {_mode} is "set":
+        set yaml value "%{_find}%" from "bck.manager.mob.config" to {_data}
+        save yaml "bck.manager.mob.config"
+    set {_r} to {_result} parsed as boolean
+    return {_r}
+function textToLo(data: text) :: location:
+    set {_loc::*} to {_data} split by ","
+    set {_x} to {_loc::1}
+    replace "x:" with "" in {_x}
+    replace all " " with "" in {_x}
+    set {_y} to {_loc::2}
+    replace " y:" with "" in {_y}
+    replace all " " with "" in {_y}
+    set {_z} to {_loc::3}
+    replace " z:" with "" in {_z}
+    replace all " " with "" in {_z}
+    set {_w::*} to {_loc::5} split by "in"
+    replace "'" with "" in {_w::2}
+    replace all " " with "" in {_w::2}
+    set {_w} to {_w::2}
+    set {_x} to {_x} parsed as number
+    set {_y} to {_y} parsed as number
+    set {_z} to {_z} parsed as number
+    return location({_x}, {_y}, {_z}, {_w})
+function locToTex(data: location) :: text:
+    set {_loc::*} to "%{_data}%" split by ","
+    set {_x} to {_loc::1}
+    replace "x:" with "" in {_x}
+    replace all " " with "" in {_x}
+    set {_y} to {_loc::2}
+    replace " y:" with "" in {_y}
+    replace all " " with "" in {_y}
+    set {_z} to {_loc::3}
+    replace " z:" with "" in {_z}
+    replace all " " with "" in {_z}
+    set {_w::*} to {_loc::5} split by "in"
+    replace "'" with "" in {_w::2}
+    replace all " " with "" in {_w::2}
+    set {_w} to {_w::2}
+    set {_x} to {_x} parsed as number
+    set {_y} to {_y} parsed as number
+    set {_z} to {_z} parsed as number
+    return "%{_x}%/%{_y}%/%{_z}%/%{_w}%"
+command /startanimation:
+    trigger:
+        # set {_n} to 0.2
+        # loop 70 times:
+        #     wait 1 tick
+        #     bckParticle(player, dust, 100, 1, {_n})
+        set {_center} to player's location  
+        set {_radius} to 5  
+
+        set {_angle} to 360 / 5  
+        set {_startAngle} to 0  
+
+        loop 5 times:
+            wait 1 tick
+            set {_startAngle} to {_startAngle} + {_angle}
+            set {_endAngle} to {_startAngle} + 180 
+
+            set {_startRadians} to {_startAngle} * PI / 180
+            set {_endRadians} to {_endAngle} * PI / 180
+
+            set {_startX} to {_radius} * sin({_startRadians})
+            set {_startZ} to {_radius} * cos({_startRadians})
+
+            set {_endX} to {_radius} * sin({_endRadians})
+            set {_endZ} to {_radius} * cos({_endRadians})
+
+            set {_startLocation} to {_center} offset {_startX} in x-axis and {_startZ} in z-axis
+            set {_endLocation} to {_center} offset {_endX} in x-axis and {_endZ} in z-axis
+
+            loop 20 times:
+                set {_ln} to loop-number-2
+                set {_progress} to {_ln} / 20
+
+                set {_lineLocation} to {_startLocation} linear interpolation to {_endLocation} with progress {_progress}
+                play dust at {_lineLocation}
+function bckParticle(player: player, particle: visual effect, repeat: number=100, amount: number=1, height: number=0.1, radius: number=1):
+    loop {_repeat} times:
+        set {_loc} to location of {_player}
+        set {_x} to x-coordinate of {_loc}
+        set {_y} to y-coordinate of {_loc}
+        set {_z} to z-coordinate of {_loc}
+        set {_angle} to loop-number
+        set {_rangle} to {_angle} * -1
+        set {_rrangle} to {_angle} * -0.5
+        set {_rrrangle} to {_angle} * -1.5
+        set {_radians} to {_angle} * PI / 0.01
+        set {_rradians} to {_rangle} * PI / 0.01
+        set {_rrradians} to {_rrangle} * PI / 0.01
+        set {_rrrradians} to {_rrrangle} * PI / 0.01
+        set {_dx} to {_radius} * cos({_radians})
+        set {_dz} to {_radius} * sin({_radians})
+        set {_rdx} to {_radius} * cos({_rradians})
+        set {_rdz} to {_radius} * sin({_rradians})
+        set {_rrdx} to {_radius} * cos({_rrradians})
+        set {_rrdz} to {_radius} * sin({_rrradians})
+        set {_rrrdx} to {_radius} * cos({_rrrradians})
+        set {_rrrdz} to {_radius} * sin({_rrrradians})
+        add {_x} to {_dx}
+        add {_z} to {_dz}
+        add {_x} to {_rdx}
+        add {_z} to {_rdz}
+        add {_x} to {_rrdx}
+        add {_z} to {_rrdz}
+        add {_x} to {_rrrdx}
+        add {_z} to {_rrrdz}
+        add {_height} to {_y}
+        set {_particleLocation} to location({_dx}, {_y}, {_dz})
+        set {_reverseParticleLocation} to location({_rdx}, {_y}, {_rdz})
+        set {_rreverseParticleLocation} to location({_rrdx}, {_y}, {_rrdz})
+        set {_rrreverseParticleLocation} to location({_rrrdx}, {_y}, {_rrrdz})
+
+        loop {_amount} times:
+            play {_particle} at {_particleLocation}
+            play {_particle} at {_reverseParticleLocation}
+            play {_particle} at {_rreverseParticleLocation}
+            play {_particle} at {_rrreverseParticleLocation}

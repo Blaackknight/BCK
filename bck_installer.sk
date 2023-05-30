@@ -9,6 +9,8 @@ on load:
 	delete file "plugins/Skript/scripts/BCK/core/temp.txt"
 	create script "plugins/Skript/scripts/BCK/manager/money/temp.txt"
 	delete file "plugins/Skript/scripts/BCK/manager/money/temp.txt"
+	create script "plugins/Skript/scripts/BCK/manager/mob/temp.txt"
+	delete file "plugins/Skript/scripts/BCK/manager/mob/temp.txt"
 	create script "plugins/Skript/scripts/BCK/manager/account/temp.txt"
 	delete file "plugins/Skript/scripts/BCK/manager/account/temp.txt"
 	create script "plugins/Skript/scripts/BCK/manager/box/temp.txt"
@@ -36,6 +38,10 @@ on load:
 	download file from "%{_link}%/manager/bck_manager_debug.sk" to file "plugins/Skript/scripts/BCK/manager/bck_manager_debug.sk"
 	download file from "%{_link}%/manager/config.yml" to file "plugins/Skript/scripts/BCK/manager/config.yml"
 	download file from "%{_link}%/manager/data.yml" to file "plugins/Skript/scripts/BCK/manager/data.yml"
+
+	download file from "%{_link}%/manager/mob/bck_mob.sk" to file "plugins/Skript/scripts/BCK/manager/mob/bck_mob.sk"
+	download file from "%{_link}%/manager/mob/config.yml" to file "plugins/Skript/scripts/BCK/manager/mob/config.yml"
+	download file from "%{_link}%/manager/mob/data.yml" to file "plugins/Skript/scripts/BCK/manager/mob/data.yml"
 
 	download file from "%{_link}%/manager/money/bck_money.sk" to file "plugins/Skript/scripts/BCK/manager/money/bck_money.sk"
 	download file from "%{_link}%/manager/money/config.yml" to file "plugins/Skript/scripts/BCK/manager/money/config.yml"

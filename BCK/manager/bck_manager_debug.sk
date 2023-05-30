@@ -85,7 +85,10 @@ on place:
         cancel event
         send "§c§lHey! §7Tu n'a pas la permission :|"
     else:
-        logCustom("%{_player}% has just placing the §7%event-block%", 5)
+        if "%type of event-block%" is "bite":
+            cancel event
+        else:
+            logCustom("%{_player}% has just placing the §7%event-block%", 5)
 on drop:
     if hasPermission(player, "item.drop") is false:
         cancel event

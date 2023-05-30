@@ -1,0 +1,55 @@
+data:
+    config:
+        defaultName: §k[§r???§k]
+        defaultVisisbleName: false
+        defaultBossbar: false
+        defaultMobSource: pig
+        defaultPv: 20
+        defaultSpeed: 0.2
+        defaultArmor: 0
+        defaultArmorToughness: 0
+        defaultKnockbackResistance: 0
+        defaultAttackKnockback: 0.7
+        defaultAttackDamage: 2
+        defaultAttackSpeed: 4
+        defaultHelmet: false
+        defaultChestplate: false
+        defaultLeggings: false
+        defaultBoots: false
+        defaultMainHand: false
+        defaultOffHand: false
+        defaultloot:
+        defaultLootConfig:
+            chance: 100
+            count: 1
+    mob:
+        zombie_elite:
+            name: §2§lZombie §4§lElite
+            visibleName: false
+            bossbar: false
+            mobSource: zombie
+            pv: 1
+            speed: 0.3
+            armor: 0
+            armorToughness: 0.1
+            knockbackResistance: 0.1
+            attackKnockback: 0.7
+            attackDamage: 12
+            attackSpeed: 4
+            helmet: end rod
+            chestplate:
+            leggings:
+            boots:
+            mainHand:
+            offHand:
+            loot:
+                - bread named §5Pute
+                - barrier named §4barrier
+            lootConfig:
+                chance: 50
+                count: 1
+        skeleton_elite:
+            name: §7§lSkeleton §4§lElite
+            mobSource: skeleton
+            pv: 10
+            mainHand:

@@ -10,6 +10,7 @@ function bckRegisterSkripts():
     set {_con::*} to fileList("/plugins/Skript/scripts/BCK/manager/contener/")
     set {_ele::*} to fileList("/plugins/Skript/scripts/BCK/manager/elevator/")
     set {_ham::*} to fileList("/plugins/Skript/scripts/BCK/manager/hammer/")
+    set {_mob::*} to fileList("/plugins/Skript/scripts/BCK/manager/mob/")
     set {_oth::*} to fileList("/plugins/Skript/scripts/BCK/manager/other/")
     set {_zon::*} to fileList("/plugins/Skript/scripts/BCK/manager/zones/")
     loop {_bc::*}:
@@ -27,6 +28,8 @@ function bckRegisterSkripts():
     loop {_ele::*}:
         add "%loop-value%" to {skripts::*}
     loop {_ham::*}:
+        add "%loop-value%" to {skripts::*}
+    loop {_mob::*}:
         add "%loop-value%" to {skripts::*}
     loop {_box::*}:
         add "%loop-value%" to {skripts::*}
@@ -488,6 +491,9 @@ function textToMinecraft(text: text) :: text:
 function mobNbtEdit(p: player, mob: text, data: text, value: text):
     set {_en} to textToMinecraft({_mob})
     make console execute command "/execute at %{_p}% run data modify entity @e[type=%{_en}%,limit=1,distance=..1] %{_data}% set value %{_value}%"
+function mobMergeEdit(p: player, mob: text, name: text, base: text):
+    set {_en} to textToMinecraft({_mob})
+    make console execute command "/execute at %{_p}% run data merge entity @e[type=%{_en}%,limit=1,distance=..1] {Attributes:[{Name:%{_name}%,Base:%{_base}%d}]}"
 #                                                                                                                #
 function numberFormatter(num: integer) :: text:
     if length of {_b} > 3:
@@ -802,10 +808,14 @@ function folderList(dir: text, extention: text=".sk") :: objects:
         # add {_r} to {_files::*}
     return {_files::*}
 function loadUserData(player: player):
-    set {_uuid} to {_player}'s uuid
+    set {_uuid} to "%{_player}'s uuid%"
+    if {_uuid} is not set:
+        stop
     load yaml "plugins/Skript/scripts/BCK/manager/userdata/%{_uuid}%.yml" as "bck.userdata.%{_uuid}%"
 function userData(player: player, find: text="data", mode: text="extract", data: text="", type: text="string") :: text:
-    set {_uuid} to {_player}'s uuid
+    set {_uuid} to "%{_player}'s uuid%"
+    if {_uuid} is not set:
+        stop
     if file "plugins/Skript/scripts/BCK/manager/userdata/%{_uuid}%.yml" doesn't exist:
         create file "plugins/Skript/scripts/BCK/manager/userdata/%{_uuid}%.yml"
         set yaml value "data.username" from "bck.userdata.%{_uuid}%" to {_player}'s display name

@@ -355,6 +355,9 @@ on inventory click:
             else if "%{_t}%" is "netherite pickaxe":
                 if {_u} contain "Hammer":
                     guiMain(player, "hammer")
+            else if "%{_t}%" contain "zombie head":
+                if {_u} contain "Mob":
+                    guiMain(player, "mob")
             else if "%{_t}%" is "feather":
                 if {_u} contain "Other":
                     guiMain(player, "other")
@@ -524,6 +527,28 @@ on inventory click:
             else if "%{_t}%" contain {_uni}:
                 if {_u} contain "Désinstaller":
                     addonDeleter(player, "hammer")
+    else if userData(player, "data.inv") is "manager.mob.main":
+        cancel event
+        set {_i} to event-slot
+        set {_t} to type of {_i}
+        set {_n} to display name of {_i}
+        set {_u} to uncolored {_n}
+        if {_t} is not air:
+            set {_ins} to managerConfig("data.gui.config.install.item")
+            set {_swi} to managerConfig("data.gui.config.switch.item")
+            set {_uni} to managerConfig("data.gui.config.uninstall.item")
+            if "%{_t}%" contain "barrier":
+                if {_u} contain "Back":
+                    managerGuiMain(player)
+            else if "%{_t}%" is {_ins}:
+                if {_u} contain "Installer":
+                    addonInstaller(player, {_i}, "mob")
+            else if "%{_t}%" contain {_swi}:
+                if {_u} contain "Activé":
+                    fileSwitch(player, "mob")
+            else if "%{_t}%" contain {_uni}:
+                if {_u} contain "Désinstaller":
+                    addonDeleter(player, "mob")
     else if userData(player, "data.inv") is "manager.other.main":
         cancel event
         set {_i} to event-slot

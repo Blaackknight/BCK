@@ -1,0 +1,6 @@
+on load:
+    set {_list::*} to {skripts::*}
+    if {_list::*} contains "bck_mob.sk":
+        send "§6[§4BCK§6/§aMobDebug§6]§r Loaded successfully !" to console
+    else:
+        unload script file "bck_mob_debug.sk"

@@ -57,6 +57,11 @@ data:
             name: "§8⟪ Hammer ⟫"
             guiName: "§8Hammer"
             lore:
+        mob:
+            item: zombie head
+            name: "§a⟪ Mob ⟫"
+            guiName: "§aMob"
+            lore:
         money:
             item: paper
             name: "§b⟪ Money ⟫"

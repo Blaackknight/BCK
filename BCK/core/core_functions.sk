@@ -5,13 +5,14 @@ function bckRegisterSkripts():
     set {_bc::*} to fileList("/plugins/Skript/scripts/BCK/core/")
     set {_mon::*} to fileList("/plugins/Skript/scripts/BCK/manager/money/")
     set {_acc::*} to fileList("/plugins/Skript/scripts/BCK/manager/account/")
-    set {_zon::*} to fileList("/plugins/Skript/scripts/BCK/manager/attributs/")
+    set {_att::*} to fileList("/plugins/Skript/scripts/BCK/manager/attributs/")
     set {_box::*} to fileList("/plugins/Skript/scripts/BCK/manager/box/")
     set {_cla::*} to fileList("/plugins/Skript/scripts/BCK/manager/clan/")
     set {_con::*} to fileList("/plugins/Skript/scripts/BCK/manager/contener/")
     set {_ele::*} to fileList("/plugins/Skript/scripts/BCK/manager/elevator/")
     set {_ham::*} to fileList("/plugins/Skript/scripts/BCK/manager/hammer/")
     set {_mob::*} to fileList("/plugins/Skript/scripts/BCK/manager/mob/")
+    set {_tur::*} to fileList("/plugins/Skript/scripts/BCK/manager/turret/")
     set {_oth::*} to fileList("/plugins/Skript/scripts/BCK/manager/other/")
     set {_zon::*} to fileList("/plugins/Skript/scripts/BCK/manager/zones/")
     loop {_bc::*}:
@@ -37,6 +38,10 @@ function bckRegisterSkripts():
     loop {_oth::*}:
         add "%loop-value%" to {skripts::*}
     loop {_zon::*}:
+        add "%loop-value%" to {skripts::*}
+    loop {_att::*}:
+        add "%loop-value%" to {skripts::*}
+    loop {_tur::*}:
         add "%loop-value%" to {skripts::*}
 function bckRegisterCommands():
     set {cmds::*} to all registered commands

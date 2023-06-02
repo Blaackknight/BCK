@@ -378,6 +378,9 @@ on inventory click:
             else if "%{_t}%" is "ink sac":
                 if {_u} contain "Attributs":
                     guiMain(player, "attributs")
+            else if "%{_t}%" is "iron block":
+                if {_u} contain "Turret":
+                    guiMain(player, "turret")
     else if userData(player, "data.inv") is "manager.money.main":
         cancel event
         set {_i} to event-slot
@@ -622,6 +625,28 @@ on inventory click:
                             add 1 to {_line}
                         give 1 of {_i} to player
                         exit loop
+    else if userData(player, "data.inv") is "manager.turret.main":
+        cancel event
+        set {_i} to event-slot
+        set {_t} to type of {_i}
+        set {_n} to display name of {_i}
+        set {_u} to uncolored {_n}
+        if {_t} is not air:
+            set {_ins} to managerConfig("data.gui.config.install.item")
+            set {_swi} to managerConfig("data.gui.config.switch.item")
+            set {_uni} to managerConfig("data.gui.config.uninstall.item")
+            if "%{_t}%" contain "barrier":
+                if {_u} contain "Back":
+                    managerGuiMain(player)
+            else if "%{_t}%" is {_ins}:
+                if {_u} contain "Installer":
+                    addonInstaller(player, {_i}, "turret")
+            else if "%{_t}%" contain {_swi}:
+                if {_u} contain "Activé":
+                    fileSwitch(player, "turret")
+            else if "%{_t}%" contain {_uni}:
+                if {_u} contain "Désinstaller":
+                    addonDeleter(player, "turret")
     else if userData(player, "data.inv") is "manager.userdata.main":
         cancel event
         set {_i} to event-slot

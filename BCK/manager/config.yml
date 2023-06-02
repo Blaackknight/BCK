@@ -84,6 +84,11 @@ data:
             guiName: "§aRecipe"
             lore:
             - "§aRecipe System.."
+        turret:
+            item: iron block
+            name: "§e⟪ Turret ⟫"
+            guiName: "§eTurret"
+            lore:
         userdata:
             item: name tag
             name: "§e⟪ Userdata ⟫"

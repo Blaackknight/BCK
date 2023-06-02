@@ -85,6 +85,10 @@ on load:
 	download file from "%{_link}%/manager/recipe/config.yml" to file "plugins/Skript/scripts/BCK/manager/recipe/config.yml"
 	download file from "%{_link}%/manager/recipe/data.yml" to file "plugins/Skript/scripts/BCK/manager/recipe/data.yml"
 
+	download file from "%{_link}%/manager/turret/bck_turret.sk" to file "plugins/Skript/scripts/BCK/manager/turret/bck_turret.sk"
+	download file from "%{_link}%/manager/turret/config.yml" to file "plugins/Skript/scripts/BCK/manager/turret/config.yml"
+	download file from "%{_link}%/manager/turret/data.yml" to file "plugins/Skript/scripts/BCK/manager/turret/data.yml"
+
 	download file from "%{_link}%/manager/zones/bck_zones.sk" to file "plugins/Skript/scripts/BCK/manager/zones/bck_zones.sk"
 	download file from "%{_link}%/manager/zones/config.yml" to file "plugins/Skript/scripts/BCK/manager/zones/config.yml"
 	download file from "%{_link}%/manager/zones/data.yml" to file "plugins/Skript/scripts/BCK/manager/zones/data.yml"

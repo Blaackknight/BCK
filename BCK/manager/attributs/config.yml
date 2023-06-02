@@ -1,0 +1,28 @@
+data:
+    config:
+        defaultColor: §f
+    attributs:
+        health:
+            min: 5
+            max: 40
+            color: §a
+            icon: "❤"
+        strength:
+            min: 5
+            max: 40
+            color: §c
+            icon:
+        speed:
+            min: 1
+            max: 10
+            color: §a
+            icon:
+        resistance:
+            min: 1
+            max: 5
+            color: §8
+            icon:
+        big_head:
+            min: 1
+            max: 3
+            color: §5

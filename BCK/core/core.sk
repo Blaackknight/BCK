@@ -4,6 +4,8 @@ on load:
     bckRegisterSkripts()
     bckRegisterCommands()
     bckLettersLoad()
+    set {_m} to skriptUniversalConverterText("cut copper stair")
+    broadcast {_m}
     #broadcast {skripts::*}
 command /permission [<offlineplayer>] [<text>] [<text>]:
     trigger:
@@ -61,3 +63,8 @@ on tab complete of "/permission":
                 set tab completions for position 3 to getServerPermission(loop-value)
             else if tab arg-2 is "remove":
                 set tab completions for position 3 to {server.permission.%loop-value%.list::*}
+command /type:
+    trigger:
+        set {_t} to player's tool
+        if {_t} is not air:
+            send type of {_t}

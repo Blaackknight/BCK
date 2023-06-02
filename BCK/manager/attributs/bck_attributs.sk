@@ -10,4 +10,253 @@ on load:
         unload script file "bck_attributs.sk"
 command /attributs [<text>]:
     trigger:
+        set {_h} to iron helmet
+        set {_i} to addRandomAttributs({_h}, 3)
+        give {_i} to player
+        give {_g} to player
+every second:
+    loop all players:
+        set {_p} to loop-player
+        set {_h} to {_p}'s helmet
+        set {_s} to {_p}'s chestplate
+        set {_l} to {_p}'s leggings
+        set {_b} to {_p}'s boots
+        if "%{_h}%" is not "<none>":
+            set {_hLore::*} to uncolored lore of {_h}
+            loop {_hLore::*}:
+                set {_data::*} to loop-value-2 split by ":"
+                set {_name} to {_data::1}
+                set {_stats} to {_data::2}
+                replace " " with "" in {_stats}
+                replace all " "  with "_" in {_name}
+                set {_datas::*} to {_name} split by "_"
+                loop {_datas::*}:
+                    set {_yy} to lowercase(loop-value-3)
+                    add {_yy} to {_lower::*}
+                set {_lower}to "%{_lower::*}%"
+                replace all ", " with 
+                send "%{_lower::*}%" to {_p}
+                #set {_lowerName} to lowercase({_lower})
+                send "%{_lowerName}%/%{_name}% -> %{_stats}%" to {_p}
+function addAttributs(item: item, att: text) :: item:
+    loop yaml node keys "data.attributs" from "bck.manager.attributs.config":
+        add loop-node to {_atts::*}
+    set {_line} to 1
+    if line 1 of lore of {_item} is set:
+        add 1 to {_line}
+    else if line 2 of lore of {_item} is set:
+        add 1 to {_line}
+    else if line 3 of lore of {_item} is set:
+        add 1 to {_line}
+    else if line 4 of lore of {_item} is set:
+        add 1 to {_line}
+    else if line 5 of lore of {_item} is set:
+        add 1 to {_line}
+    else if line 6 of lore of {_item} is set:
+        add 1 to {_line}
+    else if line 7 of lore of {_item} is set:
+        add 1 to {_line}
+    else if line 8 of lore of {_item} is set:
+        add 1 to {_line}
+    else if line 9 of lore of {_item} is set:
+        add 1 to {_line}
+    else if line 10 of lore of {_item} is set:
+        add 1 to {_line}
+    else if line 11 of lore of {_item} is set:
+        add 1 to {_line}
+    else if line 12 of lore of {_item} is set:
+        add 1 to {_line}
+    else if line 13 of lore of {_item} is set:
+        add 1 to {_line}
+    else if line 14 of lore of {_item} is set:
+        add 1 to {_line}
+    else if line 15 of lore of {_item} is set:
+        add 1 to {_line}
+    else if line 16 of lore of {_item} is set:
+        add 1 to {_line}
+    else if line 17 of lore of {_item} is set:
+        add 1 to {_line}
+    else if line 18 of lore of {_item} is set:
+        add 1 to {_line}
+    else if line 19 of lore of {_item} is set:
+        add 1 to {_line}
+    else if line 20 of lore of {_item} is set:
+        add 1 to {_line}
         
+    set {_r} to "data.attributs.%{_att}%"
+    set {_a} to {_r}
+    replace "data.attributs." with "" in {_a}
+    set {_min} to attributsConfigNumber("%{_r}%.min")
+    set {_max} to attributsConfigNumber("%{_r}%.max")
+    set {_color} to attributsConfig("%{_r}%.color")
+    if {_color} is "<none>":
+        set {_color} to attributsConfig("data.config.defaultColor")
+    set {_stats} to random integer between {_min} and {_max}
+    set {_icon} to attributsConfig("%{_r}%.icon")
+        
+            
+    set {_ss} to substring of {_a} from 0 to 1
+    set {_f} to substring of {_a} from 2 to length of {_a}
+    set {_name} to "%uppercase({_ss})%%{_f}%"
+    set line {_line} of {_item} to "§7%{_name}%: %{_color}%%{_stats}%"
+    if {_icon} is not "<none>":
+        set line {_line} of lore of {_item} to "§7%{_name}%: %{_color}%%{_stats}%%{_icon}%"
+        #broadcast "§7%{_name}%: %{_color}%%{_stats}%%{_icon}%"
+    else:
+        set line {_line} of lore of {_item} to "§7%{_name}%: %{_color}%%{_stats}%"
+        #broadcast "§7%{_name}%: %{_color}%%{_stats}%"
+    add 1 to {_line}
+    set {_noSame} to {_rng}
+    return {_item}
+function addRandomAttributs(item: item, count: number=1) :: item:
+    loop yaml node keys "data.attributs" from "bck.manager.attributs.config":
+        add loop-node to {_atts::*}
+    set {_line} to 1
+    set {_noSame} to 0
+    loop {_count} times:
+        set {_rng} to random integer between 1 and listCounter({_atts::*})
+        
+        if {_noSame} = {_rng}:
+            set {_rngg} to random integer between 1 and listCounter({_atts::*})
+            if {_noSame} = {_rngg}:
+                set {_rnggg} to random integer between 1 and listCounter({_atts::*})
+                set {_r} to {_atts::%{_rnggg}%}
+                set {_a} to {_r}
+                replace "data.attributs." with "" in {_a}
+                replace all "_" with " " in {_a}
+                set {_min} to attributsConfigNumber("%{_r}%.min")
+                set {_max} to attributsConfigNumber("%{_r}%.max")
+                set {_color} to attributsConfig("%{_r}%.color")
+                if {_color} is "<none>":
+                    set {_color} to attributsConfig("data.config.defaultColor")
+                set {_stats} to random integer between {_min} and {_max}
+                set {_icon} to attributsConfig("%{_r}%.icon")
+            
+                
+                set {_ss} to substring of {_a} from 0 to 1
+                set {_f} to substring of {_a} from 2 to length of {_a}
+                set {_name} to "%uppercase({_ss})%%{_f}%"
+                set line {_line} of {_item} to "§7%{_name}%: %{_color}%%{_stats}%"
+                if {_icon} is not "<none>":
+                    if "%{_stats}%" contains "-":
+
+                    else:
+                        set {_stats} to "+%{_stats}%"
+                    set line {_line} of lore of {_item} to "§7%{_name}%: %{_color}%%{_stats}%%{_icon}%"
+                    #broadcast "§7%{_name}%: %{_color}%%{_stats}%%{_icon}%"
+                else:
+                    if "%{_stats}%" contains "-":
+
+                    else:
+                        set {_stats} to "+%{_stats}%"
+                    set line {_line} of lore of {_item} to "§7%{_name}%: %{_color}%%{_stats}%"
+                    #broadcast "§7%{_name}%: %{_color}%%{_stats}%"
+                add 1 to {_line}
+                set {_noSame} to {_rng}
+            else:
+                set {_r} to {_atts::%{_rngg}%}
+                set {_a} to {_r}
+                replace "data.attributs." with "" in {_a}
+                replace all "_" with " " in {_a}
+                set {_min} to attributsConfigNumber("%{_r}%.min")
+                set {_max} to attributsConfigNumber("%{_r}%.max")
+                set {_color} to attributsConfig("%{_r}%.color")
+                if {_color} is "<none>":
+                    set {_color} to attributsConfig("data.config.defaultColor")
+                set {_stats} to random integer between {_min} and {_max}
+                set {_icon} to attributsConfig("%{_r}%.icon")
+            
+                
+                set {_ss} to substring of {_a} from 0 to 1
+                set {_f} to substring of {_a} from 2 to length of {_a}
+                set {_name} to "%uppercase({_ss})%%{_f}%"
+                set line {_line} of {_item} to "§7%{_name}%: %{_color}%%{_stats}%"
+                if {_icon} is not "<none>":
+                    if "%{_stats}%" contains "-":
+
+                    else:
+                        set {_stats} to "+%{_stats}%"
+                    set line {_line} of lore of {_item} to "§7%{_name}%: %{_color}%%{_stats}%%{_icon}%"
+                    #broadcast "§7%{_name}%: %{_color}%%{_stats}%%{_icon}%"
+                else:
+                    if "%{_stats}%" contains "-":
+
+                    else:
+                        set {_stats} to "+%{_stats}%"
+                    set line {_line} of lore of {_item} to "§7%{_name}%: %{_color}%%{_stats}%"
+                    #broadcast "§7%{_name}%: %{_color}%%{_stats}%"
+                add 1 to {_line}
+                set {_noSame} to {_rng}
+        else:
+            #broadcast {_rng}
+            set {_r} to {_atts::%{_rng}%}
+            set {_a} to {_r}
+            replace "data.attributs." with "" in {_a}
+            replace all "_" with " " in {_a}
+            set {_min} to attributsConfigNumber("%{_r}%.min")
+            set {_max} to attributsConfigNumber("%{_r}%.max")
+            set {_color} to attributsConfig("%{_r}%.color")
+            if {_color} is "<none>":
+                set {_color} to attributsConfig("data.config.defaultColor")
+            set {_stats} to random integer between {_min} and {_max}
+            set {_icon} to attributsConfig("%{_r}%.icon")
+        
+            
+            set {_ss} to substring of {_a} from 0 to 1
+            set {_f} to substring of {_a} from 2 to length of {_a}
+            set {_name} to "%uppercase({_ss})%%{_f}%"
+            set line {_line} of {_item} to "§7%{_name}%: %{_color}%%{_stats}%"
+            if {_icon} is not "<none>":
+                if "%{_stats}%" contains "-":
+                else:
+                    set {_stats} to "+%{_stats}%"
+                set line {_line} of lore of {_item} to "§7%{_name}%: %{_color}%%{_stats}%%{_icon}%"
+                #broadcast "§7%{_name}%: %{_color}%%{_stats}%%{_icon}%"
+            else:
+                if "%{_stats}%" contains "-":
+                else:
+                    set {_stats} to "+%{_stats}%"
+                set line {_line} of lore of {_item} to "§7%{_name}%: %{_color}%%{_stats}%"
+                #broadcast "§7%{_name}%: %{_color}%%{_stats}%"
+            add 1 to {_line}
+            set {_noSame} to {_rng}
+    return {_item}
+
+function attributsConfig(find: text="data", mode: text="extract", data: text="") :: text:
+    if {_mode} is "extract":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.attributs.config"
+        if {_result} isn't set:
+            if {_data} isn't empty:
+                set {_result} to {_data}
+    else if {_mode} is "delete":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.attributs.config"
+        if {_result} is set:
+            delete yaml value "%{_find}%" from "bck.manager.attributs.config"
+            save yaml "bck.manager.attributs.config"
+        else:
+            set yaml value "%{_find}%" from "bck.manager.attributs.config" to {_data}
+            save yaml "bck.manager.attributs.config"
+    else if {_mode} is "set":
+        set yaml value "%{_find}%" from "bck.manager.attributs.config" to {_data}
+        save yaml "bck.manager.attributs.config"
+    
+    return "%{_result}%"
+function attributsConfigNumber(find: text="data", mode: text="extract", data: text="") :: number:
+    if {_mode} is "extract":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.attributs.config"
+        if {_result} isn't set:
+            if {_data} isn't empty:
+                set {_result} to {_data}
+    else if {_mode} is "delete":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.attributs.config"
+        if {_result} is set:
+            delete yaml value "%{_find}%" from "bck.manager.attributs.config"
+            save yaml "bck.manager.attributs.config"
+        else:
+            set yaml value "%{_find}%" from "bck.manager.attributs.config" to {_data}
+            save yaml "bck.manager.attributs.config"
+    else if {_mode} is "set":
+        set yaml value "%{_find}%" from "bck.manager.attributs.config" to {_data}
+        save yaml "bck.manager.attributs.config"
+    set {_r} to "%{_result}%" parsed as number
+    return {_r}

@@ -45,7 +45,7 @@ function bckRegisterCommands():
         if {server.perms::*} doesn't contain {_p}:
             replace "skript:" with "" in {_p}
             addServerPermission("server.command.%{_p}%")
-            broadcast {_p}
+            #broadcast {_p}
 function bckLettersLoad(): 
     set {_letters} to "Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz"
     set {_letter-pairs::*} to {_letters} split at " "
@@ -537,7 +537,7 @@ function switchCaseFor(text: text, to-uppercase: boolean) :: text:
             set {_char} to {letters::lowercase::%loop-value%}
  
         set {_new} to "%{_new}%%{_char}%"
- 
+    replace "<none>" with "" in {_new}
     return {_new}
 #                                                                                                                #
 function uppercase(text: text) :: text:
@@ -921,3 +921,259 @@ function managerConfig(find: text="data", mode: text="extract", data: text="") :
         save yaml "bck.manager.config"
     
     return "%{_result}%"
+function skriptUniversalConverterText(source: text) :: text:
+    if {_source} is "air":
+        set {_r} to "air"
+    else if {_source} is "stone block":
+        set {_r} to "stone"
+    else if {_source} is "raw granite":
+        set {_r} to "granite"
+    else if {_source} is "smooth granite":
+        set {_r} to "polished granite"
+    else if {_source} is "raw diorite":
+        set {_r} to "diorite"
+    else if {_source} is "smooth diorite":
+        set {_r} to "polished diorite"
+    else if {_source} is "raw andesite":
+        set {_r} to "andesite"
+    else if {_source} is "smooth andesite":
+        set {_r} to "polished andesite"
+    else if {_source} is "deepslate block":
+        set {_r} to "deepslate"
+    else if {_source} is "cobbled deepslate block":
+        set {_r} to "cobbled_deepslate"
+    else if {_source} is "polished deepslate block":
+        set {_r} to "polished_deepslate"
+    else if {_source} is "calcite":
+        set {_r} to "calcite"
+    else if {_source} is "tuff":
+        set {_r} to "tuff"
+    else if {_source} is "dripstone block":
+        set {_r} to "dripstone_block"
+    else if {_source} is "grass block":
+        set {_r} to "grass_block"
+    else if {_source} is "dirt block":
+        set {_r} to "dirt"
+    else if {_source} is "coarse dirt block":
+        set {_r} to "coarse_dirt"
+    else if {_source} is "podzol block":
+        set {_r} to "podzol"
+    else if {_source} is "rooted dirt block":
+        set {_r} to "rooted_dirt"
+    else if {_source} is "mud":
+        set {_r} to "mud"
+    else if {_source} is "crimson nylium":
+        set {_r} to "crimson_nylium"
+    else if {_source} is "warped nylium":
+        set {_r} to "warped_nylium"
+    else if {_source} is "cobblestone":
+        set {_r} to "cobblestone"
+    else if {_source} is "oak wood wooden planks":
+        set {_r} to "oak_planks"
+    else if {_source} is "spruce wood wooden planks":
+        set {_r} to "spruce_planks"
+    else if {_source} is "birch wood wooden planks":
+        set {_r} to "birch_planks"
+    else if {_source} is "jungle wood wooden planks":
+        set {_r} to "jungle_planks"
+    else if {_source} is "acacia wood wooden planks":
+        set {_r} to "acacia_planks"
+    else if {_source} is "dark oak wood wooden planks":
+        set {_r} to "dark_oak_planks"
+    else if {_source} is "mangrove wood wooden planks":
+        set {_r} to "mangrove_planks"
+    else if {_source} is "crimson wood wooden planks":
+        set {_r} to "crimson_planks"
+    else if {_source} is "warped wood wooden planks":
+        set {_r} to "warped_planks"
+    else if {_source} is "oak sapling":
+        set {_r} to "oak_sapling"
+    else if {_source} is "spruce sapling":
+        set {_r} to "spruce_sapling"
+    else if {_source} is "birch sapling":
+        set {_r} to "birch_sapling"
+    else if {_source} is "jungle sapling":
+        set {_r} to "jungle_sapling"
+    else if {_source} is "acacia sapling":
+        set {_r} to "acacia_sapling"
+    else if {_source} is "dark oak sapling":
+        set {_r} to "dark_oak_sapling"
+    else if {_source} is "mangrove propagule":
+        set {_r} to "mangrove_propagule"
+    else if {_source} is "bedrock block":
+        set {_r} to "bedrock"
+    else if {_source} is "sand block":
+        set {_r} to "sand"
+    else if {_source} is "red sand block":
+        set {_r} to "red_sand"
+    else if {_source} is "gravel block":
+        set {_r} to "gravel"
+    else if {_source} is "coal ore":
+        set {_r} to "coal_ore"
+    else if {_source} is "deepslate coal ore":
+        set {_r} to "deepslate_coal_ore"
+    else if {_source} is "iron ore":
+        set {_r} to "iron_ore"
+    else if {_source} is "deepslate iron ore":
+        set {_r} to "deepslate_iron_ore"
+    else if {_source} is "copper ore":
+        set {_r} to "copper_ore"
+    else if {_source} is "deepslate copper ore":
+        set {_r} to "deepslate_copper_ore"
+    else if {_source} is "gold ore":
+        set {_r} to "gold_ore"
+    else if {_source} is "deepslate gold ore":
+        set {_r} to "deepslate_gold_ore"
+    else if {_source} is "redstone ore":
+        set {_r} to "redstone_ore"
+    else if {_source} is "deepslate redstone ore":
+        set {_r} to "deepslate_redstone_ore"
+    else if {_source} is "emerald ore":
+        set {_r} to "emerald_ore"
+    else if {_source} is "deepslate emerald ore":
+        set {_r} to "deepslate_emerald_ore"
+    else if {_source} is "lapis lazuli ore":
+        set {_r} to "lapis_ore"
+    else if {_source} is "deepslate lapis lazuli ore":
+        set {_r} to "deepslate_lapis_ore"
+    else if {_source} is "diamond ore":
+        set {_r} to "diamond_ore"
+    else if {_source} is "deepslate diamond ore":
+        set {_r} to "deepslate_diamond_ore"
+    else if {_source} is "nether gold ore":
+        set {_r} to "nether_gold_ore"
+    else if {_source} is "nether quartz ore":
+        set {_r} to "nether_quartz_ore"
+    else if {_source} is "ancient debris":
+        set {_r} to "ancient_debris"
+    else if {_source} is "coal block":
+        set {_r} to "coal_block"
+    else if {_source} is "raw iron block":
+        set {_r} to "raw_iron_block"
+    else if {_source} is "raw copper block":
+        set {_r} to "raw_copper_block"
+    else if {_source} is "raw gold block":
+        set {_r} to "raw_gold_block"
+    else if {_source} is "amethyst block":
+        set {_r} to "amethyst_block"
+    else if {_source} is "budding amethyst":
+        set {_r} to "budding_amethyst"
+    else if {_source} is "iron block":
+        set {_r} to "iron_block"
+    else if {_source} is "copper block":
+        set {_r} to "copper_block"
+    else if {_source} is "gold block":
+        set {_r} to "gold_block"
+    else if {_source} is "diamond block":
+        set {_r} to "diamond_block"
+    else if {_source} is "netherite block":
+        set {_r} to "netherite_block"
+    else if {_source} is "exposed copper block":
+        set {_r} to "exposed_copper"
+    else if {_source} is "weathered copper block":
+        set {_r} to "weathered_copper"
+    else if {_source} is "oxidized copper block":
+        set {_r} to "oxidized_copper"
+    else if {_source} is "cut copper block":
+        set {_r} to "cut_copper"
+    else if {_source} is "exposed cut copper block":
+        set {_r} to "exposed_cut_copper"
+    else if {_source} is "weathered cut copper block":
+        set {_r} to "weathered_cut_copper"
+    else if {_source} is "oxidized cut copper block":
+        set {_r} to "oxidized_cut_copper"
+    else if {_source} is "cut copper stair":
+        set {_r} to "cut_copper_stairs"
+    else if {_source} is "exposed copper stair":
+        set {_r} to "exposed_cut_copper_stairs"
+    else if {_source} is "weathered copper stair":
+        set {_r} to "weathered_cut_copper_stairs"
+    else if {_source} is "oxidized copper stair":
+        set {_r} to "oxidized_cut_copper_stairs"
+    else if {_source} is "cut copper slab":
+        set {_r} to "cut_copper_slab"
+    else if {_source} is "exposed copper slab":
+        set {_r} to "exposed_cut_copper_slab"
+    else if {_source} is "weathered copper slab":
+        set {_r} to "weathered_cut_copper_slab"
+    else if {_source} is "oxidized copper slab":
+        set {_r} to "oxidized_cut_copper_slab"
+    else if {_source} is "waxed copper block":
+        set {_r} to "waxed_copper_block"
+    else if {_source} is "waxed exposed copper block":
+        set {_r} to "waxed_exposed_copper"
+    else if {_source} is "waxed weathered copper block":
+        set {_r} to "waxed_weathered_copper"
+    else if {_source} is "waxed oxidized copper block":
+        set {_r} to "waxed_oxidized_copper"
+    else if {_source} is "waxed cut copper block":
+        set {_r} to "waxed_cut_copper"
+    else if {_source} is "waxed exposed cut copper block":
+        set {_r} to "waxed_exposed_cut_copper"
+    else if {_source} is "waxed weathered cut copper block":
+        set {_r} to "waxed_weathered_cut_copper"
+    else if {_source} is "waxed oxidized cut copper block":
+        set {_r} to "waxed_oxidized_cut_copper"
+    else if {_source} is "waxed cut copper stair":
+        set {_r} to "waxed_cut_copper_stairs"
+    else if {_source} is "waxed exposed cut copper stair":
+        set {_r} to "waxed_exposed_cut_copper_stairs"
+    else if {_source} is "waxed weathered cut copper stair":
+        set {_r} to "waxed_weathered_cut_copper_stairs"
+    else if {_source} is "waxed oxidized cut copper stair":
+        set {_r} to "waxed_oxidized_cut_copper_stairs"
+    else if {_source} is "waxed cut copper slab":
+        set {_r} to "waxed_cut_copper_slab"
+    else if {_source} is "waxed exposed cut copper slab":
+        set {_r} to "waxed_exposed_cut_copper_slab"
+    else if {_source} is "waxed weathered cut copper slab":
+        set {_r} to "waxed_weathered_cut_copper_slab"
+    else if {_source} is "waxed oxidized cut copper slab":
+        set {_r} to "waxed_oxidized_cut_copper_slab"
+    else if {_source} is "oak log":
+        set {_r} to "oak_log"
+    else if {_source} is "spruce log":
+        set {_r} to "spruce_log"
+    else if {_source} is "birch log":
+        set {_r} to "birch_log"
+    else if {_source} is "jungle log":
+        set {_r} to "jungle_log"
+    else if {_source} is "acacia log":
+        set {_r} to "acacia_log"
+    else if {_source} is "dark oak log":
+        set {_r} to "dark_oak_log"
+    else if {_source} is "mangrove log":
+        set {_r} to "mangrove_log"
+    else if {_source} is "mangrove root":
+        set {_r} to "mangrove_roots"
+    else if {_source} is "muddy mangrove root":
+        set {_r} to "muddy_mangrove_roots"
+    else if {_source} is "crimson stem":
+        set {_r} to "crimson_stem"
+    else if {_source} is "warped stem":
+        set {_r} to "warped_stem"
+    
+    set {_blocks::*} to all blocks
+    set {_items::*} to all items
+    loop {_blocks::*}:
+        set {_b} to "%loop-value%"
+        set {_bb} to loop-value
+        if {_b} contains "stone" or "copper" or "root" or "stair" or "impulse" or "chain" or "repeat":
+            if {_b} contains "command":
+            else:
+                replace "block" with "" in {_b}
+            if {_b} contains "rooted" or "roots":
+                
+            else:
+                replace "root" with "roots" in {_b}
+            replace "stair" with "stairs" in {_b}
+            replace all " " with "_" in {_b}
+            set {_ll} to length of {_b} -1
+            set {_lll} to length of {_b}
+            set {_t} to substring of {_b} from {_ll} to {_lll}
+            if {_t} contain "_":
+                set {_b} to substring of {_b} from 0 to {_ll}
+                wait 10 tick
+            broadcast "%{_bb}% -> %{_b}%"
+
+    return {_r}

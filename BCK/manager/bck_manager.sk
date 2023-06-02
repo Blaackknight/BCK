@@ -188,10 +188,12 @@ function guiMain(player: player, type: text):
         set {_gui} to genericGui({_gn}, {_gs}, true)
         set {_slot} to 0
         loop {_userdatas::*}:
+            if loop-value contain "<none>":
+                stop
             set {_l} to loop-value
             set {_n} to loop-value
             replace ".yml" with "" in {_n}
-            set {_p} to {_n} parsed as offlineplayer
+            set {_p} to {_n} parsed as offline player
             set {_i} to {_p}'s skull named {_n}
             loop yaml node keys "data" from "bck.userdata.%{_n}%":
                 add loop-node to {_list::*}

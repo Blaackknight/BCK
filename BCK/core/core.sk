@@ -5,10 +5,6 @@ on load:
     bckRegisterCommands()
     bckLettersLoad()
     #broadcast {skripts::*}
-
-on inventory close:
-    userData(player, "data.inv", "set", "false")
-    stop
 command /permission [<offlineplayer>] [<text>] [<text>]:
     trigger:
         if hasPermission(player, "server.owner") is false:

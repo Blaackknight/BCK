@@ -52,7 +52,9 @@ on load:
     addServerPermission("server.command.money.check")
 
     set {spawnCoordinates::*} to getCoordinateSeparate("%{spawn}%")
-
+on inventory close:
+    userData(player, "data.inv", "set", "false")
+    stop
 on unload:
     delete {clan.ranks::*}
     delete {server.perms::*}

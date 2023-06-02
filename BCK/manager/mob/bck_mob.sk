@@ -259,37 +259,65 @@ command /startanimation:
         # loop 70 times:
         #     wait 1 tick
         #     bckParticle(player, dust, 100, 1, {_n})
-        set {_center} to player's location  
-        set {_radius} to 5  
-
-        set {_angle} to 360 / 5  
-        set {_startAngle} to 0  
-
-        loop 5 times:
-            wait 1 tick
-            set {_startAngle} to {_startAngle} + {_angle}
-            set {_endAngle} to {_startAngle} + 180 
-
-            set {_startRadians} to {_startAngle} * PI / 180
-            set {_endRadians} to {_endAngle} * PI / 180
-
-            set {_startX} to {_radius} * sin({_startRadians})
-            set {_startZ} to {_radius} * cos({_startRadians})
-
-            set {_endX} to {_radius} * sin({_endRadians})
-            set {_endZ} to {_radius} * cos({_endRadians})
-
-            set {_startLocation} to {_center} offset {_startX} in x-axis and {_startZ} in z-axis
-            set {_endLocation} to {_center} offset {_endX} in x-axis and {_endZ} in z-axis
-
-            loop 20 times:
-                set {_ln} to loop-number-2
-                set {_progress} to {_ln} / 20
-
-                set {_lineLocation} to {_startLocation} linear interpolation to {_endLocation} with progress {_progress}
-                play dust at {_lineLocation}
+        set {_n} to 0.2
+        set {_r} to 1.5
+        loop 100 times:
+            bckParticle(player, glow, 10, 2, {_n}, {_r})
+            if {_r} > 0.5:
+                if {_n} = 0.2:
+                    remove 0.1 from {_r}
+                else if {_n} = 3:
+                    remove 0.1 from {_r}
+            else:
+                if {_n} = 3:
+                    remove 0.1 from {_r}
+                else:
+                    add 0.1 to {_n}
+                
 function bckParticle(player: player, particle: visual effect, repeat: number=100, amount: number=1, height: number=0.1, radius: number=1):
     loop {_repeat} times:
+        set {_loc} to location of {_player}
+        set {_x} to x-coordinate of {_loc}
+        set {_y} to y-coordinate of {_loc}
+        set {_z} to z-coordinate of {_loc}
+        set {_angle} to loop-number
+        set {_rangle} to {_angle} * -1
+        set {_rrangle} to {_angle} * -0.5
+        set {_rrrangle} to {_angle} * -1.5
+        set {_radians} to {_angle} * PI / 0.01
+        set {_rradians} to {_rangle} * PI / 0.01
+        set {_rrradians} to {_rrangle} * PI / 0.01
+        set {_rrrradians} to {_rrrangle} * PI / 0.01
+        set {_dx} to {_radius} * cos({_radians})
+        set {_dz} to {_radius} * sin({_radians})
+        set {_rdx} to {_radius} * cos({_rradians})
+        set {_rdz} to {_radius} * sin({_rradians})
+        set {_rrdx} to {_radius} * cos({_rrradians})
+        set {_rrdz} to {_radius} * sin({_rrradians})
+        set {_rrrdx} to {_radius} * cos({_rrrradians})
+        set {_rrrdz} to {_radius} * sin({_rrrradians})
+        add {_x} to {_dx}
+        add {_z} to {_dz}
+        add {_x} to {_rdx}
+        add {_z} to {_rdz}
+        add {_x} to {_rrdx}
+        add {_z} to {_rrdz}
+        add {_x} to {_rrrdx}
+        add {_z} to {_rrrdz}
+        add {_height} to {_y}
+        set {_particleLocation} to location({_dx}, {_y}, {_dz})
+        set {_reverseParticleLocation} to location({_rdx}, {_y}, {_rdz})
+        set {_rreverseParticleLocation} to location({_rrdx}, {_y}, {_rrdz})
+        set {_rrreverseParticleLocation} to location({_rrrdx}, {_y}, {_rrrdz})
+
+        loop {_amount} times:
+            play {_particle} at {_particleLocation}
+            play {_particle} at {_reverseParticleLocation}
+            play {_particle} at {_rreverseParticleLocation}
+            play {_particle} at {_rrreverseParticleLocation}
+function bckParticleTimer(player: player, particle: visual effect, repeat: number=100, amount: number=1, height: number=0.1, radius: number=1):
+    loop {_repeat} times:
+        wait 1 tick
         set {_loc} to location of {_player}
         set {_x} to x-coordinate of {_loc}
         set {_y} to y-coordinate of {_loc}

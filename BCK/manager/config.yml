@@ -32,6 +32,11 @@ data:
             name: "§d⟪ Account ⟫"
             guiName: "§dAccount"
             lore:
+        attributs:
+            item: ink sac
+            name: "§9⟪ Attributs ⟫"
+            guiName: "§9Attributs"
+            lore:
         box:
             item: ender chest
             name: "§1⟪ Box ⟫"

@@ -8,3 +8,27 @@ on load:
     else:
         broadcast "§6[§4BCK§6/§eTurret§6]§r Script loading cancel It requires (bck_manager.sk)"
         unload script file "bck_turret.sk"
+command /turret [<text>]:
+    trigger:
+        if targeted block is set:
+            set {_loc} to location of targeted block
+        else:
+            set {_loc} to player's location
+        spawn armor stand at {_loc}
+        set {_turret} to the spawned entity
+        set {_h} to yaml value "data.helmet" from "bck.manager.turret.config"
+        set {_r} to yaml value "data.radius" from "bck.manager.turret.config"
+        set {_h} to {_h} parsed as item
+        set {_r} to {_r} parsed as number
+        set helmet of {_turret} to {_h}
+        loop every 2 ticks:
+            if {_turret} is dead:
+                stop
+            loop all entities within {_r} blocks of {_turret}:
+                if {_target} is alive:
+                    if {_target} is not in {_noAggro}:
+                        set {_noAggro} to {_noAggro} and {_target}
+                        loop 10 times:
+                            shoot {_turret} towards {_target} with power 2
+                            play "reddust" at {_turret}'s eye location offset by 0.1 in direction of {_target}
+                            wait 1 tick

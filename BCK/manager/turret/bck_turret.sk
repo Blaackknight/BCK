@@ -17,18 +17,216 @@ command /turret [<text>]:
         spawn armor stand at {_loc}
         set {_turret} to the spawned entity
         set {_h} to yaml value "data.helmet" from "bck.manager.turret.config"
-        set {_r} to yaml value "data.radius" from "bck.manager.turret.config"
         set {_h} to {_h} parsed as item
         set {_r} to {_r} parsed as number
         set helmet of {_turret} to {_h}
-        loop every 2 ticks:
-            if {_turret} is dead:
-                stop
-            loop all entities within {_r} blocks of {_turret}:
-                if {_target} is alive:
-                    if {_target} is not in {_noAggro}:
-                        set {_noAggro} to {_noAggro} and {_target}
-                        loop 10 times:
-                            shoot {_turret} towards {_target} with power 2
-                            play "reddust" at {_turret}'s eye location offset by 0.1 in direction of {_target}
-                            wait 1 tick
+            
+every 25 ticks:
+    loop all entities:
+        if "%loop-entity%" is "armor stand":
+            set {_turret} to loop-entity
+            set {_helmet} to {_turret}'s helmet
+            if {_helmet} is redstone block:
+                if {_turret} is dead:
+                    stop
+                set {_loc} to {_turret}'s location
+                
+                set {_r} to yaml value "data.radius" from "bck.manager.turret.config"
+                loop all living entities in radius {_r} around {_loc}:
+                    set {_target} to loop-entity-2
+                    if "%{_target}%" contains "dropped":
+                        #broadcast {_target}
+                    else if "%{_target}%" is "armor stand":
+                        #broadcast {_target}
+                    else if {_target}'s gamemode is creative or spectator:
+                        #dd
+                    else if {_noAggro::*} contains {_target}:
+                        #dd
+                    else:
+                        #lerp 1.5 soul at {_target} with offset vector(0, 1, 0) with extra 0.04
+                        #lerp 1 of dust_color_transition using dustTransition(cyan, cyan, 3) at {_target} with offset vector(0, 1, 0) with extra 0.1 
+                        loop 2 times:
+                            set {_x} to x-coordinate of {_turret}'s location
+                            set {_y} to y-coordinate of {_turret}'s location
+                            set {_z} to z-coordinate of {_turret}'s location
+                            set {_xx} to x-coordinate of {_turret}'s eye location
+                            set {_yy} to y-coordinate of {_turret}'s eye location
+                            set {_zz} to z-coordinate of {_turret}'s eye location
+                            set {_xxx} to x-coordinate of {_target}'s eye location
+                            set {_yyy} to y-coordinate of {_target}'s eye location
+                            set {_zzz} to z-coordinate of {_target}'s eye location
+                            set {_dist} to distance between {_turret} and {_target}
+                            set {_loc1} to location({_x}, {_y}+1.5, {_z})
+                            set {_loc2} to location({_xx}, {_yy}, {_zz})
+                            set {_loc3} to location({_xxx}, {_yyy}-0.2, {_zzz})
+                            set {_t} to ceil({_dist})
+                            set {_t} to {_t} * 2
+                            set {_v} to vector from {_turret} to {_target}
+                            set vector length of {_v} to 0.1
+                            set {_verif} to true
+                            loop (distance between {_loc} and {_target}) / 0.1 times:
+                                set {_bb} to block at {_loc2}
+                                if "%{_bb}%" contains "air" or "water" or "lava" or "short grass" or "slab" or "lever" or "torch" or "carpet":
+                                    draw 1 of dust using dustOption(red, 1) at {_loc2} with force
+                                    set {_loc2} to {_loc2} ~ {_v}
+                                    #wait 1 tick
+                                else:
+                                    #broadcast {_bb}
+                                    set {_verif} to false
+                            if {_verif} is true:
+                                set {_h} to 7
+                                make 10 of block particle using redstone block at {_loc3}
+                                damage {_target} by {_h} hearts
+                                add 1 to {turret.timer.%{_target}%}
+                                set {_verif} to false
+            else if {_helmet} is ice:
+                if {_turret} is dead:
+                    stop
+                set {_loc} to {_turret}'s location
+                
+                set {_r} to yaml value "data.radius" from "bck.manager.turret.config"
+                loop all living entities in radius {_r} around {_loc}:
+                    set {_target} to loop-entity-2
+                    if "%{_target}%" contains "dropped":
+                        #broadcast {_target}
+                    else if "%{_target}%" is "armor stand":
+                        #broadcast {_target}
+                    else if {_target}'s gamemode is creative or spectator:
+                        #dd
+                    else if {_noAggro::*} contains {_target}:
+                        #dd
+                    else:
+                        #lerp 1.5 soul at {_target} with offset vector(0, 1, 0) with extra 0.04
+                        #lerp 1 of dust_color_transition using dustTransition(cyan, cyan, 3) at {_target} with offset vector(0, 1, 0) with extra 0.1 
+                        loop 2 times:
+                            set {_x} to x-coordinate of {_turret}'s location
+                            set {_y} to y-coordinate of {_turret}'s location
+                            set {_z} to z-coordinate of {_turret}'s location
+                            set {_xx} to x-coordinate of {_turret}'s eye location
+                            set {_yy} to y-coordinate of {_turret}'s eye location
+                            set {_zz} to z-coordinate of {_turret}'s eye location
+                            set {_xxx} to x-coordinate of {_target}'s eye location
+                            set {_yyy} to y-coordinate of {_target}'s eye location
+                            set {_zzz} to z-coordinate of {_target}'s eye location
+                            set {_dist} to distance between {_turret} and {_target}
+                            set {_loc1} to location({_x}, {_y}+1.5, {_z})
+                            set {_loc2} to location({_xx}, {_yy}, {_zz})
+                            set {_loc3} to location({_xxx}, {_yyy}-0.2, {_zzz})
+                            set {_t} to ceil({_dist})
+                            set {_t} to {_t} * 2
+                            set {_v} to vector from {_turret} to {_target}
+                            set vector length of {_v} to 0.1
+                            set {_verif} to true
+                            loop (distance between {_loc} and {_target}) / 0.1 times:
+                                set {_bb} to block at {_loc2}
+                                if "%{_bb}%" contains "air" or "water" or "lava" or "short grass" or "slab" or "lever" or "torch" or "carpet":
+                                    draw 1 of dust using dustOption(cyan, 1) at {_loc2} with force
+                                    set {_loc2} to {_loc2} ~ {_v}
+                                    #wait 1 tick
+                                else:
+                                    #broadcast {_bb}
+                                    set {_verif} to false
+                            if {_verif} is true:
+                                set {_h} to 0.5
+                                #make 1 of block particle using redstone block at {_loc3}
+                                loop 5 times:
+                                    lerp 10 of block particle using ice block at {_target} with offset vector(0.25, 1, 0.25) with extra 0.1 
+                                damage {_target} by {_h} hearts
+                                apply slowness 2 to {_target}
+                                add 1 to {turret.timer.%{_target}%}
+                                set {_verif} to false
+            else if {_helmet} is ender chest:
+                if {_turret} is dead:
+                    stop
+                set {_loc} to {_turret}'s location
+                
+                set {_r} to yaml value "data.radius" from "bck.manager.turret.config"
+                loop all entities in radius {_r} around {_loc}:
+                    set {_target} to loop-entity-2
+                    if "%{_target}%" is "armor stand":
+                        #broadcast {_target}
+                    else if {_noAggro::*} contains {_target}:
+                        #dd
+                    else if "%{_target}%" contains "dropped":
+                        #lerp 1.5 soul at {_target} with offset vector(0, 1, 0) with extra 0.04
+                        #lerp 1 of dust_color_transition using dustTransition(cyan, cyan, 3) at {_target} with offset vector(0, 1, 0) with extra 0.1 
+                        loop 2 times:
+                            set {_x} to x-coordinate of {_turret}'s location
+                            set {_y} to y-coordinate of {_turret}'s location
+                            set {_z} to z-coordinate of {_turret}'s location
+                            set {_xx} to x-coordinate of {_turret}'s eye location
+                            set {_yy} to y-coordinate of {_turret}'s eye location
+                            set {_zz} to z-coordinate of {_turret}'s eye location
+                            set {_xxx} to x-coordinate of {_target}'s eye location
+                            set {_yyy} to y-coordinate of {_target}'s eye location
+                            set {_zzz} to z-coordinate of {_target}'s eye location
+                            set {_xxxx} to x-coordinate of {_target}'s location
+                            set {_yyyy} to y-coordinate of {_target}'s location
+                            set {_zzzz} to z-coordinate of {_target}'s location
+                            set {_dist} to distance between {_turret} and {_target}
+                            set {_loc1} to location({_x}, {_y}+1.5, {_z})
+                            set {_loc2} to location({_xx}, {_yy}-1.25, {_zz})
+                            set {_loc22} to location({_xxxx}, {_yyyy}+0.5, {_zzzz})
+                            set {_loc3} to location({_xxx}, {_yyy}-1.5, {_zzz})
+                            set {_t} to ceil({_dist})
+                            set {_t} to {_t} * 2
+                            set {_v} to vector from {_target} to {_turret}
+                            set vector length of {_v} to 0.1
+                            set {_verif} to true
+                            set {_ccc} to 0
+                            loop (distance between {_target} and {_loc}) / 0.1 times:
+                                set {_bb} to block at {_loc22}
+                                if "%{_bb}%" contains "air" or "water" or "lava" or "short grass" or "slab" or "lever" or "torch" or "carpet":
+                                    if {_verif} is true:
+                                        draw 1 of dust using dustOption(green, 1) at {_loc22} with force
+                                        set {_loc22} to {_loc22} ~ {_v}
+                                        if {_ccc} < 15:
+                                            wait 1 tick
+                                        add 1 to {_ccc}
+                                else:
+                                    #broadcast {_bb}
+                                    set {_verif} to false
+                            if {_verif} is true:
+                                make 50 of nautilus at {_target}'s location
+                                play sound "block.sculk.charge" with volume 0.7 at {_target}'s location
+                                wait 5 tick
+                                teleport {_target} to {_turret}
+                                
+                                set {_verif} to false
+                                    
+every 2 tick:
+    loop all entities:
+        set {_t} to {turret.timer.%loop-entity%}
+        if {_t} > 0:
+            remove 1 from {turret.timer.%{_target}%}
+on death of player:
+    set {_t} to {turret.timer.%victim%}
+    if {_t} > 0:
+        set death message to ""
+        broadcast formatted "%selector(victim)% looked at a turret"
+on left click with diamond hoe:
+    if target entity is set:
+        if "%target entity%" contains "dropped":
+            stop
+        else:
+            #send target entity to player
+            set {_V} to vector from player to target entity
+            set vector length of {_V} to 0.1
+            #set {_loc} to location of player
+            set {_x} to x-coordinate of player's location
+            set {_y} to y-coordinate of player's location
+            set {_z} to z-coordinate of player's location
+            add 1.5 to {_y}
+            set {_loc} to location({_x}, {_y}, {_z})
+            loop (distance between {_loc} and target entity) / 0.1 times:
+                #draw 1 dust_color_transition using dustTransition(red, red, 2) at {_loc} with force
+                draw 1 of dust using dustOption(red, 1) at {_loc} with force
+                set {_loc} to {_loc} ~ {_v}
+            set {_xx} to x-coordinate of target entity's location
+            set {_yy} to y-coordinate of target entity's location
+            set {_zz} to z-coordinate of target entity's location
+            add 1.5 to {_yy}
+            set {_loc1} to location({_xx}, {_yy}, {_zz})
+            loop 10 times:
+                make 10 of block particle using redstone block at {_loc1}
+            kill target entity

@@ -274,7 +274,7 @@ command /startanimation:
                 else:
                     add 0.1 to {_n}
                 
-function bckParticle(player: player, particle: visual effect, repeat: number=100, amount: number=1, height: number=0.1, radius: number=1):
+function bckParticle(player: livingentity, particle: visual effect, repeat: number=100, amount: number=1, height: number=0.1, radius: number=1):
     loop {_repeat} times:
         set {_loc} to location of {_player}
         set {_x} to x-coordinate of {_loc}

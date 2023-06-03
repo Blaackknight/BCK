@@ -4,8 +4,8 @@ on load:
     bckRegisterSkripts()
     bckRegisterCommands()
     bckLettersLoad()
-    set {_m} to skriptUniversalConverterText("cut copper stair")
-    broadcast {_m}
+    # set {_m} to skriptUniversalConverterText("cut copper stair")
+    # broadcast {_m}
     #broadcast {skripts::*}
 command /permission [<offlineplayer>] [<text>] [<text>]:
     trigger:
@@ -63,8 +63,46 @@ on tab complete of "/permission":
                 set tab completions for position 3 to getServerPermission(loop-value)
             else if tab arg-2 is "remove":
                 set tab completions for position 3 to {server.permission.%loop-value%.list::*}
-command /type:
+command /bck [<text>] [<text>] [<text>]:
     trigger:
-        set {_t} to player's tool
-        if {_t} is not air:
-            send type of {_t}
+        if arg-1 is set:
+            if arg-1 is "slotCount":
+                set {_n} to arg-2 parsed as number
+                if {_n} > 0:
+                    if {_n} > 6:
+                        send "§c/bck %arg-1% <number>"
+                        stop
+                    set {_gui} to genericGui("§7Slot §bCounter", {_n})
+                    set {_slot} to 1
+                    set {_i} to yaml value "data.bck.slotCounter" from "bck.core.config"
+                    set {_i} to {_i} parsed as item
+                    loop 500 times:
+                        set slot {_slot} of {_gui} to {_slot} of stone
+                        add 1 to {_slot}
+                    open {_gui} to player
+                else:
+                    send "§c/bck %arg-1% <number>"
+            else if arg-1 is "type":
+                set {_t} to player's tool
+                if {_t} is not air:
+                    send "§6[§4BCK§6/§bType§6] §d%type of {_t}%"
+                else:
+                    send "§6[§4BCK§6/§bType§6] §cRien dans votre main :/"
+            else if arg-1 is "config":
+            else if arg-1 is "nbt":
+                set {_t} to player's tool
+                if {_t} is not air:
+                    set {_nbt} to nbt of {_t}
+                    send formatted "§6[§4BCK§6/§eNbt§6] §d<insertion:%{_nbt}%>%{_nbt}%"
+                else:
+                    send "§6[§4BCK§6/§eNbt§6] §cRien dans votre main :/"
+            else:
+                send "§cOption iconnue (%arg-1%)"
+        else:
+            send "§c/bck <option>"
+on tab complete of "/bck":
+    if hasPermission(player, "server.command.bck") is false:
+        stop
+    set tab completions for position 1 to "slotCount", "type", "nbt" and "config"
+    if tab arg-1 is "slotCount":
+        set tab completions for position 2 to 1, 2, 3, 4, 5 and 6

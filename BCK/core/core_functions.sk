@@ -546,8 +546,8 @@ function switchCaseFor(text: text, to-uppercase: boolean) :: text:
     return {_new}
 #                                                                                                                #
 function uppercase(text: text) :: text:
- 
-    return switchCaseFor({_text}, true)
+    set {_r} to switchCaseFor({_text}, true)
+    return {_r}
 #                                                                                                                #
 function lowercase(text: text) :: text:
  
@@ -821,7 +821,7 @@ function loadUserData(player: player):
     load yaml "plugins/Skript/scripts/BCK/manager/userdata/%{_uuid}%.yml" as "bck.userdata.%{_uuid}%"
 function userData(player: player, find: text="data", mode: text="extract", data: text="", type: text="string") :: text:
     set {_uuid} to "%{_player}'s uuid%"
-    if {_uuid} is not set:
+    if {_uuid} is "<none>":
         stop
     if file "plugins/Skript/scripts/BCK/manager/userdata/%{_uuid}%.yml" doesn't exist:
         create file "plugins/Skript/scripts/BCK/manager/userdata/%{_uuid}%.yml"

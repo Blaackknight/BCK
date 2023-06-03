@@ -11,7 +11,7 @@ on load:
 command /attributs [<text>]:
     trigger:
         set {_h} to iron helmet
-        set {_i} to addRandomAttributs({_h}, 3)
+        set {_i} to addRandomAttributs({_h}, 2)
         give {_i} to player
         give {_g} to player
 every second:
@@ -33,11 +33,20 @@ every second:
                 loop {_datas::*}:
                     set {_yy} to lowercase(loop-value-3)
                     add {_yy} to {_lower::*}
-                set {_lower}to "%{_lower::*}%"
-                replace all ", " with 
-                send "%{_lower::*}%" to {_p}
+                set {_lower} to "%{_lower::*}%"
+                replace all ", " with " " in {_lower}
+                #replace "and " with "$" in {_lower}
+                replace all " " with "$" in {_lower}
+                #set {_lo::*} to {_lower} split by ""
+                set {_lo::*} to {_lower} split by "/"
+                set {_r} to listCounter({_lo::*})
+                set {_u} to {_lo::%{_r}%}
+                replace all "and" with "|" in {_u}
+                replace all "$|$" with "_" in {_u}
+                send "LOWER -> %{_u}%" to {_p}
+                #broadcast {_lo::*}
                 #set {_lowerName} to lowercase({_lower})
-                send "%{_lowerName}%/%{_name}% -> %{_stats}%" to {_p}
+                #send "%{_lowerName}%/%{_name}% -> %{_stats}%" to {_p}
 function addAttributs(item: item, att: text) :: item:
     loop yaml node keys "data.attributs" from "bck.manager.attributs.config":
         add loop-node to {_atts::*}

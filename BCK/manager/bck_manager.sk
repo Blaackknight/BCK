@@ -48,7 +48,7 @@ function managerGuiMain(player: player):
                 set {_id} to loop-number
                 set line {_id} of lore of {_i} to {_lore::%{_id}%}
         set slot {_slot} of {_gui} to {_i}
-        if {_slot} = 16 or 23 or 30 or 37 or 44 or 51 or 58:
+        if {_slot} = 16 or 25 or 34 or 43 or 52 or 61 or 70:
             add 3 to {_slot}
         else:
             add 1 to {_slot}

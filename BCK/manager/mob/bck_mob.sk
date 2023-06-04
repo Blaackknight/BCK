@@ -315,6 +315,47 @@ function bckParticle(player: livingentity, particle: visual effect, repeat: numb
             play {_particle} at {_reverseParticleLocation}
             play {_particle} at {_rreverseParticleLocation}
             play {_particle} at {_rrreverseParticleLocation}
+function bckParticleDust(player: livingentity, color: color, repeat: number=100, amount: number=1, height: number=0.1, radius: number=1):
+    loop {_repeat} times:
+        set {_loc} to location of {_player}
+        set {_x} to x-coordinate of {_loc}
+        set {_y} to y-coordinate of {_loc}
+        set {_z} to z-coordinate of {_loc}
+        set {_angle} to loop-number
+        set {_rangle} to {_angle} * -1
+        set {_rrangle} to {_angle} * -0.5
+        set {_rrrangle} to {_angle} * -1.5
+        set {_radians} to {_angle} * PI / 0.01
+        set {_rradians} to {_rangle} * PI / 0.01
+        set {_rrradians} to {_rrangle} * PI / 0.01
+        set {_rrrradians} to {_rrrangle} * PI / 0.01
+        set {_dx} to {_radius} * cos({_radians})
+        set {_dz} to {_radius} * sin({_radians})
+        set {_rdx} to {_radius} * cos({_rradians})
+        set {_rdz} to {_radius} * sin({_rradians})
+        set {_rrdx} to {_radius} * cos({_rrradians})
+        set {_rrdz} to {_radius} * sin({_rrradians})
+        set {_rrrdx} to {_radius} * cos({_rrrradians})
+        set {_rrrdz} to {_radius} * sin({_rrrradians})
+        add {_x} to {_dx}
+        add {_z} to {_dz}
+        add {_x} to {_rdx}
+        add {_z} to {_rdz}
+        add {_x} to {_rrdx}
+        add {_z} to {_rrdz}
+        add {_x} to {_rrrdx}
+        add {_z} to {_rrrdz}
+        add {_height} to {_y}
+        set {_particleLocation} to location({_dx}, {_y}, {_dz})
+        set {_reverseParticleLocation} to location({_rdx}, {_y}, {_rdz})
+        set {_rreverseParticleLocation} to location({_rrdx}, {_y}, {_rrdz})
+        set {_rrreverseParticleLocation} to location({_rrrdx}, {_y}, {_rrrdz})
+
+        loop {_amount} times:
+            draw 1 of dust using dustOption({_color}, 1) at {_particleLocation}
+            draw 1 of dust using dustOption({_color}, 1) at {_reverseParticleLocation}
+            draw 1 of dust using dustOption({_color}, 1) at {_rreverseParticleLocation}
+            draw 1 of dust using dustOption({_color}, 1) at {_rrreverseParticleLocation}
 function bckParticleTimer(player: player, particle: visual effect, repeat: number=100, amount: number=1, height: number=0.1, radius: number=1):
     loop {_repeat} times:
         wait 1 tick

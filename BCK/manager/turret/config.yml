@@ -1,3 +1,42 @@
 data:
-    helmet: redstone block
-    radius: 10
+    config:
+        defaultHelmet: barrier
+        defaultRadius: 5
+        defaultDamage: 1
+        defaultHealth: 1
+    turret:
+        laser:
+            helmet: redstone block
+            radius: 10
+            rayColor: red
+            raySize: 1
+            hitParticle: redstone block
+            damage: 7
+        slow:
+            helmet: ice
+            radius: 10
+            rayColor: cyan
+            raySize: 1
+            hitParticle: ice
+            damage: 0.5
+            slowness: 2
+        collector:
+            helmet: ender chest
+            radius: 10
+            rayColor: green
+            raySize: 1
+            collectParticle: nautilus
+            collectParticleNumber: 50
+            collectSound: block.sculk.charge
+        heal:
+            helmet: lime glazed terracotta
+            radius: 10
+            rayColor1: lime
+            rayColor2: lime
+            rayColorCircle1: lime
+            rayColorCircle2: lime
+            rayColorCircle3: lime
+            raySize: 2
+            absoption: 1
+            heal: 3
+            healSound: entity.evoker.cast_spell

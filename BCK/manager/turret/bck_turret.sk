@@ -16,23 +16,36 @@ command /turret [<text>]:
             set {_loc} to player's location
         spawn armor stand at {_loc}
         set {_turret} to the spawned entity
-        set {_h} to yaml value "data.helmet" from "bck.manager.turret.config"
+        set {_h} to yaml value "data.turret.%arg-1%.helmet" from "bck.manager.turret.config"
         set {_h} to {_h} parsed as item
-        set {_r} to {_r} parsed as number
         set helmet of {_turret} to {_h}
-            
+on tab complete of "/turret":
+    set tab completions for position 1 to turretList()
 every 25 ticks:
     loop all entities:
         if "%loop-entity%" is "armor stand":
             set {_turret} to loop-entity
             set {_helmet} to {_turret}'s helmet
-            if {_helmet} is redstone block:
+            set {_laser} to yaml value "data.turret.laser.helmet" from "bck.manager.turret.config"
+            set {_slow} to yaml value "data.turret.slow.helmet" from "bck.manager.turret.config"
+            set {_collector} to yaml value "data.turret.collector.helmet" from "bck.manager.turret.config"
+            set {_heal} to yaml value "data.turret.heal.helmet" from "bck.manager.turret.config"
+            set {_laser} to {_laser} parsed as item
+            set {_slow} to {_slow} parsed as item
+            set {_collector} to {_collector} parsed as item
+            set {_heal} to {_heal} parsed as item
+            #broadcast "%{_laser}% | %{_slow}% | %{_collector}% | %{_heal}%"
+            if {_helmet} is {_laser}:
                 if {_turret} is dead:
                     stop
                 set {_loc} to {_turret}'s location
                 
-                set {_r} to yaml value "data.radius" from "bck.manager.turret.config"
-                loop all living entities in radius {_r} around {_loc}:
+                set {_laserRadius} to yaml value "data.turret.laser.radius" from "bck.manager.turret.config"
+                if {_laserRadius} is "<none>":
+                    set {_laserRadius} to yaml value "data.config.defaultRadius" from "bck.manager.turret.config"
+                set {_laserRadius} to {_laserRadius} parsed as number
+                #broadcast "%{_laserRadius}%"
+                loop all living entities in radius {_laserRadius} around {_loc}:
                     set {_target} to loop-entity-2
                     if "%{_target}%" contains "dropped":
                         #broadcast {_target}
@@ -67,25 +80,39 @@ every 25 ticks:
                             loop (distance between {_loc} and {_target}) / 0.1 times:
                                 set {_bb} to block at {_loc2}
                                 if "%{_bb}%" contains "air" or "water" or "lava" or "short grass" or "slab" or "lever" or "torch" or "carpet":
-                                    draw 1 of dust using dustOption(red, 1) at {_loc2} with force
+                                    set {_laserRayColor} to yaml value "data.turret.laser.rayColor" from "bck.manager.turret.config"
+                                    set {_laserRaySize} to yaml value "data.turret.laser.raySize" from "bck.manager.turret.config"
+                                    set {_laserRayColor} to {_laserRayColor} parsed as color
+                                    set {_laserRaySize} to {_laserRaySize} parsed as number
+                                    draw 1 of dust using dustOption({_laserRayColor}, {_laserRaySize}) at {_loc2} with force
                                     set {_loc2} to {_loc2} ~ {_v}
                                     #wait 1 tick
                                 else:
                                     #broadcast {_bb}
                                     set {_verif} to false
                             if {_verif} is true:
-                                set {_h} to 7
-                                make 10 of block particle using redstone block at {_loc3}
-                                damage {_target} by {_h} hearts
+                                set {_laserHit} to yaml value "data.turret.laser.hitParticle" from "bck.manager.turret.config"
+                                set {_laserDamage} to yaml value "data.turret.laser.damage" from "bck.manager.turret.config"
+                                if {_laserDamage} is "<none>":
+                                    set {_laserDamage} to yaml value "data.config.defaultDamage" from "bck.manager.turret.config"
+                                set {_laserDamage} to {_laserDamage} parsed as integer
+                                set {_laserHit} to {_laserHit} parsed as item
+                                make 10 of block particle using {_laserHit} at {_loc3}
+                                damage {_target} by {_laserDamage} hearts
                                 add 1 to {turret.timer.%{_target}%}
                                 set {_verif} to false
-            else if {_helmet} is ice:
+            else if {_helmet} is {_slow}:
                 if {_turret} is dead:
                     stop
                 set {_loc} to {_turret}'s location
                 
-                set {_r} to yaml value "data.radius" from "bck.manager.turret.config"
-                loop all living entities in radius {_r} around {_loc}:
+                #set {_r} to yaml value "data.radius" from "bck.manager.turret.config"
+                set {_slowRadius} to yaml value "data.turret.slow.radius" from "bck.manager.turret.config"
+                if {_slowRadius} is "<none>":
+                    set {_slowRadius} to yaml value "data.config.defaultRadius" from "bck.manager.turret.config"
+                set {_slowRadius} to "%{_slowRadius}%" parsed as number
+                #broadcast "%{_slowRadius}%"
+                loop all living entities in radius {_slowRadius} around {_loc}:
                     set {_target} to loop-entity-2
                     if "%{_target}%" contains "dropped":
                         #broadcast {_target}
@@ -120,28 +147,43 @@ every 25 ticks:
                             loop (distance between {_loc} and {_target}) / 0.1 times:
                                 set {_bb} to block at {_loc2}
                                 if "%{_bb}%" contains "air" or "water" or "lava" or "short grass" or "slab" or "lever" or "torch" or "carpet":
-                                    draw 1 of dust using dustOption(cyan, 1) at {_loc2} with force
+                                    set {_slowRayColor} to yaml value "data.turret.slow.rayColor" from "bck.manager.turret.config"
+                                    set {_slowRaySize} to yaml value "data.turret.slow.raySize" from "bck.manager.turret.config"
+                                    set {_slowRayColor} to {_slowRayColor} parsed as color
+                                    set {_slowRaySize} to "%{_slowRaySize}%" parsed as number
+                                    #broadcast "%{_slowRayColor}% | %{_slowRaySize}%"
+                                    draw 1 of dust using dustOption({_slowRayColor}, {_slowRaySize}) at {_loc2} with force
                                     set {_loc2} to {_loc2} ~ {_v}
                                     #wait 1 tick
                                 else:
                                     #broadcast {_bb}
                                     set {_verif} to false
                             if {_verif} is true:
-                                set {_h} to 0.5
+                                set {_slowHit} to yaml value "data.turret.slow.hitParticle" from "bck.manager.turret.config"
+                                set {_slowDamage} to yaml value "data.turret.slow.damage" from "bck.manager.turret.config"
+                                set {_slowSlowness} to yaml value "data.turret.slow.slowness" from "bck.manager.turret.config"
+                                if {_slowDamage} is "<none>":
+                                    set {_slowDamage} to yaml value "data.config.defaultDamage" from "bck.manager.turret.config"
+                                set {_slowDamage} to "%{_slowDamage}%" parsed as number
+                                set {_slowHit} to {_slowHit} parsed as item
+                                set {_slowSlowness} to "%{_slowSlowness}%" parsed as number
                                 #make 1 of block particle using redstone block at {_loc3}
                                 loop 5 times:
-                                    lerp 10 of block particle using ice block at {_target} with offset vector(0.25, 1, 0.25) with extra 0.1 
-                                damage {_target} by {_h} hearts
-                                apply slowness 2 to {_target}
+                                    lerp 10 of block particle using {_slowHit} at {_target} with offset vector(0.25, 1, 0.25) with extra 0.1 
+                                damage {_target} by {_slowDamage} hearts
+                                apply slowness {_slowSlowness} to {_target} for 0.7 seconds
                                 add 1 to {turret.timer.%{_target}%}
                                 set {_verif} to false
-            else if {_helmet} is ender chest:
+            else if {_helmet} is {_collector}:
                 if {_turret} is dead:
                     stop
                 set {_loc} to {_turret}'s location
                 
-                set {_r} to yaml value "data.radius" from "bck.manager.turret.config"
-                loop all entities in radius {_r} around {_loc}:
+                set {_collectorRadius} to yaml value "data.turret.collector.radius" from "bck.manager.turret.config"
+                if {_collectorRadius} is "<none>":
+                    set {_collectorRadius} to yaml value "data.config.defaultRadius" from "bck.manager.turret.config"
+                set {_collectorRadius} to "%{_collectorRadius}%" parsed as number
+                loop all entities in radius {_collectorRadius} around {_loc}:
                     set {_target} to loop-entity-2
                     if "%{_target}%" is "armor stand":
                         #broadcast {_target}
@@ -178,7 +220,11 @@ every 25 ticks:
                                 set {_bb} to block at {_loc22}
                                 if "%{_bb}%" contains "air" or "water" or "lava" or "short grass" or "slab" or "lever" or "torch" or "carpet":
                                     if {_verif} is true:
-                                        draw 1 of dust using dustOption(green, 1) at {_loc22} with force
+                                        set {_collectorRayColor} to yaml value "data.turret.collector.rayColor" from "bck.manager.turret.config"
+                                        set {_collectorRaySize} to yaml value "data.turret.collector.raySize" from "bck.manager.turret.config"
+                                        set {_collectorRayColor} to {_collectorRayColor} parsed as color
+                                        set {_collectorRaySize} to "%{_collectorRaySize}%" parsed as number
+                                        draw 1 of dust using dustOption({_collectorRayColor}, {_collectorRaySize}) at {_loc22} with force
                                         set {_loc22} to {_loc22} ~ {_v}
                                         if {_ccc} < 15:
                                             wait 1 tick
@@ -187,18 +233,108 @@ every 25 ticks:
                                     #broadcast {_bb}
                                     set {_verif} to false
                             if {_verif} is true:
-                                make 50 of nautilus at {_target}'s location
-                                play sound "block.sculk.charge" with volume 0.7 at {_target}'s location
+                                set {_collectorCollectParticle} to yaml value "data.turret.collector.collectParticle" from "bck.manager.turret.config"
+                                set {_collectorCollectParticleSound} to yaml value "data.turret.collector.collectSound" from "bck.manager.turret.config"
+                                set {_collectorCollectParticleNumber} to yaml value "data.turret.collector.collectParticleNumber" from "bck.manager.turret.config"
+                                set {_collectorCollectParticle} to "%{_collectorCollectParticle}%" parsed as particle
+                                set {_collectorCollectParticleNumber} to "%{_collectorCollectParticleNumber}%" parsed as number
+                                make {_collectorCollectParticleNumber} of {_collectorCollectParticle} at {_target}'s location
+                                play sound "%{_collectorCollectParticleSound}%" with volume 0.7 at {_target}'s location
                                 wait 5 tick
                                 teleport {_target} to {_turret}
                                 
+                                set {_verif} to false
+            else if {_helmet} is {_heal}:
+                if {_turret} is dead:
+                    stop
+                set {_loc} to {_turret}'s location
+                
+                set {_healRadius} to yaml value "data.turret.heal.radius" from "bck.manager.turret.config"
+                if {_healRadius} is "<none>":
+                    set {_healRadius} to yaml value "data.config.defaultRadius" from "bck.manager.turret.config"
+                set {_healRadius} to "%{_healRadius}%" parsed as number
+                loop all living entities in radius {_healRadius} around {_loc}:
+                    set {_target} to loop-entity-2
+                    if "%{_target}%" contains "dropped":
+                        #broadcast {_target}
+                    else if "%{_target}%" is "armor stand":
+                        #broadcast {_target}
+                    else if {_target}'s gamemode is creative or spectator:
+                        #dd
+                    else if {_target} is not player:
+                        #dd
+                    else if {_noAggro::*} contains {_target}:
+                        #dd
+                    else:
+                        #lerp 1.5 soul at {_target} with offset vector(0, 1, 0) with extra 0.04
+                        #lerp 1 of dust_color_transition using dustTransition(cyan, cyan, 3) at {_target} with offset vector(0, 1, 0) with extra 0.1 
+                        loop 2 times:
+                            set {_x} to x-coordinate of {_turret}'s location
+                            set {_y} to y-coordinate of {_turret}'s location
+                            set {_z} to z-coordinate of {_turret}'s location
+                            set {_xx} to x-coordinate of {_turret}'s eye location
+                            set {_yy} to y-coordinate of {_turret}'s eye location
+                            set {_zz} to z-coordinate of {_turret}'s eye location
+                            set {_xxx} to x-coordinate of {_target}'s eye location
+                            set {_yyy} to y-coordinate of {_target}'s eye location
+                            set {_zzz} to z-coordinate of {_target}'s eye location
+                            set {_dist} to distance between {_turret} and {_target}
+                            set {_loc1} to location({_x}, {_y}+1.5, {_z})
+                            set {_loc2} to location({_xx}, {_yy}, {_zz})
+                            set {_loc3} to location({_xxx}, {_yyy}-0.2, {_zzz})
+                            set {_t} to ceil({_dist})
+                            set {_t} to {_t} * 2
+                            set {_v} to vector from {_turret} to {_target}
+                            set vector length of {_v} to 0.1
+                            set {_verif} to true
+                            loop (distance between {_loc} and {_target}) / 0.1 times:
+                                set {_bb} to block at {_loc2}
+                                if "%{_bb}%" contains "air" or "water" or "lava" or "short grass" or "slab" or "lever" or "torch" or "carpet":
+                                    set {_healRayColor1} to yaml value "data.turret.heal.rayColor1" from "bck.manager.turret.config"
+                                    set {_healRayColor2} to yaml value "data.turret.heal.rayColor2" from "bck.manager.turret.config"
+                                    set {_healRaySize} to yaml value "data.turret.heal.raySize" from "bck.manager.turret.config"
+                                    set {_healRayColor1} to {_healRayColor1} parsed as color
+                                    set {_healRayColor2} to {_healRayColor2} parsed as color
+                                    set {_healRaySize} to "%{_healRaySize}%" parsed as number
+                                    lerp 2 of dust_color_transition using dustTransition({_healRayColor1}, {_healRayColor2}, {_healRaySize}) at {_turret} with offset vector(5, 5, 5) with extra 0.1 
+                                    #draw 1 of dust using dustOption(lime, 1) at {_loc2} with force
+                                    set {_loc2} to {_loc2} ~ {_v}
+                                    #wait 1 tick
+                                else:
+                                    #broadcast {_bb}
+                                    set {_verif} to false
+                            if {_verif} is true:
+                                set {_h} to 3
+                                #make 10 of block particle using lime glazed terracotta at {_loc3}
+                                set {_healRayColorCircle1} to yaml value "data.turret.heal.rayColorCircle1" from "bck.manager.turret.config"
+                                set {_healRayColorCircle2} to yaml value "data.turret.heal.rayColorCircle2" from "bck.manager.turret.config"
+                                set {_healRayColorCircle3} to yaml value "data.turret.heal.rayColorCircle3" from "bck.manager.turret.config"
+                                set {_healHealSound} to yaml value "data.turret.heal.healSound" from "bck.manager.turret.config"
+                                set {_healRayColorCircle1} to {_healRayColorCircle1} parsed as color
+                                set {_healRayColorCircle2} to {_healRayColorCircle2} parsed as color
+                                set {_healRayColorCircle3} to {_healRayColorCircle3} parsed as color
+                                bckParticleDust({_target}, {_healRayColorCircle1}, 50, 1)
+                                bckParticleDust({_target}, {_healRayColorCircle2}, 50, 1, 1)
+                                bckParticleDust({_target}, {_healRayColorCircle3}, 50, 1, 2)
+                                set {_h} to {_target}'s health
+                                set {_hm} to {_target}'s max health
+                                if {_h} = {_hm}:
+                                    set {_healAbsoption} to yaml value "data.turret.heal.absorption" from "bck.manager.turret.config"
+                                    set {_healAbsoption} to "%{_healAbsoption}%" parsed as number
+                                    apply absorption {_healAbsoption} to {_target} for 0.7 seconds
+                                else:
+                                    set {_healHeal} to yaml value "data.turret.heal.heal" from "bck.manager.turret.config"
+                                    set {_healHeal} to "%{_healHeal}%" parsed as number
+                                    heal {_target} by {_healHeal} hearts
+                                play sound "%{_healHealSound}%" with volume 0.2 with pitch 2 at {_target}'s location
+                                #add 1 to {turret.timer.%{_target}%}
                                 set {_verif} to false
                                     
 every 2 tick:
     loop all entities:
         set {_t} to {turret.timer.%loop-entity%}
         if {_t} > 0:
-            remove 1 from {turret.timer.%{_target}%}
+            remove 1 from {turret.timer.%loop-entity%}
 on death of player:
     set {_t} to {turret.timer.%victim%}
     if {_t} > 0:
@@ -230,3 +366,8 @@ on left click with diamond hoe:
             loop 10 times:
                 make 10 of block particle using redstone block at {_loc1}
             kill target entity
+function turretList() :: objects:
+    set {_list::*} to yaml node keys "data.turret" from "bck.manager.turret.config"
+    loop {_list::*}:
+        add loop-value to {_r::*}
+    return {_r::*}

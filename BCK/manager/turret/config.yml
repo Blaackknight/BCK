@@ -4,6 +4,12 @@ data:
         defaultRadius: 5
         defaultDamage: 1
         defaultHealth: 1
+        gui:
+            defaultName: §e§lTourelle §d<type>
+            whiteListAdd: §aClic gauche pour ajouter une personne
+            whiteListRemove: §cClic droit pour enlever une personne
+            blackListAdd: §2Clic gauche pour ajouter une personne
+            blackListRemove: §4Clic droit pour enlever une personne
     turret:
         laser:
             helmet: redstone block
@@ -11,7 +17,7 @@ data:
             rayColor: red
             raySize: 1
             hitParticle: redstone block
-            damage: 7
+            damage: 5
         slow:
             helmet: ice
             radius: 10
@@ -40,3 +46,4 @@ data:
             absoption: 1
             heal: 3
             healSound: entity.evoker.cast_spell
+            guiName: §6Tourelle §2<type>

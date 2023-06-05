@@ -11,14 +11,19 @@ on load:
 command /turret [<text>]:
     trigger:
         if targeted block is set:
-            set {_loc} to location of targeted block
+            set {_x} to x-coordinate of location of targeted block
+            set {_y} to y-coordinate of location of targeted block
+            set {_z} to z-coordinate of location of targeted block
+            set {_loc} to location({_x}, {_y}+0.5, {_z})
         else:
             set {_loc} to player's location
         spawn armor stand at {_loc}
+        mobNbtEditLoc({_loc}, "armor_stand", "Small", "1b")
         set {_turret} to the spawned entity
         set {_h} to yaml value "data.turret.%arg-1%.helmet" from "bck.manager.turret.config"
         set {_h} to {_h} parsed as item
         set helmet of {_turret} to {_h}
+        set block at {_loc} to barrier
         set {_list::*} to yaml list "data.turret.%player's uuid%" from "bck.manager.turret.data"
         set {_x} to x-coordinate of {_turret}
         set {_y} to y-coordinate of {_turret}
@@ -133,9 +138,12 @@ function turretGuiMain(player: player, type: text):
     loop {_blackList::*}:
         set line {_bline} of {_blacklist} to "§6-> §b%loop-value%§r"
         add 1 to {_bline}
+    set {_remove} to tnt named "§4§l§nEnlever"
+    set line 2 of lore of {_remove} to "§fPermet de supprimer la tourelle"
     
     set slot 12 of {_gui} to {_whitelist}
     set slot 14 of {_gui} to {_blacklist}
+    set slot 26 of {_gui} to {_remove}
     open {_gui} to {_player}
     userData({_player}, "data.inv", "set", "manager.turret.inside")
 function whitelistSystem(player: player, option: text):
@@ -166,6 +174,21 @@ on inventory click:
                 else if "%{_un}%" is "BlackList":
                     set {_t} to turretData("data.temp.%player's uuid%.turretGuiType")
                     blacklistSystem(player, "add")
+            else if "%{_s}%" contains "tnt":
+                if "%{_un}%" is "Enlever":
+                    set {_b} to targeted block
+                    set {_tb} to type of {_b}
+                    if "%{_tb}%" is not "barrier block":
+                        send "§cIl faut viser la tourelle !"
+                        stop
+                    set {_bb} to {_b}'s location
+                    set {_x} to x-coordinate of {_bb}
+                    set {_y} to y-coordinate of {_bb}
+                    set {_z} to z-coordinate of {_bb}
+                    set {_loc} to location({_x}, {_y}, {_z})
+                    close player's inventory
+                    make console execute command "/execute at @e[type=armor_stand,x=%{_x}%,y=%{_y}%,z=%{_z}%,distance=..1] run kill @e[type=armor_stand,limit=1,distance=..1]"
+                    set block at {_loc} to air
         else if click action is right mouse button:
             if "%{_s}%" contains "paper":
                 if "%{_un}%" is "WhiteList":
@@ -233,7 +256,7 @@ every 25 ticks:
                             set {_verif} to true
                             loop (distance between {_loc} and {_target}) / 0.1 times:
                                 set {_bb} to block at {_loc2}
-                                if "%{_bb}%" contains "air" or "water" or "lava" or "short grass" or "slab" or "lever" or "torch" or "carpet":
+                                if "%{_bb}%" contains "air" or "water" or "lava" or "short grass" or "slab" or "lever" or "torch" or "carpet" or "barrier":
                                     set {_laserRayColor} to yaml value "data.turret.laser.rayColor" from "bck.manager.turret.config"
                                     set {_laserRaySize} to yaml value "data.turret.laser.raySize" from "bck.manager.turret.config"
                                     set {_laserRayColor} to "%{_laserRayColor}%" parsed as color
@@ -300,7 +323,7 @@ every 25 ticks:
                             set {_verif} to true
                             loop (distance between {_loc} and {_target}) / 0.1 times:
                                 set {_bb} to block at {_loc2}
-                                if "%{_bb}%" contains "air" or "water" or "lava" or "short grass" or "slab" or "lever" or "torch" or "carpet":
+                                if "%{_bb}%" contains "air" or "water" or "lava" or "short grass" or "slab" or "lever" or "torch" or "carpet" or "barrier":
                                     set {_slowRayColor} to yaml value "data.turret.slow.rayColor" from "bck.manager.turret.config"
                                     set {_slowRaySize} to yaml value "data.turret.slow.raySize" from "bck.manager.turret.config"
                                     set {_slowRayColor} to {_slowRayColor} parsed as color
@@ -372,7 +395,7 @@ every 25 ticks:
                             set {_ccc} to 0
                             loop (distance between {_target} and {_loc}) / 0.1 times:
                                 set {_bb} to block at {_loc22}
-                                if "%{_bb}%" contains "air" or "water" or "lava" or "short grass" or "slab" or "lever" or "torch" or "carpet":
+                                if "%{_bb}%" contains "air" or "water" or "lava" or "short grass" or "slab" or "lever" or "torch" or "carpet" or "barrier":
                                     if {_verif} is true:
                                         set {_collectorRayColor} to yaml value "data.turret.collector.rayColor" from "bck.manager.turret.config"
                                         set {_collectorRaySize} to yaml value "data.turret.collector.raySize" from "bck.manager.turret.config"
@@ -443,7 +466,7 @@ every 25 ticks:
                             set {_verif} to true
                             loop (distance between {_loc} and {_target}) / 0.1 times:
                                 set {_bb} to block at {_loc2}
-                                if "%{_bb}%" contains "air" or "water" or "lava" or "short grass" or "slab" or "lever" or "torch" or "carpet":
+                                if "%{_bb}%" contains "air" or "water" or "lava" or "short grass" or "slab" or "lever" or "torch" or "carpet" or "barrier":
                                     set {_healRayColor1} to yaml value "data.turret.heal.rayColor1" from "bck.manager.turret.config"
                                     set {_healRayColor2} to yaml value "data.turret.heal.rayColor2" from "bck.manager.turret.config"
                                     set {_healRaySize} to yaml value "data.turret.heal.raySize" from "bck.manager.turret.config"

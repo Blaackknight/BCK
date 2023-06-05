@@ -498,6 +498,12 @@ function textToMinecraft(text: text) :: text:
 function mobNbtEdit(p: player, mob: text, data: text, value: text):
     set {_en} to textToMinecraft({_mob})
     make console execute command "/execute at %{_p}% run data modify entity @e[type=%{_en}%,limit=1,distance=..1] %{_data}% set value %{_value}%"
+function mobNbtEditLoc(loc: location, mob: text, data: text, value: text):
+    set {_en} to textToMinecraft({_mob})
+    set {_x} to x-coordinate of {_loc}
+    set {_y} to x-coordinate of {_loc}
+    set {_z} to x-coordinate of {_loc}
+    make console execute command "/execute at @e[x=%{_x}%,y=%{_y}%,z=%{_z}%] run data modify entity @e[type=%{_en}%,limit=1,distance=..1] %{_data}% set value %{_value}%"
 function mobMergeEdit(p: player, mob: text, name: text, base: text):
     set {_en} to textToMinecraft({_mob})
     make console execute command "/execute at %{_p}% run data merge entity @e[type=%{_en}%,limit=1,distance=..1] {Attributes:[{Name:%{_name}%,Base:%{_base}%d}]}"

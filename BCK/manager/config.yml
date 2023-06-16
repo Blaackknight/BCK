@@ -37,6 +37,11 @@ data:
             name: "§9⟪ Attributs ⟫"
             guiName: "§9Attributs"
             lore:
+        backpack:
+            item: white shulker box
+            name: "§2§l⟪ Backpack ⟫"
+            guiName: "§2Backpack"
+            lore:
         box:
             item: ender chest
             name: "§1⟪ Box ⟫"

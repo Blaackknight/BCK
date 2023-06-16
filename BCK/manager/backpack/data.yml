@@ -1,0 +1,8 @@
+data:
+    inventory:
+        b03197e4-1f1a-316b-8873-ed0870397060:
+            88512ff5-a630-07c9-365b-2a99b7820aab:
+            -   ==: org.bukkit.inventory.ItemStack
+                v: 3120
+                type: ANVIL
+                amount: 13

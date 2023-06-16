@@ -53,8 +53,10 @@ on load:
 
     set {spawnCoordinates::*} to getCoordinateSeparate("%{spawn}%")
 on inventory close:
+    #wait 1 tick
+    if userData(player, "data.inv") is "bck.manager.backpack.main":
+        backpackGuiSaver(player, event-inventory)
     userData(player, "data.inv", "set", "false")
-    stop
 on unload:
     delete {clan.ranks::*}
     delete {server.perms::*}

@@ -15,6 +15,7 @@ function bckRegisterSkripts():
     set {_tur::*} to fileList("/plugins/Skript/scripts/BCK/manager/turret/")
     set {_oth::*} to fileList("/plugins/Skript/scripts/BCK/manager/other/")
     set {_zon::*} to fileList("/plugins/Skript/scripts/BCK/manager/zones/")
+    set {_bac::*} to fileList("/plugins/Skript/scripts/BCK/manager/backpack/")
     loop {_bc::*}:
         add "%loop-value%" to {skripts::*}
     loop {_sks::*}:
@@ -42,6 +43,8 @@ function bckRegisterSkripts():
     loop {_att::*}:
         add "%loop-value%" to {skripts::*}
     loop {_tur::*}:
+        add "%loop-value%" to {skripts::*}
+    loop {_bac::*}:
         add "%loop-value%" to {skripts::*}
 function bckRegisterCommands():
     set {cmds::*} to all registered commands

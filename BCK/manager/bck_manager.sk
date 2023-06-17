@@ -389,9 +389,11 @@ on inventory click:
             else if "%{_t}%" is "white shulker box":
                 if {_u} contain "Backpack":
                     guiMain(player, "backpack")
-            else if "%{_t}%" is "crypter":
+            else if "%{_t}%" is "ender rod":
                 if {_u} contain "Crypter":
                     guiMain(player, "crypter")
+            else:
+                broadcast {_t}
     else if userData(player, "data.inv") is "manager.money.main":
         cancel event
         set {_i} to event-slot

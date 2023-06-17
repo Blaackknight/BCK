@@ -11,10 +11,19 @@ on load:
 command /crypt [<text>] [<text>]:
     trigger:
         if arg-1 is set:
-            if arg-1 is "bck":
-                
+            if arg-1 is "ovor":
+                set {_t} to crypting(arg-2)
+                broadcast "Crypting: %{_t}%"
         else:
             send "§c/crypt <type> <text>"
+function crypting(text: text, type: text="ovor") :: text:
+    set {_data::*} to text split by ""
+    set {_r} to ""
+    loop {_data::*}:
+        set {_b} to crypterConfig("data.mapping.%{_type}%.%loop-value%")
+        if {_b} isn't "<none>":
+            set {_r} to "%{_r}%%{_b}%"
+    return {_r}
 function crypterConfig(find: text, mode: text="extract", data: text="") :: text:
     if {_mode} is "extract":
         set {_result} to yaml value "%{_find}%" from "bck.manager.crypter.config"

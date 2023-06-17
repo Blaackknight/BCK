@@ -1,0 +1,10 @@
+on load:
+    set {_list::*} to {skripts::*}
+    if {_list::*} contains "bck_manager.sk":
+        send "§6[§4BCK§6]§r Loading crypter..." to console
+        send "§6[§4BCK§6/§3Crypter§6]§r Loaded successfully !" to console
+        load yaml "plugins/Skript/scripts/BCK/manager/crypter/config.yml" as "bck.manager.crypter.config"
+        load yaml "plugins/Skript/scripts/BCK/manager/crypter/data.yml" as "bck.manager.crypter.data"
+    else:
+        broadcast "§6[§4BCK§6/§3Crypter§6]§r Script loading cancel It requires (bck_manager.sk)"
+        unload script file "bck_crypter.sk"

@@ -1,8 +1,56 @@
 data:
     inventory:
         b03197e4-1f1a-316b-8873-ed0870397060:
-            88512ff5-a630-07c9-365b-2a99b7820aab:
+            <none>:
             -   ==: org.bukkit.inventory.ItemStack
                 v: 3120
-                type: ANVIL
-                amount: 13
+                type: CHEST
+                meta:
+                    ==: ItemMeta
+                    meta-type: TILE_ENTITY
+                    display-name: '{"extra":[{"bold":false,"italic":false,"underlined":false,"strikethrough":false,"obfuscated":false,"color":"gold","text":"Compact Drawer"}],"text":""}'
+                    lore:
+                    - '{"extra":[{"bold":false,"italic":false,"underlined":false,"strikethrough":false,"obfuscated":false,"color":"gray","text":"Type "},{"bold":false,"italic":false,"underlined":false,"strikethrough":false,"obfuscated":false,"color":"gold","text":": "},{"bold":false,"italic":false,"underlined":false,"strikethrough":false,"obfuscated":false,"color":"green","text":"chest"}],"text":""}'
+                    - '{"extra":[{"bold":false,"italic":false,"underlined":false,"strikethrough":false,"obfuscated":false,"color":"gray","text":"Quantité "},{"bold":false,"italic":false,"underlined":false,"strikethrough":false,"obfuscated":false,"color":"gold","text":": "},{"bold":false,"italic":false,"underlined":false,"strikethrough":false,"obfuscated":false,"color":"green","text":"3"}],"text":""}'
+                    blockMaterial: CHEST
+            -   ==: org.bukkit.inventory.ItemStack
+                v: 3120
+                type: CHEST
+                meta:
+                    ==: ItemMeta
+                    meta-type: TILE_ENTITY
+                    display-name: '{"extra":[{"bold":false,"italic":false,"underlined":false,"strikethrough":false,"obfuscated":false,"color":"gold","text":"Compact Drawer"}],"text":""}'
+                    blockMaterial: CHEST
+            -   ==: org.bukkit.inventory.ItemStack
+                v: 3120
+                type: OAK_PLANKS
+            -   ==: org.bukkit.inventory.ItemStack
+                v: 3120
+                type: DIRT
+                amount: 2
+            -   ==: org.bukkit.inventory.ItemStack
+                v: 3120
+                type: TUFF
+            -   ==: org.bukkit.inventory.ItemStack
+                v: 3120
+                type: CRIMSON_SIGN
+            -   ==: org.bukkit.inventory.ItemStack
+                v: 3120
+                type: COW_SPAWN_EGG
+            -   ==: org.bukkit.inventory.ItemStack
+                v: 3120
+                type: ORANGE_SHULKER_BOX
+            -   ==: org.bukkit.inventory.ItemStack
+                v: 3120
+                type: ORANGE_SHULKER_BOX
+                meta:
+                    ==: ItemMeta
+                    meta-type: TILE_ENTITY
+                    display-name: '{"extra":[{"bold":false,"italic":false,"underlined":false,"strikethrough":false,"obfuscated":false,"color":"white","text":"Backpack"}],"text":""}'
+                    lore:
+                    - '{"extra":[{"bold":false,"italic":false,"underlined":false,"strikethrough":false,"obfuscated":false,"color":"gray","text":"--⟨ "},{"bold":false,"italic":false,"underlined":false,"strikethrough":false,"obfuscated":false,"color":"gold","text":"Backpack"},{"bold":false,"italic":false,"underlined":false,"strikethrough":false,"obfuscated":false,"color":"gray","text":" ⟩--"}],"text":""}'
+                    - '{"text":""}'
+                    - '{"extra":[{"bold":false,"italic":false,"underlined":false,"strikethrough":false,"obfuscated":false,"color":"gray","text":"⇾ "},{"bold":false,"italic":false,"underlined":false,"strikethrough":false,"obfuscated":false,"color":"white","text":"Tier: "},{"bold":false,"italic":false,"underlined":false,"strikethrough":false,"obfuscated":false,"color":"green","text":"1"}],"text":""}'
+                    - '{"text":""}'
+                    - '{"extra":[{"bold":false,"italic":false,"underlined":false,"strikethrough":false,"obfuscated":false,"color":"gray","text":"63c65f93-715d-3b7f-79c2-11b1c2b6eb5d"}],"text":""}'
+                    blockMaterial: ORANGE_SHULKER_BOX

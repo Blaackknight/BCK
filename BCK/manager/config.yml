@@ -105,3 +105,11 @@ data:
             name: "§2⟪ Zones ⟫"
             guiName: "§2Zones"
             lore:
+        crypter:
+            item: end rod
+            name: "§f§l⟪ Crypter ⟫"
+            guiName: "§f§lCrypter"
+            lore:
+                - test
+                - lol
+                - ta mère

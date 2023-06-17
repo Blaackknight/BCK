@@ -10,3 +10,10 @@ data:
         line: "&8&m---⟮&r"
         uline: "&8&m⟯---&r"
         price: 1000
+    config:
+        compactDrawer: true
+        compactDrawerItem: chest
+        compactDrawerName: "§6Compact Drawer"
+        compactDrawerLore:
+            line1: "&7Type &6: &a"
+            line2: "&7Quantité &6: &a"

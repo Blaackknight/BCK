@@ -16,6 +16,7 @@ function bckRegisterSkripts():
     set {_oth::*} to fileList("/plugins/Skript/scripts/BCK/manager/other/")
     set {_zon::*} to fileList("/plugins/Skript/scripts/BCK/manager/zones/")
     set {_bac::*} to fileList("/plugins/Skript/scripts/BCK/manager/backpack/")
+    set {_cry::*} to fileList("/plugins/Skript/scripts/BCK/manager/backpack/")
     loop {_bc::*}:
         add "%loop-value%" to {skripts::*}
     loop {_sks::*}:
@@ -45,6 +46,8 @@ function bckRegisterSkripts():
     loop {_tur::*}:
         add "%loop-value%" to {skripts::*}
     loop {_bac::*}:
+        add "%loop-value%" to {skripts::*}
+    loop {_cry::*}:
         add "%loop-value%" to {skripts::*}
 function bckRegisterCommands():
     set {cmds::*} to all registered commands
@@ -441,34 +444,6 @@ function giveGeneratorItem(player: player, type: text):
         set {_item} to {generators.types::%{_type}%.item}
         give {_item} to {_player}
         play sound "entity.item.pickup" with volume 0.3 at {_player}
-#                                                                                                                #
-function drawerDropAtLocation(u: block, name: text, player: player, location: location):
-    set {_l1} to line 1 of {_u}
-    set {_l2} to line 2 of {_u}
-    set {_l3} to line 3 of {_u}
-    set {_l4} to line 4 of {_u}
-    if {_l1} is {_name}:
-        if {_player}'s gamemode is creative:
-            wait 3 ticks
-            if {_l1} is set:
-                set line 1 of {_u} to {_l1}
-            if {_l2} is set:
-                set line 2 of {_u} to {_l2}
-            if {_l3} is set:
-                set line 3 of {_u} to {_l3}
-            if {_l4} is set:
-                set line 4 of {_u} to {_l4}
-        else:
-            if {_l2} is set:
-                set {_i} to "%{_l2}%" parsed as item
-            if {_l3} is set:
-                set {_n} to "%{_l3}%" parsed as integer
-            if {_l4} is set:
-                set {_p} to {_l4} parsed as player
-            loop {_n} times:
-                drop {_i} at {_location}
-            #send "%{_l1}% | %{_l2}% | %{_l3}% | %{_l4}%" to {_player}
-            logCustom("--> %{_l1}%§r %{_l3}% %{_l2}% dropped for %selector({_p})%", 5)
 #                                                                                                                #
 function addSellers(category: text, name: text):
     add "%{_category}%/%{_name}%" to {sellers::*}

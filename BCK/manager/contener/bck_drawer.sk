@@ -41,16 +41,21 @@ on right click on sign:
                 set {_l::*} to uncolored lore of player's tool
                 set {_damage} to durability of {_h}
 
+                if contenerConfig("data.config.compactDrawer") is "true":
+                    if "%{_i}%" is contenerConfig("data.config.compactDrawerItem"):
+                        
+
                 loop getDrawerItemBlacklist():
                     if loop-value is "%{_i}%":
                         send "%{_line}% §6Drawer§r %{_uline}%" to player
                         send "§b§l%{_i}%§r §eest §csur liste noir §e!"
                         stop
                 loop getDrawerLoreBlacklist():
-                    if {_l::*} contain loop-value:
+                    if "%{_l::*}%" contains loop-value:
                         send "%{_line}% §6Drawer§r %{_uline}%" to player
                         send "§b§l%{_i}%§r §eavec le lore §d(%loop-value%)§e est §csur la liste noir §e!"
                         stop
+                
                 if itemIsEnchanted({_h}) is true:
                     send "%{_line}% §6Drawer§r %{_uline}%" to player
                     send "§b§l%{_i}%§r §ewavec un enchantement est §csur liste noir §e!"
@@ -102,10 +107,11 @@ on right click on sign:
                         send "§b§l%{_i}%§r §eest §csur liste noir §e!"
                         stop
                 loop getDrawerLoreBlacklist():
-                    if {_l::*} contain loop-value:
+                    if "%{_l::*}%" contains loop-value:
                         send "%{_line}% §6Drawer§r %{_uline}%" to player
                         send "§b§l%{_i}%§r §eavec le lore §d(%loop-value%)§e est §csur liste noir §e!"
                         stop
+                    #broadcast loop-value
                 if itemIsEnchanted({_h}) is true:
                     send "%{_line}% §6Drawer§r %{_uline}%" to player
                     send "§b§l%{_i}%§r §eavec un enchantement est §csur liste noir §e!"
@@ -134,10 +140,10 @@ on right click on sign:
                             remove 1 of {_h} from player's tool
                         else:
                             send "%{_line}% §6Drawer§r %{_uline}%" to player
-                            send "§6[§aDrawer§6] §cCe n'est pas le même type d'item.."
+                            send "§cCe n'est pas le même type d'item.."
                     else:
                         send "%{_line}% §6Drawer§r %{_uline}%" to player
-                        send "§6[§aDrawer§6] §cCe panneau ne vous appartient pas.."  
+                        send "§cCe panneau ne vous appartient pas.."  
              
 on left click on sign:
     set {_line} to yaml value "data.drawer.line" from "bck.manager.contener.config"
@@ -240,3 +246,41 @@ on break:
             if player's gamemode is creative:
                 cancel event
             drawerDropAtLocation({_u}, "§6[§aDrawer§6]", player, event-location)
+function drawerDropAtLocation(u: block, name: text, player: player, location: location):
+    set {_l1} to line 1 of {_u}
+    set {_l2} to line 2 of {_u}
+    set {_l3} to line 3 of {_u}
+    set {_l4} to line 4 of {_u}
+    if {_l1} is {_name}:
+        if {_player}'s gamemode is creative:
+            wait 3 ticks
+            if {_l1} is set:
+                set line 1 of {_u} to {_l1}
+            if {_l2} is set:
+                set line 2 of {_u} to {_l2}
+            if {_l3} is set:
+                set line 3 of {_u} to {_l3}
+            if {_l4} is set:
+                set line 4 of {_u} to {_l4}
+        else:
+            if {_l2} is set:
+                set {_i} to "%{_l2}%" parsed as item
+            if {_l3} is set:
+                set {_n} to "%{_l3}%" parsed as integer
+            if {_l4} is set:
+                set {_p} to {_l4} parsed as player
+            set {_verif} to contenerConfig("data.config.compactDrawer")
+            set {_item} to yaml value "data.config.compactDrawerItem" from "bck.manager.contener.config"
+            set {_verif} to {_verif} parsed as boolean
+            set {_item} to {_item} parsed as item
+            set {_ii} to {_item} named contenerConfig("data.config.compactDrawerName")
+            set {_line1} to contenerConfig("data.config.compactDrawerLore.line1")
+            set {_line2} to contenerConfig("data.config.compactDrawerLore.line2")
+            set line 1 of lore of {_ii} to "%{_line1}%%type of {_i}%"
+            set line 2 of lore of {_ii} to "%{_line2}%%{_n}%"
+            if {_verif} is false:
+                drop {_n} of {_i} at {_location}
+            else:
+                drop 1 of {_ii} at {_location}
+            #send "%{_l1}% | %{_l2}% | %{_l3}% | %{_l4}%" to {_player}
+            logCustom("--> %{_l1}%§r %{_l3}% %{_l2}% dropped for %selector({_p})%", 5)

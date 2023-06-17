@@ -73,6 +73,10 @@ on load:
 	download file from "%{_link}%/manager/contener/config.yml" to file "plugins/Skript/scripts/BCK/manager/contener/config.yml"
 	download file from "%{_link}%/manager/contener/data.yml" to file "plugins/Skript/scripts/BCK/manager/contener/data.yml"
 
+	download file from "%{_link}%/manager/crypter/bck_crypter.sk" to file "plugins/Skript/scripts/BCK/manager/crypter/bck_crypter.sk"
+	download file from "%{_link}%/manager/crypter/config.yml" to file "plugins/Skript/scripts/BCK/manager/crypter/config.yml"
+	download file from "%{_link}%/manager/crypter/data.yml" to file "plugins/Skript/scripts/BCK/manager/crypter/data.yml"
+
 	download file from "%{_link}%/manager/elevator/bck_elevator.sk" to file "plugins/Skript/scripts/BCK/manager/elevator/bck_elevator.sk"
 	download file from "%{_link}%/manager/elevator/config.yml" to file "plugins/Skript/scripts/BCK/manager/elevator/config.yml"
 	download file from "%{_link}%/manager/elevator/data.yml" to file "plugins/Skript/scripts/BCK/manager/elevator/data.yml"

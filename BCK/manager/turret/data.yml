@@ -2,10 +2,11 @@ data:
     turret:
         b03197e4-1f1a-316b-8873-ed0870397060:
         - laser|armor stand|291.59|74|-184.52
-        - heal|armor stand|226.5|68.5|-171.5
+        - laser|armor stand|271.5|71|-130.5
+        - collector|armor stand|-432.48|170.06|243.49
     temp:
         b03197e4-1f1a-316b-8873-ed0870397060:
-            turretGuiType: heal
+            turretGuiType: laser
         1b633e96-3be3-3caf-b891-c473045e744e:
             turretGuiType: collector
             whitelistAdd: true

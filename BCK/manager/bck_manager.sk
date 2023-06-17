@@ -9,6 +9,15 @@ on load:
         broadcast "§6[§4BCK§6/§5Manager§6]§r Script loading cancel It requires (core.sk)"
         unload script file "bck_manager.sk"
         unload script file "bck_manager_debug.sk"
+function randomUUID() :: text:
+    add "a", "b", "c", "d", "e", "f", "0", "1", "2", "3", "4", "5", "6", "7", "8" and "9" to {_chars::*}
+    set {_uuid} to a random element out of {_chars::*}
+    loop 35 times:
+        if loop-number = 8, 13, 18 or 23:
+            set {_uuid} to "%{_uuid}%-"
+        else:
+            set {_uuid} to "%{_uuid}%%a random element out of {_chars::*}%"
+    return {_uuid}
 function managerGuiMain(player: player):
     set {_list::*} to folderList("plugins/Skript/scripts/BCK/manager/")
 
@@ -61,10 +70,6 @@ function managerGuiMain(player: player):
 command /manager:
     trigger:
         managerGuiMain(player)
-command /managerbis:
-    trigger:
-        set {_x} to userData(player, "data.money")
-        broadcast "%{_x}%"
 function guiMain(player: player, type: text):
     if {_type} is "other":
         set {_others::*} to fileList("plugins/Skript/scripts/BCK/manager/other/")
@@ -384,6 +389,9 @@ on inventory click:
             else if "%{_t}%" is "white shulker box":
                 if {_u} contain "Backpack":
                     guiMain(player, "backpack")
+            else if "%{_t}%" is "crypter":
+                if {_u} contain "Crypter":
+                    guiMain(player, "crypter")
     else if userData(player, "data.inv") is "manager.money.main":
         cancel event
         set {_i} to event-slot
@@ -672,6 +680,28 @@ on inventory click:
             else if "%{_t}%" contain {_uni}:
                 if {_u} contain "Désinstaller":
                     addonDeleter(player, "backpack")
+    else if userData(player, "data.inv") is "manager.crypter.main":
+        cancel event
+        set {_i} to event-slot
+        set {_t} to type of {_i}
+        set {_n} to display name of {_i}
+        set {_u} to uncolored {_n}
+        if {_t} is not air:
+            set {_ins} to managerConfig("data.gui.config.install.item")
+            set {_swi} to managerConfig("data.gui.config.switch.item")
+            set {_uni} to managerConfig("data.gui.config.uninstall.item")
+            if "%{_t}%" contain "barrier":
+                if {_u} contain "Back":
+                    managerGuiMain(player)
+            else if "%{_t}%" is {_ins}:
+                if {_u} contain "Installer":
+                    addonInstaller(player, {_i}, "crypter")
+            else if "%{_t}%" contain {_swi}:
+                if {_u} contain "Activé":
+                    fileSwitch(player, "crypter")
+            else if "%{_t}%" contain {_uni}:
+                if {_u} contain "Désinstaller":
+                    addonDeleter(player, "crypter")
     else if userData(player, "data.inv") is "manager.userdata.main":
         cancel event
         set {_i} to event-slot

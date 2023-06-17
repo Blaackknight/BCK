@@ -14,6 +14,7 @@ on load:
     addDrawerLoreBlacklisted("AutoSmelt")
     addDrawerLoreBlacklisted("Edit Stick")
     addDrawerLoreBlacklisted("Elevator")
+    addDrawerLoreBlacklisted("Backpack")
 
     addSellers("§d§lMateriaux", "§d§lPatrick")
     addSellers("§6§lNourriture", "§6§lJerry")
@@ -55,6 +56,7 @@ on load:
 on inventory close:
     #wait 1 tick
     if userData(player, "data.inv") is "bck.manager.backpack.main":
+        play sound "block.shulker_box.close" with volume 0.2 with pitch 1 at player's location
         backpackGuiSaver(player, event-inventory)
     userData(player, "data.inv", "set", "false")
 on unload:
@@ -184,3 +186,18 @@ function bckManagerEditfiles(source: text, find: text="data", mode: text="extrac
 		set yaml value "%{_find}%" from "bck.%{_source}%" to {_data}
 		save yaml "bck.%{_source}%"
 	return {_result}
+function backpackGuiSaver(player: player, gui: inventory):
+    set {_i} to {_player}'s tool
+    set {_storage::*} to items of {_gui}
+    set yaml list "data.inventory.%{_player}'s uuid%.%backpackGetUUID({_i})%" from "bck.manager.backpack.data" to {_storage::*}
+    save yaml "bck.manager.backpack.data"
+function backpackGetTier(item: item) :: number:
+    set {_l} to line 3 of {_item}'s lore
+    set {_l} to uncolored {_l}
+    replace "⇾ Tier: " with "" in {_l}
+    set {_l} to {_l} parsed as number
+    return {_l}
+function backpackGetUUID(item: item) :: string:
+    set {_l} to line 5 of {_item}'s lore
+    set {_l} to uncolored {_l}
+    return {_l}

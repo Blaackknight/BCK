@@ -29,15 +29,6 @@ command /backpack [<number>]:
         set line 3 of lore of {_i} to {_t}
         set line 5 of lore of {_i} to "§7%randomUUID()%"
         give {_i} to player
-function randomUUID() :: text:
-    add "a", "b", "c", "d", "e", "f", "0", "1", "2", "3", "4", "5", "6", "7", "8" and "9" to {_chars::*}
-    set {_uuid} to a random element out of {_chars::*}
-    loop 35 times:
-        if loop-number = 8, 13, 18 or 23:
-            set {_uuid} to "%{_uuid}%-"
-        else:
-            set {_uuid} to "%{_uuid}%%a random element out of {_chars::*}%"
-    return {_uuid}
 function backpackGui(player: player, tier: number=1):
     set {_i} to {_player}'s tool
     set {_n} to display name of {_i}
@@ -56,21 +47,6 @@ function backpackGui(player: player, tier: number=1):
         save yaml "bck.manager.backpack.data"
     open {_gui} to {_player}
     userData({_player}, "data.inv", "set", "bck.manager.backpack.main")
-function backpackGuiSaver(player: player, gui: inventory):
-    set {_i} to {_player}'s tool
-    set {_storage::*} to items of {_gui}
-    set yaml list "data.inventory.%{_player}'s uuid%.%backpackGetUUID({_i})%" from "bck.manager.backpack.data" to {_storage::*}
-    save yaml "bck.manager.backpack.data"
-function backpackGetTier(item: item) :: number:
-    set {_l} to line 3 of {_item}'s lore
-    set {_l} to uncolored {_l}
-    replace "⇾ Tier: " with "" in {_l}
-    set {_l} to {_l} parsed as number
-    return {_l}
-function backpackGetUUID(item: item) :: string:
-    set {_l} to line 5 of {_item}'s lore
-    set {_l} to uncolored {_l}
-    return {_l}
 on click:
     set {_i} to player's tool
     set {_lore::*} to uncolored lore of {_i}
@@ -78,6 +54,7 @@ on click:
     set {_ii} to {_ii} parsed as item
     if {_i} is {_ii}:
         if "%{_lore::*}%" contains "Backpack":
+            play sound "block.shulker_box.open" with volume 0.2 with pitch 1 at player's location
             backpackGui(player, backpackGetTier({_i}))
 on place:
     set {_i} to player's tool

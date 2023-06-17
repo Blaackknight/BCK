@@ -13,16 +13,26 @@ command /crypt [<text>] [<text>]:
         if arg-1 is set:
             if arg-1 is "ovor":
                 set {_t} to crypting(arg-2)
-                broadcast "Crypting: %{_t}%"
+                set {_f} to "<insertion:%{_t}%>%{_t}%"
+                broadcast formatted "Crypting: %arg-2% -> %{_f}%"
         else:
             send "§c/crypt <type> <text>"
 function crypting(text: text, type: text="ovor") :: text:
-    set {_data::*} to text split by ""
+    set {_data::*} to {_text} split by ""
     set {_r} to ""
+    #broadcast yaml value "data.mapping.%{_type}%.A" from "bck.manager.crypter.config"
     loop {_data::*}:
-        set {_b} to crypterConfig("data.mapping.%{_type}%.%loop-value%")
-        if {_b} isn't "<none>":
-            set {_r} to "%{_r}%%{_b}%"
+       # set {_texts::*} to yaml list "data.mapping.%{_type}%" from "bck.manager.crypter.config"
+        set {_b} to yaml value "data.mapping.%{_type}%.%loop-value%" from "bck.manager.crypter.config"
+        #set {_b} to "%{_b}%"
+        #set {_b} to crypterConfig("data.mapping.%{_type}%.%loop-value%")
+        set {_l} to length of {_b} 
+        set {_bb} to substring of {_b} from 0 to {_l}
+        #broadcast "%{_bb}%"
+        if {_bb} isn't "<none>":
+            set {_r} to "%{_r}%%{_bb}%" 
+            #set {_b} to ""
+    replace all "<none>" with "" in {_r}
     return {_r}
 function crypterConfig(find: text, mode: text="extract", data: text="") :: text:
     if {_mode} is "extract":

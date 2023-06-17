@@ -15,24 +15,51 @@ command /crypt [<text>] [<text>]:
                 set {_t} to crypting(arg-2)
                 set {_f} to "<insertion:%{_t}%>%{_t}%"
                 broadcast formatted "Crypting: %arg-2% -> %{_f}%"
+                crypterData("data.temp.%player's uuid%", "set", {_t})
         else:
             send "§c/crypt <type> <text>"
+on tab complete of "/crypt":
+    set tab completions for position 1 to getCryptLanguages()
+on tab complete of "/decrypt":
+    set tab completions for position 1 to getCryptLanguages()
+command /decrypt [<text>] [<text>]:
+    trigger:
+        if arg-1 is set:
+            if arg-1 is "ovor":
+                set {_t} to decrypting(arg-2)
+                set {_f} to "<insertion:%{_t}%>%{_t}%"
+                broadcast formatted "Decrypting: %arg-2% -> %{_f}%"
+        else:
+            send "§c/crypt <type> <text>"
+function getCryptLanguages() :: objects:
+    loop yaml node keys "data.mapping" from "bck.manager.crypter.config":
+        add loop-node to {_nodes::*}
+    loop {_nodes::*}:
+        set {_l} to loop-value
+        replace "data.mapping." with "" in {_l}
+        add {_l} to {_r::*}
+    return {_r::*}
 function crypting(text: text, type: text="ovor") :: text:
     set {_data::*} to {_text} split by ""
     set {_r} to ""
-    #broadcast yaml value "data.mapping.%{_type}%.A" from "bck.manager.crypter.config"
     loop {_data::*}:
-       # set {_texts::*} to yaml list "data.mapping.%{_type}%" from "bck.manager.crypter.config"
         set {_b} to yaml value "data.mapping.%{_type}%.%loop-value%" from "bck.manager.crypter.config"
-        #set {_b} to "%{_b}%"
-        #set {_b} to crypterConfig("data.mapping.%{_type}%.%loop-value%")
         set {_l} to length of {_b} 
         set {_bb} to substring of {_b} from 0 to {_l}
-        #broadcast "%{_bb}%"
         if {_bb} isn't "<none>":
             set {_r} to "%{_r}%%{_bb}%" 
-            #set {_b} to ""
     replace all "<none>" with "" in {_r}
+    return {_r}
+function decrypting(text: text, type: text="ovor") :: text:
+    loop yaml node keys "data.mapping.%{_type}%" from "bck.manager.crypter.config":
+        add loop-node to {_nodes::*}
+    loop {_nodes::*}:
+        set {_l} to loop-value
+        set {_d} to crypterConfig({_l})
+        replace "data.mapping.%{_type}%." with "" in {_l}
+        if {_text} contains {_d}:
+            replace all {_d} with {_l} in {_text}
+    set {_r} to "%{_text}%"
     return {_r}
 function crypterConfig(find: text, mode: text="extract", data: text="") :: text:
     if {_mode} is "extract":
@@ -51,4 +78,22 @@ function crypterConfig(find: text, mode: text="extract", data: text="") :: text:
     else if {_mode} is "set":
         set yaml value "%{_find}%" from "bck.manager.crypter.config" to {_data}
         save yaml "bck.manager.crypter.config"
+    return "%{_result}%"
+function crypterData(find: text, mode: text="extract", data: text="") :: text:
+    if {_mode} is "extract":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.crypter.data"
+        if {_result} isn't set:
+            if {_data} isn't empty:
+                set {_result} to {_data}
+    else if {_mode} is "delete":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.crypter.data"
+        if {_result} is set:
+            delete yaml value "%{_find}%" from "bck.manager.crypter.data"
+            save yaml "bck.manager.crypter.data"
+        else:
+            set yaml value "%{_find}%" from "bck.manager.crypter.data" to {_data}
+            save yaml "bck.manager.crypter.data"
+    else if {_mode} is "set":
+        set yaml value "%{_find}%" from "bck.manager.crypter.data" to {_data}
+        save yaml "bck.manager.crypter.data"
     return "%{_result}%"

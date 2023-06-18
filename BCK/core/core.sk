@@ -47,7 +47,7 @@ command /permission [<offlineplayer>] [<text>] [<text>]:
                 send "§6Permissions §4enlever§6 de §b%{_p}%"
                 send "§2Ajout§6 des permissions par défault.."
                 wait 1 second
-                addDefaultPermission({_p})
+                defaultPermission({_p})
                 send "§6Permission par défault §2ajouter avec succès§6 !"
             else:
                 send "§cOption inconnue (%arg-2%)"

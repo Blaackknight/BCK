@@ -11,11 +11,10 @@ on load:
 command /crypt [<text>] [<text>]:
     trigger:
         if arg-1 is set:
-            if arg-1 is "ovor":
-                set {_t} to crypting(arg-2)
-                set {_f} to "<insertion:%{_t}%>%{_t}%"
-                broadcast formatted "Crypting: %arg-2% -> %{_f}%"
-                crypterData("data.temp.%player's uuid%", "set", {_t})
+            set {_t} to crypting(arg-2, arg-1)
+            set {_f} to "<insertion:%{_t}%>%{_t}%"
+            broadcast formatted "Crypting: %arg-2% -> %{_f}%"
+            crypterData("data.temp.%player's uuid%", "set", {_t})
         else:
             send "§c/crypt <type> <text>"
 on tab complete of "/crypt":
@@ -25,12 +24,60 @@ on tab complete of "/decrypt":
 command /decrypt [<text>] [<text>]:
     trigger:
         if arg-1 is set:
-            if arg-1 is "ovor":
-                set {_t} to decrypting(arg-2)
-                set {_f} to "<insertion:%{_t}%>%{_t}%"
-                broadcast formatted "Decrypting: %arg-2% -> %{_f}%"
+            set {_t} to decrypting(arg-2, arg-1)
+            set {_f} to "<insertion:%{_t}%>%{_t}%"
+            broadcast formatted "Decrypting: %arg-2% -> %{_f}%"
         else:
             send "§c/crypt <type> <text>"
+command /chat [<text>]:
+    trigger:
+        if arg-1 is set:
+            if getChats() contains arg-1:
+                set {_defaultA::*} to yaml list "data.chat.default" from "bck.manager.crypter.data"
+                set {_cryptedA::*} to yaml list "data.chat.crypted" from "bck.manager.crypter.data"
+                set {_opA::*} to yaml list "data.chat.op" from "bck.manager.crypter.data"
+                set {_ownerA::*} to yaml list "data.chat.owner" from "bck.manager.crypter.data"
+
+                loop {_defaultA::*}:
+                    if loop-value isn't player's uuid:
+                        add loop-value to {_default::*}
+                loop {_cryptedA::*}:
+                    if loop-value isn't player's uuid:
+                        add loop-value to {_crypted::*}
+                loop {_opA::*}:
+                    if loop-value isn't player's uuid:
+                        add loop-value to {_op::*}
+                loop {_ownerA::*}:
+                    if loop-value isn't player's uuid:
+                        add loop-value to {_owner::*}
+                
+                set yaml list "data.chat.default" from "bck.manager.crypter.data" to {_default::*}
+                set yaml list "data.chat.crypted" from "bck.manager.crypter.data" to {_crypted::*}
+                set yaml list "data.chat.op" from "bck.manager.crypter.data" to {_op::*}
+                set yaml list "data.chat.owner" from "bck.manager.crypter.data" to {_owner::*}
+                save yaml "bck.manager.crypter.data"
+                userData(player, "data.chat", "set", arg-1)
+                set {_chat::*} to yaml list "data.chat.%arg-1%" from "bck.manager.crypter.data"
+                if {_chat::*} contains player's uuid:
+                    #ddd
+                else:
+                    add player's uuid to {_chat::*}
+                set yaml list "data.chat.%arg-1%" from "bck.manager.crypter.data" to {_chat::*}
+                save yaml "bck.manager.crypter.data"
+            else:
+                send "§cChat introuvable.."
+        else:
+            send "§c/chat <chat>"
+on tab complete of "/chat":
+    set tab completions for position 1 to getChats()
+function getChats() :: objects:
+    loop yaml node keys "data.chat" from "bck.manager.crypter.config":
+        add loop-node to {_nodes::*}
+    loop {_nodes::*}:
+        set {_l} to loop-value
+        replace "data.chat." with "" in {_l}
+        add {_l} to {_r::*}
+    return {_r::*}
 function getCryptLanguages() :: objects:
     loop yaml node keys "data.mapping" from "bck.manager.crypter.config":
         add loop-node to {_nodes::*}
@@ -97,3 +144,67 @@ function crypterData(find: text, mode: text="extract", data: text="") :: text:
         set yaml value "%{_find}%" from "bck.manager.crypter.data" to {_data}
         save yaml "bck.manager.crypter.data"
     return "%{_result}%"
+on chat:
+    if hasPermission(player, "server.send_message") is false:
+        cancel event
+        send "§c§lHey! §7Tu n'a pas la permission :|"
+        stop
+    set {_chat} to userData(player, "data.chat")
+    if {_chat} is not set:
+        set {_chat} to "default"
+    if {_chat} is "crypted":
+        if world of player is "world":
+            cancel event
+            set {_m} to crypting(message, "ovor")
+            set {_m} to "<insertion:%{_m}%>%{_m}%"
+            set {_msg} to "[§aOverworld§r] §7§n<crypted>§r %{_m}%"
+            set {_pp::*} to yaml list "data.chat.crypted" from "bck.manager.crypter.data"
+            loop {_pp::*}:
+                set {_l} to loop-value
+                set {_p} to {_l} parsed as offlineplayer
+                add {_p} to {_p::*}
+            send formatted {_msg} to {_p::*}
+        else if world of player is "world_nether":
+            cancel event
+            set {_m} to crypting(message, "ovor")
+            set {_m} to "<insertion:%{_m}%>%{_m}%"
+            set {_msg} to "[§4Nether§r] §7§n<crypted>§r %{_m}%"
+            set {_pp::*} to yaml list "data.chat.crypted" from "bck.manager.crypter.data"
+            loop {_pp::*}:
+                set {_l} to loop-value
+                set {_p} to {_l} parsed as offlineplayer
+                add {_p} to {_p::*}
+            send formatted {_msg} to {_p::*}
+        else if world of player is "world_the_end":
+            cancel event
+            set {_m} to crypting(message, "ovor")
+            set {_m} to "<insertion:%{_m}%>%{_m}%"
+            set {_msg} to "[§eEnd§r] §7§n<crypted>§r %{_m}%"
+            set {_pp::*} to yaml list "data.chat.crypted" from "bck.manager.crypter.data"
+            loop {_pp::*}:
+                set {_l} to loop-value
+                set {_p} to {_l} parsed as offlineplayer
+                add {_p} to {_p::*}
+            send formatted {_msg} to {_p::*}
+    else if {_chat} is "op":
+    else if {_chat} is "owner":
+    else:
+        if world of player is "world":
+            cancel event
+            set {_msg} to "[§aOverworld§r] <%selector(player)%> %message%"
+            broadcast formatted {_msg}
+            #send {_msg} to channel with id "1103405488953102339" with "%{bot}%"
+        else if world of player is "world_nether":
+            cancel event
+            set {_msg} to "[§4Nether§r] <%selector(player)%> %message%"
+            broadcast formatted {_msg}
+            #send {_msg} to channel with id "1103405488953102339" with "%{bot}%"
+        else if world of player is "world_the_end":
+            cancel event
+            set {_msg} to "[§eEnd§r] <%selector(player)%> %message%"
+            broadcast formatted {_msg}
+            #send {_msg} to channel with id "1103405488953102339" with "%{bot}%"
+        else:
+            cancel event
+            set {_msg} to "[§7Void§r] <%selector(player)%> %message%"
+            broadcast formatted {_msg}

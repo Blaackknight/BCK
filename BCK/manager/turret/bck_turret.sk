@@ -33,6 +33,32 @@ command /turret [<text>]:
         save yaml "bck.manager.turret.data"
 on tab complete of "/turret":
     set tab completions for position 1 to turretList()
+command /wave [<number=5>]:
+    trigger:
+        set {_loc} to player's location
+        waveDustParticle({_loc}, cyan, arg-1)
+on right click:
+    set {_b} to targeted block
+    if {_b} is set:
+        set {_l} to player's tool
+        set {_ds} to display name of {_l}
+        if {_l} is stick:
+            if {_ds} is "Wave":
+                set {_l} to {_b}'s location
+                set {_x} to x-coordinate of {_l}
+                set {_y} to y-coordinate of {_l}
+                set {_z} to z-coordinate of {_l}
+                set {_loc} to location({_x}, {_y}, {_z})
+                waveDustParticle({_loc}, cyan, 5)
+function waveDustParticle(loc: location, color: color, radius: number=3):
+    set {_n} to 1
+    set {_r} to {_radius}
+    set {_rr} to {_r} * 10
+    set {_ry} to 0
+    loop {_rr} times:
+        bckParticleDustLoc({_loc}, {_color}, 100, 5, {_n}, {_ry})
+        add 0.1 to {_ry}
+        wait 1 tick
 on death:
     loop all players:
         set {_p} to loop-player

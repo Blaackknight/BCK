@@ -5,6 +5,7 @@ on load:
         send "§6[§4BCK§6/§3Crypter§6]§r Loaded successfully !" to console
         load yaml "plugins/Skript/scripts/BCK/manager/crypter/config.yml" as "bck.manager.crypter.config"
         load yaml "plugins/Skript/scripts/BCK/manager/crypter/data.yml" as "bck.manager.crypter.data"
+        loadPresets()
     else:
         broadcast "§6[§4BCK§6/§3Crypter§6]§r Script loading cancel It requires (bck_manager.sk)"
         unload script file "bck_crypter.sk"
@@ -85,12 +86,16 @@ function getCryptLanguages() :: objects:
         set {_l} to loop-value
         replace "data.mapping." with "" in {_l}
         add {_l} to {_r::*}
+    loop getPresets():
+        add loop-value to {_r::*}
     return {_r::*}
 function crypting(text: text, type: text="ovor") :: text:
     set {_data::*} to {_text} split by ""
     set {_r} to ""
     loop {_data::*}:
         set {_b} to yaml value "data.mapping.%{_type}%.%loop-value%" from "bck.manager.crypter.config"
+        if {_b} is not set:
+            set {_b} to yaml value "data.%loop-value%" from "bck.manager.crypter.presets.%{_type}%"
         set {_l} to length of {_b} 
         set {_bb} to substring of {_b} from 0 to {_l}
         if {_bb} isn't "<none>":
@@ -144,6 +149,32 @@ function crypterData(find: text, mode: text="extract", data: text="") :: text:
         set yaml value "%{_find}%" from "bck.manager.crypter.data" to {_data}
         save yaml "bck.manager.crypter.data"
     return "%{_result}%"
+function loadPresets():
+    set {_list::*} to fileList("/plugins/Skript/scripts/BCK/manager/crypter/presets", "yml")
+    set {_n} to 0
+    loop {_list::*}:
+        set {_l} to loop-value
+        replace ".yml" with "" in {_l}
+        load yaml "plugins/Skript/scripts/BCK/manager/crypter/presets/%loop-value%" as "bck.manager.crypter.presets.%{_l}%"
+        set {_name} to yaml value "name" from "bck.manager.crypter.presets.%{_l}%"
+        if "%{_name}%" is "<none>":
+            set {_name} to "§r§c%{_l}%§r"
+        send "§6[§4BCK§6/§3Crypter§6/§7Presets§6]§r §7%loop-value% §r-> §a%{_name}% §2✓" to console
+        add 1 to {_n}
+    send "§6[§4BCK§6/§3Crypter§6/§7Presets§6]§r §l§b%{_n}%§r loadded successfully !" to console
+function getPresets() :: objects:
+    set {_list::*} to fileList("/plugins/Skript/scripts/BCK/manager/crypter/presets", "yml")
+    loop {_list::*}:
+        set {_l} to loop-value
+        set {_ll} to {_l}
+        replace ".yml" with "" in {_ll}
+        set {_name} to yaml value "name" from "bck.manager.crypter.presets.%{_ll}%"
+        if "%{_name}%" is "<none>":
+            replace ".yml" with "" in {_l}
+            set {_name} to {_l}
+        
+        add {_name} to {_presets::*}
+    return {_presets::*}
 on chat:
     if hasPermission(player, "server.send_message") is false:
         cancel event

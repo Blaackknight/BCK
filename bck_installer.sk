@@ -31,6 +31,9 @@ on load:
 	delete file "plugins/Skript/scripts/BCK/manager/zones/temp.txt"
 	create script "plugins/Skript/scripts/BCK/manager/other/temp.txt"
 	delete file "plugins/Skript/scripts/BCK/manager/other/temp.txt"
+	create script "plugins/Skript/scripts/BCK/manager/crypter/presets/temp.txt"
+	delete file "plugins/Skript/scripts/BCK/manager/crypter/presets/temp.txt"
+	
 	wait 5 tick
 	download file from "%{_link}%/core/core.sk" to file "plugins/Skript/scripts/BCK/core/core.sk"
 	download file from "%{_link}%/core/core_functions.sk" to file "plugins/Skript/scripts/BCK/core/core_functions.sk"
@@ -90,7 +93,7 @@ on load:
 	download file from "%{_link}%/manager/recipe/data.yml" to file "plugins/Skript/scripts/BCK/manager/recipe/data.yml"
 
 	download file from "%{_link}%/manager/turret/bck_turret.sk" to file "plugins/Skript/scripts/BCK/manager/turret/bck_turret.sk"
-	download file from "%{_link}%/manager/s/config.yml" to file "plugins/Skript/scripts/BCK/manager/turret/config.yml"
+	download file from "%{_link}%/manager/turret/config.yml" to file "plugins/Skript/scripts/BCK/manager/turret/config.yml"
 	download file from "%{_link}%/manager/turret/data.yml" to file "plugins/Skript/scripts/BCK/manager/turret/data.yml"
 
 	download file from "%{_link}%/manager/zones/bck_zones.sk" to file "plugins/Skript/scripts/BCK/manager/zones/bck_zones.sk"
@@ -100,7 +103,6 @@ on load:
 	download file from "%{_link}%/manager/other/bck_other.sk" to file "plugins/Skript/scripts/BCK/manager/other/bck_other.sk"
 	download file from "%{_link}%/manager/other/autoSmelt.sk" to file "plugins/Skript/scripts/BCK/manager/other/autoSmelt.sk"
 	download file from "%{_link}%/manager/other/broadcast.sk" to file "plugins/Skript/scripts/BCK/manager/other/broadcast.sk"
-	download file from "%{_link}%/manager/other/chat.sk" to file "plugins/Skript/scripts/BCK/manager/other/chat.sk"
 	download file from "%{_link}%/manager/other/config.sk" to file "plugins/Skript/scripts/BCK/manager/other/config.sk"
 	download file from "%{_link}%/manager/other/coordinate.sk" to file "plugins/Skript/scripts/BCK/manager/other/coordinate.sk"
 	download file from "%{_link}%/manager/other/cps.sk" to file "plugins/Skript/scripts/BCK/manager/other/cps.sk"

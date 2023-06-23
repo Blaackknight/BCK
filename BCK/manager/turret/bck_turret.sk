@@ -49,16 +49,16 @@ on right click:
                 set {_y} to y-coordinate of {_l}
                 set {_z} to z-coordinate of {_l}
                 set {_loc} to location({_x}, {_y}, {_z})
-                waveDustParticle({_loc}, cyan, 5)
+                waveDustParticle({_loc}, red, 5)
 function waveDustParticle(loc: location, color: color, radius: number=3):
     set {_n} to 1
     set {_r} to {_radius}
     set {_rr} to {_r} * 10
     set {_ry} to 0
     loop {_rr} times:
-        bckParticleDustLoc({_loc}, {_color}, 100, 5, {_n}, {_ry})
+        bckParticleDustLoc({_loc}, {_color}, 100, 10, {_n}, {_ry})
         add 0.1 to {_ry}
-        wait 1 tick
+        wait 5 tick
 on death:
     loop all players:
         set {_p} to loop-player

@@ -1,54 +1,29 @@
 function bckCoreLoad():
     load yaml "plugins/Skript/scripts/BCK/core/config.yml" as "bck.core.config"
 function bckRegisterSkripts():
-    set {_sks::*} to fileList("/plugins/Skript/scripts/BCK/manager/")
-    set {_bc::*} to fileList("/plugins/Skript/scripts/BCK/core/")
-    set {_mon::*} to fileList("/plugins/Skript/scripts/BCK/manager/money/")
-    set {_acc::*} to fileList("/plugins/Skript/scripts/BCK/manager/account/")
-    set {_att::*} to fileList("/plugins/Skript/scripts/BCK/manager/attributs/")
-    set {_box::*} to fileList("/plugins/Skript/scripts/BCK/manager/box/")
-    set {_cla::*} to fileList("/plugins/Skript/scripts/BCK/manager/clan/")
-    set {_con::*} to fileList("/plugins/Skript/scripts/BCK/manager/contener/")
-    set {_ele::*} to fileList("/plugins/Skript/scripts/BCK/manager/elevator/")
-    set {_ham::*} to fileList("/plugins/Skript/scripts/BCK/manager/hammer/")
-    set {_mob::*} to fileList("/plugins/Skript/scripts/BCK/manager/mob/")
-    set {_tur::*} to fileList("/plugins/Skript/scripts/BCK/manager/turret/")
-    set {_oth::*} to fileList("/plugins/Skript/scripts/BCK/manager/other/")
-    set {_zon::*} to fileList("/plugins/Skript/scripts/BCK/manager/zones/")
-    set {_bac::*} to fileList("/plugins/Skript/scripts/BCK/manager/backpack/")
-    set {_cry::*} to fileList("/plugins/Skript/scripts/BCK/manager/backpack/")
-    loop {_bc::*}:
-        add "%loop-value%" to {skripts::*}
-    loop {_sks::*}:
-        add "%loop-value%" to {skripts::*}
-    loop {_mon::*}:
-        add "%loop-value%" to {skripts::*}
-    loop {_acc::*}:
-        add "%loop-value%" to {skripts::*}
-    loop {_cla::*}:
-        add "%loop-value%" to {skripts::*}
-    loop {_con::*}:
-        add "%loop-value%" to {skripts::*}
-    loop {_ele::*}:
-        add "%loop-value%" to {skripts::*}
-    loop {_ham::*}:
-        add "%loop-value%" to {skripts::*}
-    loop {_mob::*}:
-        add "%loop-value%" to {skripts::*}
-    loop {_box::*}:
-        add "%loop-value%" to {skripts::*}
-    loop {_oth::*}:
-        add "%loop-value%" to {skripts::*}
-    loop {_zon::*}:
-        add "%loop-value%" to {skripts::*}
-    loop {_att::*}:
-        add "%loop-value%" to {skripts::*}
-    loop {_tur::*}:
-        add "%loop-value%" to {skripts::*}
-    loop {_bac::*}:
-        add "%loop-value%" to {skripts::*}
-    loop {_cry::*}:
-        add "%loop-value%" to {skripts::*}
+    loop files in dir "plugins/Skript/scripts/BCK/":
+        set {_l} to loop-value
+        set {_data::*} to {_l} split by "BCK/"
+        set {_f} to {_data::2}
+        #broadcast {_l}
+        loop files in dir "%{_l}%":
+            set {_ll} to loop-value-2
+            set {_lA} to {_ll}
+            set {_data::*} to {_lA} split by "BCK/%{_f}%/"
+            set {_r} to {_data::2}
+            if {_r} doesn't contain ".sk":
+                loop files in dir "%{_ll}%":
+                    set {_lll} to loop-value-3
+                    #broadcast {_lll}
+                    set {_data::*} to {_lll} split by "%{_ll}%/"
+                    set {_r} to {_data::2}
+                    if {_r} contain ".sk":
+                        add "%{_r}%" to {skripts::*}
+                    #broadcast "%{_r}%"
+                    #broadcast "BCK/%{_ll}%/"
+            else:
+                add "%{_r}%" to {skripts::*}
+            
 function bckRegisterCommands():
     set {cmds::*} to all registered commands
     loop {cmds::*}:

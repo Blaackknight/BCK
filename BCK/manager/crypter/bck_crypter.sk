@@ -105,12 +105,24 @@ function crypting(text: text, type: text="ovor") :: text:
 function decrypting(text: text, type: text="ovor") :: text:
     loop yaml node keys "data.mapping.%{_type}%" from "bck.manager.crypter.config":
         add loop-node to {_nodes::*}
+    
     loop {_nodes::*}:
         set {_l} to loop-value
         set {_d} to crypterConfig({_l})
         replace "data.mapping.%{_type}%." with "" in {_l}
         if {_text} contains {_d}:
             replace all {_d} with {_l} in {_text}
+    set {_r} to "%{_text}%"
+    if {_r} is {_text}:
+        broadcast "lol"
+        loop yaml node keys "data" from "bck.manager.crypter.presets.%{_type}%":
+            add loop-node to {_nodes::*}
+        loop {_nodes::*}:
+            set {_l} to loop-value
+            set {_d} to yaml value {_l} from "bck.manager.crypter.presets.%{_type}%"
+            replace "data." with "" in {_l}
+            if {_text} contains {_d}:
+                replace all {_d} with {_l} in {_text}
     set {_r} to "%{_text}%"
     return {_r}
 function crypterConfig(find: text, mode: text="extract", data: text="") :: text:

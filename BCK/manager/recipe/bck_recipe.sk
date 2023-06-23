@@ -13,16 +13,80 @@ on unload:
     set yaml list "data.recipes" from "bck.manager.recipe.data" to {_l::*}
     save yaml "bck.manager.recipe.data"
 function customRecipes():
-    set {_super_dirt} to dirt named "§dSuper Dirt"
-    register new shaped recipe for {_super_dirt} using dirt, dirt, dirt and dirt with id "super_dirt"
-    registerRecipe("super_dirt", {_super_dirt})
-    set {_supra_dirt} to dirt named "§bSupra Dirt"
-    register new shaped recipe for {_supra_dirt} using dirt, dirt, dirt and dirt with id "supra_dirt"
-    registerRecipe("supra_dirt", {_supra_dirt})
-    set {_big_dirt} to dirt named "§aBig Dirt"
-    set line 1 of lore of {_big_dirt} to "§6TEST"
-    register new shaped recipe for {_big_dirt} using dirt, dirt, dirt and dirt with id "big_dirt"
-    registerRecipe("big_dirt", {_big_dirt})
+    loop yaml node keys "data.customRecipe" from "bck.manager.recipe.config":
+        add loop-node to {_nodes::*}
+    loop {_nodes::*}:
+        set {_l} to loop-value
+        set {_i} to {_l}
+        replace "data.customRecipe." with "" in {_i}
+        replace all " " with "_" in {_i}
+        set {_data::*} to yaml list "%{_l}%.needed" from "bck.manager.recipe.config"
+        #broadcast "%{_l}%/%{_i}% -> %{_data::*}%"
+        set {_ii} to yaml value "data.customRecipe.%{_i}%.result.item" from "bck.manager.recipe.config"
+        set {_in} to recipeConfig("data.customRecipe.%{_i}%.result.name")
+        set {_ilore::*} to yaml list "data.customRecipe.%{_i}%.result.lore" from "bck.manager.recipe.config"
+        set {_ii} to {_ii} parsed as item
+        if "%{_ilore::*}%" is not "<none>":
+            set {_line} to 1
+            loop {_ilore::*}:
+                set {_oo} to loop-value-2
+                #replace all "<uuid>" with "§7%randomUUID()%" in {_oo}
+                set line {_line} of lore of {_ii} to {_oo}
+                add 1 to {_line}
+        set {_i.1} to {_data::1}
+        set {_i.2} to {_data::2}
+        set {_i.3} to {_data::3}
+        set {_i.4} to {_data::4}
+        set {_i.5} to {_data::5}
+        set {_i.6} to {_data::6}
+        set {_i.7} to {_data::7}
+        set {_i.8} to {_data::8}
+        set {_i.9} to {_data::9}
+        set {_i.1} to  {_i.1} parsed as item
+        set {_i.2} to  {_i.2} parsed as item
+        set {_i.3} to  {_i.3} parsed as item
+        set {_i.4} to  {_i.4} parsed as item
+        set {_i.5} to  {_i.5} parsed as item
+        set {_i.6} to  {_i.6} parsed as item
+        set {_i.7} to  {_i.7} parsed as item
+        set {_i.8} to  {_i.8} parsed as item
+        set {_i.9} to  {_i.9} parsed as item
+        if {_i.1} is not set:
+            set {_i.1} to air
+        if {_i.2} is not set:
+            set {_i.2} to air
+        if {_i.3} is not set:
+            set {_i.3} to air
+        if {_i.4} is not set:
+            set {_i.4} to air
+        if {_i.5} is not set:
+            set {_i.5} to air
+        if {_i.6} is not set:
+            set {_i.6} to air
+        if {_i.7} is not set:
+            set {_i.7} to air
+        if {_i.8} is not set:
+            set {_i.8} to air
+        if {_i.9} is not set:
+            set {_i.9} to air
+        set {_item} to {_ii} named {_in}
+        #broadcast "%{_i.1}%, %{_i.2}%, %{_i.3}%, %{_i.4}%, %{_i.5}%, %{_i.6}%, %{_i.7}%, %{_i.8}% and %{_i.9}%"
+        set {_prefix} to recipeConfig("data.prefix")
+        register new shaped recipe for {_item} using {_i.1}, {_i.2}, {_i.3}, {_i.4}, {_i.5}, {_i.6}, {_i.7}, {_i.8} and {_i.9} with id "%{_prefix}%%{_i}%"
+        registerRecipe({_i}, {_item})
+on craft:
+    set {_i} to event-item
+    set {_lores::*} to uncolored lore of {_i}
+    loop {_lores::*}:
+        set {_l} to loop-value
+        replace all "<uuid>" with "§7%randomUUID()%" in {_l}
+        add {_l} to {_list::*}
+    set {_line} to 1
+    loop {_list::*}:
+        set line {_line} of lore of {_i} to "§fedit:§r %loop-value%"
+        add 1 to {_line}
+    cancel event
+    broadcast "%{_i}% -> %{_list::*}%"
 function registerRecipe(id: text, result: item):
     set {_list::*} to yaml list "data.recipes" from "bck.manager.recipe.data"
     if {_list::*} is set:
@@ -30,7 +94,8 @@ function registerRecipe(id: text, result: item):
         set {_n} to display name of {_result}
         if {_n} is not set:
             set {_n} to {_t}
-        add "%{_id}%|%{_t}%|%{_n}%" to {_list::*}
+        if {_list::*} doesn't contain "%{_id}%|%{_t}%|%{_n}%":
+            add "%{_id}%|%{_t}%|%{_n}%" to {_list::*}
         set yaml list "data.recipes" from "bck.manager.recipe.data" to {_list::*}
         save yaml "bck.manager.recipe.data"
     else:

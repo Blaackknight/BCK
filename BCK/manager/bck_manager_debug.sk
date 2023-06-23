@@ -166,6 +166,10 @@ on explosion prime:
         play sound "entity.pig.hurt" with volume 1 at event-location
         delete event-entity
         kill event-entity
+on craft:
+    if hasPermission(player, "item.craft") is false:
+        cancel event
+        #send "§c§lHey! §7Tu n'a pas la permission :|"
 every minecraft day in "world":
     add 1 to {world.day}
     logCustom("§71§r added to day", 4)

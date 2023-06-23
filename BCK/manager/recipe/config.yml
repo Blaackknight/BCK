@@ -1,0 +1,23 @@
+data:
+    prefix: "bck."
+    customRecipe:
+        backpack_tier1: 
+            result:
+                item: orange shulker box
+                name: §fBackpack
+                lore:
+                    - "§7--⟨ §6Backpack§7 ⟩--"
+                    - ""
+                    - "§7⇾ §fTier: §a1"
+                    - ""
+                    - "<uuid>"
+            needed:
+                - string
+                - leather
+                - string
+                - leather
+                - air
+                - leather
+                - leather
+                - leather
+                - leather

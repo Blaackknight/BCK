@@ -17,7 +17,7 @@ command /money [<player>]:
                 set {_s} to managerConfig("data.money")
                 send "§e%arg-1% a §l§7%{_m}%%{_s}% §e!"
             else:
-                send "§cTu n'as pas la permission."
+                send lang("money.noPermission", player)
         else:
             set {_money} to userData(player, "data.money")
             set {_m} to numFormat("%{_money}%")
@@ -27,7 +27,7 @@ command /moneyadd [<player>] [<integer=1>]:
     trigger:
         if arg-1 is set:
             if arg-2 < 1:
-                send "§cSpécifie un nombre au dessus de 0 !"
+                send lang("money.numberAbove0", player)
                 stop
             moneyAdd(arg-1, arg-2, true)
             set {_s} to managerConfig("data.money")
@@ -38,7 +38,7 @@ command /moneyremove [<player>] [<integer=1>]:
     trigger:
         if arg-1 is set:
             if arg-2 < 1:
-                send "§cSpecify a number above 1 !"
+                send lang("money.numberAbove1", player)
                 stop
             moneyRemove(arg-1, arg-2, true)
             set {_s} to managerConfig("data.money")
@@ -50,13 +50,13 @@ command /sendMoney [<offlineplayer>] [<integer>]:
     trigger:
         if arg-1 is set:
             if arg-2 is not set:
-                send "§cEnter amount"
+                send lang("money.enterAmount", player)
                 stop
             if arg-2 < 1:
-                send "§cSpecify a number above 1 !"
+                send lang("money.numberAbove1", player)
                 stop
             if userDataNumber(player, "data.money") < arg-2:
-                send "§eTu n'as pas assez de ₣"
+                send lang("money.noEnoughtMoney", player)
                 stop
             else if userDataNumber(player, "data.money") >= arg-2:
                 sendMoney(player, arg-1, arg-2, true)

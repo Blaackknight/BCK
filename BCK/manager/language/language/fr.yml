@@ -1,0 +1,58 @@
+account:
+    goStaff: "§6Votre compte vient de passer §dSTAFF"
+    goPlayer: "§6Votre compte vient de passer §bPLAYER"
+attributs:
+backpack:
+box:
+    boxPlaced: "§6[§4BCK§6/§1Box§6]§r §eBox §b%{_box}%§r §eplacer !"
+    boxRemoved: "§6[§4BCK§6/§1Box§6]§r §eBox §b%{_box}%§r §eenlever !"
+    boxList:
+        top: "§8---------{ §1§lBoxList§r §8}---------"
+    default: "64 §o(défault)"
+    custom: "64 §o(custom)"
+    unknownOption: "§cOption incconue"
+clan:
+    enterClanName: "§cVeuillez saisir le nom de votre clan!"
+    enterName: "§cVeuillez entrer le nom du clan!"
+    clanNameAlreadyExist: "§cUn clan portant se nom et déjà existant"
+    alreadyInClan: "§cTu es déjà dans un clan.."
+    clanCreatedWithName: "§eTon clan vien d'être crée avec §asuccès§e, le nom est"
+    noExistingClanWithName: "§cClan non existant avec comme nom"
+    demandSend: "§eDemande envoyer !"
+    clanLeave: "§eClan §4quitté §eavec §asuccès §e!"
+    dontPromoteYourSelf: "§cTu ne peut pas te promouvoir toi même :|"
+    youGotPromoted: "§eVous venez d'être promue"
+    enterRank: "§cVeuillez entrer un rang !"
+    notInYourClan: "n'est pas dans votre clan !"
+    enterPlayer: "§cSpécifie un joueur.."
+    owner&CoOwerPermission: "§cSeul le §ePropriétaire du clan§c et le §eCo-propriétaire §cpeuveut utlisé cette commande.."
+    noClan: "§cTu n'est pas dans un clan !"
+    allyDemandSend: "§6Demande d'alliance §2envoyer§6 !" 
+    clanNotExist: "§cClan non éxistant"
+    enterClan: "§cVeuillez spécifier un clan."
+    unknownOption: "§cOption inconnue"
+    notOwner: "§cVous n'êtes pas le propriétaire de ce clan!"
+    clanDelete: "§eClan §4supprimé §favec §asuccès §f!"
+    enterOption: "§cVeuillez entrer une option.."
+    clanList:
+        top: "§7⟬ Listes des clans ⟭"
+        number: "§7Bombre de Clans:"
+    clanJoin: "§eClan §arejoint avec succès§e, nom:"
+    requestAcceptedFrom: "§eRequête §aaccepté §ede"
+    youRequestRefusedFrom: §eTa requête a été §4refusé, de
+    requestRefusedFrom: "§eRequête §4refusé §ede"
+contener:
+crypter:
+elevator:
+hammer:
+language:
+mob:
+money:
+    noPermission: "§cTu n'as pas la permission."
+    numberAbove0: "§cSpécifie un nombre au dessus de 0 !"
+    numberAbove1: "§cSpécifie un nombre au dessus de 1 !"
+    enterAmount: "§cEntrer un montant"
+    noEnoughtMoney: "§eTu n'as pas assez d'argent"
+other:
+turret:
+zones:

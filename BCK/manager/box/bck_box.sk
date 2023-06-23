@@ -26,7 +26,7 @@ on place:
             add "%{_box}%|%event-location%" to {_list::*}
             set yaml list "data.box.list" from "bck.manager.box.data" to {_list::*}
             save yaml "bck.manager.box.data"
-            send "§6[§4BCK§6/§1Box§6]§r §eBox §b%{_box}%§r §eplacer !"
+            send lang("box.boxPlaced", player)
             logCustom("§7%selector(player)%§r has been placed box §7§l%{_box}%", 4)
             logCustom("§7%selector(player)%§r has been placed box §7§l%{_box}%", 5)
 on break:
@@ -44,7 +44,7 @@ on break:
             set {_loc} to textToLoc({_data::2})
             #send "%locToText(event-location)% | %locToText({_loc})%"
             if locToText(event-location) is locToText({_loc}):
-                send "§6[§4BCK§6/§1Box§6]§r §eBox §b%{_box}%§r §eenlever !"
+                send lang("box.boxRemoved", player)
                 logCustom("§7%selector(player)%§r has been break box §7§l%{_box}%", 4)
                 logCustom("§7%selector(player)%§r has been break box §7§l%{_box}%", 5)
             else:
@@ -181,21 +181,22 @@ command /box [<text>] [<text>]:
                 give {_k} to player
             else if arg-1 is "list":
                 set {_b::*} to boxList()
-                send "§8---------{ §1§lBoxList§r §8}---------"
+                send lang("box.boxList.top", player)
                 loop {_b::*}:
                     set {_rew::*} to yaml list "data.box.%loop-value%.rewards" from "bck.manager.box.config"
                     set {_default} to boxConfigNumber("data.box.%loop-value%.maxStack")
                     if {_default} < 1:
-                        set {_default} to "64 §o(défault)"
+                        set {_default} to lang("box.default", player)
                     else if {_default} is not set:
-                        set {_default} to "64 §o(défault)"
+                        set {_default} to lang("box.default", player)
                     else:
-                        set {_default} to "64 §o(custom)"
+                        set {_default} to lang("box.custom", player)
                     send "§a%loop-value% §6->§r §b%{_rew::*}% §6-> §dmax: §c%{_default}%"
                 set {_t} to pluriel("Total", listCounter({_b::*}))
                 send "§6%{_t}%: §c%listCounter({_b::*})%"
             else:
-                send "§cOption incconue (%arg-1%)"
+                set {_gggg} to lang("box.unknownOption", player)
+                send "%{_gggg}% (%arg-1%)"
         else:
             send "§c/box <option>"
 on tab complete of "/box":

@@ -43,7 +43,7 @@ command /account [<text="player">]:
                 add 1 to {_count}
             set {account.%player%} to "staff"
             coordinateInterrupt(player)
-            send action bar "§6Votre compte vient de passer §dSTAFF" to player
+            send action bar lang("account.goStaff", player) to player
         else if {account.%player%} is "staff":
             set {account.creative.%player%.helmet} to player's helmet
             set {account.creative.%player%.chestplate} to player's chestplate
@@ -67,7 +67,7 @@ command /account [<text="player">]:
                 add 1 to {_count}
             set {account.%player%} to "player"
             coordinateInterrupt(player)
-            send action bar "§6Votre compte vient de passer §bPLAYER" to player
+            send action bar lang("account.goStaff", player) to player
 on tab complete of "/account":
     if hasPermission(player, "server.command.account") is false:
         stop

@@ -1,7 +1,0 @@
-command /language [<text>] [<text>]:
-    trigger:
-
-on tab complete of "/language":
-    if hasPermission(player, "server.command.language") is false:
-        stop
-    set tab completions for position 1 to "set" and "reset"

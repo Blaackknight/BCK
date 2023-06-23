@@ -5,7 +5,6 @@ function bckRegisterSkripts():
         set {_l} to loop-value
         set {_data::*} to {_l} split by "BCK/"
         set {_f} to {_data::2}
-        #broadcast {_l}
         loop files in dir "%{_l}%":
             set {_ll} to loop-value-2
             set {_lA} to {_ll}
@@ -14,13 +13,10 @@ function bckRegisterSkripts():
             if {_r} doesn't contain ".sk":
                 loop files in dir "%{_ll}%":
                     set {_lll} to loop-value-3
-                    #broadcast {_lll}
                     set {_data::*} to {_lll} split by "%{_ll}%/"
                     set {_r} to {_data::2}
                     if {_r} contain ".sk":
                         add "%{_r}%" to {skripts::*}
-                    #broadcast "%{_r}%"
-                    #broadcast "BCK/%{_ll}%/"
             else:
                 add "%{_r}%" to {skripts::*}
             
@@ -31,7 +27,6 @@ function bckRegisterCommands():
         if {server.perms::*} doesn't contain {_p}:
             replace "skript:" with "" in {_p}
             addServerPermission("server.command.%{_p}%")
-            #broadcast {_p}
 function bckLettersLoad(): 
     set {_letters} to "Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz"
     set {_letter-pairs::*} to {_letters} split at " "

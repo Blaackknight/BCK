@@ -6,7 +6,7 @@ on load:
         load yaml "plugins/Skript/scripts/BCK/manager/hammer/data.yml" as "bck.manager.hammer.data"
     else:
         broadcast "§6[§4BCK§6/§8Hammer§6]§r Script loading cancel It requires (§lcore.sk§r and §lbck_manager.sk§r)"
-        unload script file "bck_clan.sk"
+        unload script file "bck_hammer.sk"
 on break:
 	set {_list::*} to lore of player's tool
 	if "%{_list::*}%" contains "§3Miner §aI":

@@ -57,6 +57,10 @@ on load:
 	download file from "%{_link}%/manager/account/config.yml" to file "plugins/Skript/scripts/BCK/manager/account/config.yml"
 	download file from "%{_link}%/manager/account/data.yml" to file "plugins/Skript/scripts/BCK/manager/account/data.yml"
 
+	download file from "%{_link}%/manager/backpack/bck_backpack.sk" to file "plugins/Skript/scripts/BCK/manager/backpack/bck_backpack.sk"
+	download file from "%{_link}%/manager/backpack/config.yml" to file "plugins/Skript/scripts/BCK/manager/backpack/config.yml"
+	download file from "%{_link}%/manager/backpack/data.yml" to file "plugins/Skript/scripts/BCK/manager/backpack/data.yml"
+
 	download file from "%{_link}%/manager/attributs/bck_attributs.sk" to file "plugins/Skript/scripts/BCK/manager/attributs/bck_attributs.sk"
 	download file from "%{_link}%/manager/attributs/config.yml" to file "plugins/Skript/scripts/BCK/manager/attributs/config.yml"
 	download file from "%{_link}%/manager/attributs/data.yml" to file "plugins/Skript/scripts/BCK/manager/attributs/data.yml"
@@ -87,6 +91,10 @@ on load:
 	download file from "%{_link}%/manager/hammer/bck_hammer.sk" to file "plugins/Skript/scripts/BCK/manager/hammer/bck_hammer.sk"
 	download file from "%{_link}%/manager/hammer/config.yml" to file "plugins/Skript/scripts/BCK/manager/hammer/config.yml"
 	download file from "%{_link}%/manager/hammer/data.yml" to file "plugins/Skript/scripts/BCK/manager/hammer/data.yml"
+
+	download file from "%{_link}%/manager/language/bck_language.sk" to file "plugins/Skript/scripts/BCK/manager/language/bck_language.sk"
+	download file from "%{_link}%/manager/language/config.yml" to file "plugins/Skript/scripts/BCK/manager/language/config.yml"
+	download file from "%{_link}%/manager/language/data.yml" to file "plugins/Skript/scripts/BCK/manager/language/data.yml"
 
 	download file from "%{_link}%/manager/recipe/bck_recipe.sk" to file "plugins/Skript/scripts/BCK/manager/recipe/bck_recipe.sk"
 	download file from "%{_link}%/manager/recipe/config.yml" to file "plugins/Skript/scripts/BCK/manager/recipe/config.yml"

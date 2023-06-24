@@ -45,18 +45,22 @@ command /zones [<text>]:
                     set {_zt} to "zone"
                     if {_zn} > 1:
                         set {_zt} to "zones" 
-                    send "§8----{ §2§lZones§r §8}----"
+                    send lang("zones.zonesList.top", player)
                     loop {_list::*}:
                         set {_name} to zonesData("%loop-value%.name")
                         set {_radius} to zonesDataNumber("%loop-value%.radius")
                         set {_loc} to zonesDataLocation("%loop-value%")
-                        send formatted colored "§8-> §bNom: §3%{_name}% §8-> §dRadius: §5%{_radius}% §8-> §aLocation: §2%{_loc}%"
+                        set {_uu} to lang("zones.zonesList.name", player)
+                        set {_uuu} to lang("zones.zonesList.radius", player)
+                        set {_uuuu} to lang("zones.zonesList.location", player)
+                        send formatted colored "§8-> %{_uu}% §3%{_name}% §8-> %{_uuu}% §5%{_radius}% §8-> %{_uuuu}% §2%{_loc}%"
                     send "§6Total: §c§l§n%{_zn}%§r §e%{_zt}%"
                     send {_list::*}
                 else:
-                    send "§eAucune zone n'as été trouver.."
+                    send lang("zones.noAreaFound", player)
             else:
-                send "§cOption inconnue (%arg-1%)"
+                set {_uuu} to lang("zones.unknownOption", player)
+                send "%{_uuu}% (%arg-1%)"
         else:
             send "§c/zones <options>"
 on tab complete of "/zones":

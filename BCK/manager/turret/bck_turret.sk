@@ -165,7 +165,7 @@ function turretGuiMain(player: player, type: text):
         set line {_bline} of {_blacklist} to "§6-> §b%loop-value%§r"
         add 1 to {_bline}
     set {_remove} to tnt named "§4§l§nEnlever"
-    set line 2 of lore of {_remove} to "§fPermet de supprimer la tourelle"
+    set line 2 of lore of {_remove} to lang("turret.deleteTurret", {_player})
     
     set slot 12 of {_gui} to {_whitelist}
     set slot 14 of {_gui} to {_blacklist}
@@ -205,7 +205,8 @@ on inventory click:
                     set {_b} to targeted block
                     set {_tb} to type of {_b}
                     if "%{_tb}%" is not "barrier block":
-                        send "§cIl faut viser la tourelle !"
+                        
+                        send lang("turret.needTargetTurret", player)
                         stop
                     set {_bb} to {_b}'s location
                     set {_x} to x-coordinate of {_bb}
@@ -533,7 +534,7 @@ every 25 ticks:
                                 #add 1 to {turret.timer.%{_target}%}
                                 set {_verif} to false
                                     
-every 2 tick:
+every 4 tick:
     loop all entities:
         set {_t} to {turret.timer.%loop-entity%}
         if {_t} > 0:

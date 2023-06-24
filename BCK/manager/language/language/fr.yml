@@ -93,4 +93,14 @@ money:
     noEnoughtMoney: "§eTu n'as pas assez d'argent"
 other:
 turret:
+    deleteTurret: "§fPermet de supprimer la tourelle"
+    needTargetTurret: "§cIl faut viser la tourelle !"
 zones:
+    zonesList:
+        top: "§8----{ §2§lZones§r §8}----"
+        name: "§bNom:"
+        radius: "§dRayon:"
+        location: "§aLocation:"
+    noAreaFound: "§eAucune zone n'as été trouver.."
+    unknownOption: "§cOption inconnue"
+        

@@ -95,6 +95,8 @@ on load:
 	download file from "%{_link}%/manager/language/bck_language.sk" to file "plugins/Skript/scripts/BCK/manager/language/bck_language.sk"
 	download file from "%{_link}%/manager/language/config.yml" to file "plugins/Skript/scripts/BCK/manager/language/config.yml"
 	download file from "%{_link}%/manager/language/data.yml" to file "plugins/Skript/scripts/BCK/manager/language/data.yml"
+	download file from "%{_link}%/manager/language/language/fr.yml" to file "plugins/Skript/scripts/BCK/manager/language/language/fr.yml"
+	download file from "%{_link}%/manager/language/language/en.yml" to file "plugins/Skript/scripts/BCK/manager/language/language/en.yml"
 
 	download file from "%{_link}%/manager/recipe/bck_recipe.sk" to file "plugins/Skript/scripts/BCK/manager/recipe/bck_recipe.sk"
 	download file from "%{_link}%/manager/recipe/config.yml" to file "plugins/Skript/scripts/BCK/manager/recipe/config.yml"

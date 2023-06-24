@@ -82,6 +82,11 @@ hammer:
     alreadyUpdradeOn: "§eVous avez déja cet amélioration sur votre"
     syntaxError: "§cErreur de syntaxe !"
 language:
+    unknownOption: "§cOption inconnue"
+    languageNotFound: "§cLanguage non trouvé.."
+    noPermission: "§c§lHey! §7Tu n'a pas la permission :|"
+    languageClientSetTo: "§eVotre §llanguage§r§l vient d'être §achanger§e pour§r"
+    languageServerSetTo: "§eLe language de §4§lBCK§e coté serveur vient d'être §achanger§e pour§r"
 mob:
     mobNotFound: "§cMob introuvable"
     unknownOption: "§cOption inconnue"

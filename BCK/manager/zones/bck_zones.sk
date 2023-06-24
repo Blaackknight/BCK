@@ -55,7 +55,6 @@ command /zones [<text>]:
                         set {_uuuu} to lang("zones.zonesList.location", player)
                         send formatted colored "§8-> %{_uu}% §3%{_name}% §8-> %{_uuu}% §5%{_radius}% §8-> %{_uuuu}% §2%{_loc}%"
                     send "§6Total: §c§l§n%{_zn}%§r §e%{_zt}%"
-                    send {_list::*}
                 else:
                     send lang("zones.noAreaFound", player)
             else:

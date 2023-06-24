@@ -113,3 +113,8 @@ data:
                 - test
                 - lol
                 - ta mère
+        language:
+            item: amethyst shard
+            name: "§5⟪ Language ⟫"
+            guiName: "§5Language"
+            lore:

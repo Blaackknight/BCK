@@ -8,9 +8,47 @@ on load:
     else:
         broadcast "§6[§4BCK§6/§b§lLanguage§6]§r Script loading cancel It requires (§lcore.sk§r and §lbck_manager.sk§r)"
         unload script file "bck_language.sk"
-command /language [<text>]:
+command /language [<text>] [<text>]:
     trigger:
-        broadcast lang(arg-1, player, "language")
+        if arg-1 is set:
+            if arg-1 is "client":
+                if arg-2 is set:
+                    if getLanguages() contains arg-2:
+                        set {_uuu} to lang("language.languageClientSetTo", player)
+                        send "%{_uuu}% §b§l%arg-2%"
+                        userData(player, "data.language", "set", arg-2)
+                        logCustom("§7%selector(player)% §rlanguage changed to §7%arg-2%")
+                    else:
+                        send lang("language.languageNotFound", player)
+                else:
+                    send "§c/language %arg-1% <language>"
+            else if arg-1 is "server":
+                if hasPermission(player, "op") is false:
+                    send lang("language.noPermission", player)
+                    stop
+                if arg-2 is set:
+                    if getLanguages() contains arg-2:
+                        set {_uuu} to lang("language.languageServerSetTo", player)
+                        send "%{_uuu}% §b§l%arg-2%"
+                        languageData("data.server.language", "set", arg-2)
+                        logCustom("§7%selector(player)% §rhas been changed server language to §7%arg-2%")
+                    else:
+                        send lang("language.languageNotFound", player)
+                else:
+                    send "§c/language %arg-1% <language>"
+            else:
+                set {_uuu} to lang("language.unknownOption", player)
+                send "%{_uuu}% (%arg-1%)"
+        else:
+            send "§c/language <option>"
+        #broadcast lang(arg-1, player, "language")
+on tab complete of "/language":
+    if hasPermission(player, "op") is true:
+        set tab completions for position 1 to "client" and "server"
+    else:
+        set tab completions for position 1 to "client"
+    if tab arg-1 is set:
+        set tab completions for position 2 to getLanguages()
 function languageConfig(find: text, mode: text="extract", data: text="") :: text:
     if {_mode} is "extract":
         set {_result} to yaml value "%{_find}%" from "bck.manager.language.config"
@@ -28,6 +66,34 @@ function languageConfig(find: text, mode: text="extract", data: text="") :: text
     else if {_mode} is "set":
         set yaml value "%{_find}%" from "bck.manager.language.config" to {_data}
         save yaml "bck.manager.language.config"
+    return "%{_result}%"
+function getLanguages() :: objects:
+    loop files in dir "plugins/Skript/scripts/BCK/manager/language/language/":
+        set {_l} to loop-value
+        set {_data::*} to {_l} split by "language"
+        set {_u} to {_data::3}
+        replace "/" with "" in {_u}
+        if {_u} contains ".yml":
+            replace ".yml" with "" in {_u}
+            add "%{_u}%" to {_r::*}
+    return {_r::*}
+function languageData(find: text, mode: text="extract", data: text="") :: text:
+    if {_mode} is "extract":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.language.data"
+        if {_result} isn't set:
+            if {_data} isn't empty:
+                set {_result} to {_data}
+    else if {_mode} is "delete":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.language.data"
+        if {_result} is set:
+            delete yaml value "%{_find}%" from "bck.manager.language.data"
+            save yaml "bck.manager.language.data"
+        else:
+            set yaml value "%{_find}%" from "bck.manager.language.data" to {_data}
+            save yaml "bck.manager.language.data"
+    else if {_mode} is "set":
+        set yaml value "%{_find}%" from "bck.manager.language.data" to {_data}
+        save yaml "bck.manager.language.data"
     return "%{_result}%"
 # function languageRegister():
 #     loop files in dir "plugins/Skript/scripts/BCK/manager/":

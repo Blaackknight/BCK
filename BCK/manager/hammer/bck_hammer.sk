@@ -11,7 +11,7 @@ on break:
 	set {_list::*} to lore of player's tool
 	if "%{_list::*}%" contains "§3Miner §aI":
 		if hasPermission(player, "hammer.use") is false:
-			send "§c§lHey! §7Tu n'a pas la permission :|"
+			send lang("hammer.noPermission", player)
 			stop
 		set {_1} to event-block's location
 		set {_2} to event-block's location
@@ -69,7 +69,7 @@ on break:
 				play sound "entity.item.break" with volume 0.3 at player
 	else if "%{_list::*}%" contains "§3Miner §bII":
 		if hasPermission(player, "hammer.use") is false:
-			send "§c§lHey! §7Tu n'a pas la permission :|"
+			send lang("hammer.noPermission", player)
 			stop
 		set {_1} to event-block's location
 		set {_2} to event-block's location
@@ -127,7 +127,7 @@ on break:
 				play sound "entity.item.break" with volume 0.3 at player
 	else if "%{_list::*}%" contains "§3Miner §eIII":
 		if hasPermission(player, "hammer.use") is false:
-			send "§c§lHey! §7Tu n'a pas la permission :|"
+			send lang("hammer.noPermission", player)
 			stop
 		set {_1} to event-block's location
 		set {_2} to event-block's location
@@ -212,9 +212,10 @@ command /hammerGive [<text= "3x3">]:
 		if line 7 of lore of player's tool is set:
 			set {_line} to 8
 			set {_lineN} to 7
+		set {_alu} to lang("hammer.alreadyUpdradeOn", player)
 		if arg-1 is "3x3":
 			if line {_lineN} of lore of player's tool contains "§3Miner §aI":
-				send action bar "§eVous avez déja cet amélioration sur votre §c%player's tool%" to player
+				send action bar "%{_alu}% §c%player's tool%" to player
 			else if line {_lineN} of lore of player's tool contains "§3Miner §bII":
 				set line {_lineN} of lore of player's tool to "§3Miner §aI"
 				play sound "entity.experience_orb.pickup" with volume 0.3 at player
@@ -227,7 +228,7 @@ command /hammerGive [<text= "3x3">]:
 					play sound "entity.experience_orb.pickup" with volume 0.3 at player
 		else if arg-1 is "4x4":
 			if line {_lineN} of lore of player's tool contains "§3Miner §bII":
-				send action bar "§eVous avez déja cet amélioration sur votre §c%player's tool%" to player
+				send action bar "%{_alu}% §c%player's tool%" to player
 			else if line {_lineN} of lore of player's tool contains "§3Miner §cIII":
 				set line {_lineN} of lore of player's tool to "§3Miner §bII"
 				play sound "entity.experience_orb.pickup" with volume 0.3 at player
@@ -240,7 +241,7 @@ command /hammerGive [<text= "3x3">]:
 					play sound "entity.experience_orb.pickup" with volume 0.3 at player
 		else if arg-1 is "7x7":
 			if line {_lineN} of lore of player's tool contains "§3Miner §eIII":
-				send action bar "§eVous avez déja cet amélioration sur votre §c%player's tool%" to player
+				send action bar "%{_alu}% §c%player's tool%" to player
 			else if line {_lineN} of lore of player's tool contains "§3Miner §aI":
 				set line {_lineN} of lore of player's tool to "§3Miner §eIII"
 				play sound "entity.experience_orb.pickup" with volume 0.3 at player
@@ -252,7 +253,7 @@ command /hammerGive [<text= "3x3">]:
 					set line {_line} of lore of player's tool to "§3Miner §eIII"
 					play sound "entity.experience_orb.pickup" with volume 0.3 at player
 		else:
-			send "§cErreur de syntaxe !"
+			send lang("hammer.syntaxError", player)
 on tab complete of "/hammerGive":
 	if hasPermission(player, "server.command.hammerGive") is false:
 		stop

@@ -42,11 +42,49 @@ clan:
     youRequestRefusedFrom: §eTa requête a été §4refusé, de
     requestRefusedFrom: "§eRequête §4refusé §ede"
 contener:
+    bank:
+        noPermission: "§c§lHey! §7Tu n'a pas la permission :|"
+        noEnoughtMoneyWithNumber: "§cVous n'avez pas assez d'agent, il vous manque"
+        signIsNotYours: "§6[§aBank§6] §cCe panneau n'est pas le votre.."
+    drawer:
+        noPermission: "§c§lHey! §7Tu n'a pas la permission :|"
+        noEnoughtMoneyWithNumber: "§cVous n'avez pas assez d'agent, il vous manque"
+        blackList: "§eest §csur liste noir §e!"
+        blackListEnchanted: "§eavec un enchantement est §csur liste noir §e!"
+        withLore: "§eavec le lore"
+        blackListDammaged: "§eendommagé est §csur liste noir §e!"
+        noSameItemType: "§cCe n'est pas le même type d'item.."
+        signIsNotYours: "§cCe panneau ne vous appartient pas.."  
+    xpBank:
+        noPermission: "§c§lHey! §7Tu n'a pas la permission :|"
+        noEnoughtMoneyWithNumber: "§cVous n'avez pas assez d'agent, il vous manque"
+        signIsNotYours: "§cCe panneau ne vous appartient pas.."  
 crypter:
+    chatNotFound: "§cChat introuvable.."
+    noPermission: "§c§lHey! §7Tu n'a pas la permission :|"
 elevator:
+    handNotEmpty: "§cVotre main de doit pas étre vide.."
+    elevatorCanBeAddedTo: "§cL'élévateur ne peut être ajouté que sur un block"
+    blockAlreadyElevator: "§cVotre block et déja un élévateur.."
+    elevatorList:
+        title: "§6Elevators List§r"
+    numberToMany: "§c§l⟁§r §7Nombre trop grand"
+    elevatorCounter: "§6Elevators Counter:"
+    elevatorVisible: "§6élévateur rendu visible"
+    elevatorInvisible: "§6élévateur rendu invible"
+    elevator: "§6Elevator§r"
+    unknownOption: "§cOption inconnue"
+    noPermission: "§c§lHey! §7Tu n'a pas la permission :|"
+    elevatorCreated: "§7[§dElevator§7] §6Elévateur §2crée"
+    elevatorDeleted: "§7[§dElevator§7] §6Elévateur §cenlever"
 hammer:
+    noPermission: "§c§lHey! §7Tu n'a pas la permission :|"
+    alreadyUpdradeOn: "§eVous avez déja cet amélioration sur votre"
+    syntaxError: "§cErreur de syntaxe !"
 language:
 mob:
+    mobNotFound: "§cMob introuvable"
+    unknownOption: "§cOption inconnue"
 money:
     noPermission: "§cTu n'as pas la permission."
     numberAbove0: "§cSpécifie un nombre au dessus de 0 !"

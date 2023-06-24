@@ -4,7 +4,7 @@ on sign change:
     if line 1 is "xp bank":
         if hasPermission(player, "xp_bank.create") is false:
             cancel event
-            send "§c§lHey! §7Tu n'a pas la permission :|"
+            send lang("contener.xpBank.noPermission", player)
             set line 1 to ""
             stop
         if userDataNumber(player, "data.money") >= contenerConfigNumber("data.xpbank.price"):
@@ -20,14 +20,15 @@ on sign change:
             set line 1 to ""
             send "%{_line}% §6Xp Bank§r %{_uline}%" to player
             set {_s} to managerConfig("data.money")
-            send "§cVous n'avez pas assez d'agent, il vous manque %{_r}%%{_s}%"
+            set {_uuu} to lang("contener.xpBank.noEnoughtMoneyWithNumber", player)
+            send "%{_uuu}% %{_r}%%{_s}%"
 on right click on sign:
     set {_line} to yaml value "data.drawer.line" from "bck.manager.contener.config"
     set {_uline} to yaml value "data.drawer.uline" from "bck.manager.contener.config"
     if line 1 is "§6[§aXp Bank§6]":
         if hasPermission(player, "xp_bank.use") is false:
             cancel event
-            send "§c§lHey! §7Tu n'a pas la permission :|"
+            send lang("contener.xpBank.noPermission", player)
             stop
         if player is sneaking:
             #send "§6[§aDrawer§e]§r §7right click §r%player% sneak, (%event-block%)" to player
@@ -59,7 +60,7 @@ on right click on sign:
                         set line 3 to "%{_num} + 10%"
                         set player's level to player's level - 10
                     else:
-                        send "§6[§aXp Bank§6] §cThis sign is not yours.."
+                        send lang("contener.xpBank.signIsNotYours", player)
                 else:
                     set line 2 to "%{_p}%"
                     set {_num} to line 3 parsed as integer
@@ -88,7 +89,7 @@ on right click on sign:
                         set line 3 to "%{_num} + 1%"
                         set player's level to player's level - 1
                     else:
-                        send "§6[§aXp Bank§6] §cThis sign is not yours.."
+                        send lang("contener.xpBank.signIsNotYours", player)
 on left click on sign:
     set {_line} to yaml value "data.drawer.line" from "bck.manager.contener.config"
     set {_uline} to yaml value "data.drawer.uline" from "bck.manager.contener.config"
@@ -97,7 +98,7 @@ on left click on sign:
     if line 1 is "§6[§aXp Bank§6]":
         if hasPermission(player, "xp_bank.use") is false:
             cancel event
-            send "§c§lHey! §7Tu n'a pas la permission :|"
+            send lang("contener.xpBank.noPermission", player)
             stop
         if player is sneaking:
             set {_h} to player's tool
@@ -123,7 +124,7 @@ on left click on sign:
                         set line 2 to "<player>"
                         set line 3 to ""
                 else:
-                    send "§6[§aXp Bank§6] §cThis sign is not yours.."
+                    send lang("contener.xpBank.signIsNotYours", player)
             #send "§6[§aDrawer§6]§r §7left click §r%player% sneak, (%event-block%)" to player
         else:
             set {_h} to player's tool
@@ -141,7 +142,7 @@ on left click on sign:
                         set line 2 to "<player>"
                         set line 3 to ""
                 else:
-                    send "§6[§aXp Bank§6] §cThis sign is not yours.."
+                    send lang("contener.xpBank.signIsNotYours", player)
             #send "Number: %{_n}%" to player
             #send "§6[§aDrawer§6]§r §7left click §r%player% not sneak with %player's tool%, (%event-block%)" to player
             #send "§6[§aDrawer§6]§r §7left click §r%player% not sneak, (%event-block%)" to player   
@@ -170,5 +171,5 @@ on break of sign:
             if player = {_p}:
                 set {_p}'s level to {_p}'s level + {_n}
             else:
-                send "§6[§aXp Bank§6] §cThis sign is not yours.."  
+                send lang("contener.xpBank.signIsNotYours", player)  
                 cancel event                       

@@ -107,13 +107,15 @@ command /mob [<text>] [<text>]:
                         if "%{_offHand}%" is not "<none>" or "false":
                             set {_mob}'s offhand tool to {_offHand}
                     else:
-                        send "§cMob introuvable (%arg-2%)"
+                        set {_uuu} to lang("mob.mobNotFound", player)
+                        send "%{_uuu}% (%arg-2%)"
                 else:
                     send "§c/mob %arg-1% <mob>"
             else if arg-1 is "give":
             else if arg-1 is "list":
             else:
-                send "§cOption inconnue (%arg-1%)"
+                set {_uuu} to lang("mob.unknownOption", player)
+                send "%{_uuu}% (%arg-1%)"
         else:
             send "§c/mob <option>"
 on tab complete of "/mob":

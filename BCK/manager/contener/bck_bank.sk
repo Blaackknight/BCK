@@ -3,7 +3,7 @@ on sign change:
     if line 1 is "bank":
         if hasPermission(player, "bank.create") is false:
             cancel event
-            send "§c§lHey! §7Tu n'a pas la permission :|"
+            send lang("contener.bank.noPermission", player)
             set line 1 to ""
             stop
         if userDataNumber(player, "data.money") >= contenerConfigNumber("data.bank.price"):
@@ -18,21 +18,23 @@ on sign change:
             set {_r} to contenerConfigNumber("data.bank.price") - userDataNumber(player, "data.money")
             set line 1 to ""
             send "%{_line}% §6Bank§r %{_line}%" to player
-            send "§cVous n'avez pas assez d'agent, il vous manque %{_r}%%{sbm}%"
+            set {_uuu} to lang("contener.bank.noEnoughtMoneyWithNumber", player)
+            send "%{_uuu}% %{_r}%%{sbm}%"
 
 on right click on sign:
     set {_line} to yaml value "data.drawer.line" from "bck.manager.contener.config"
     if line 1 is "§6[§aBank§6]":
         if hasPermission(player, "bank.use") is false:
             cancel event
-            send "§c§lHey! §7Tu n'a pas la permission :|"
+            send lang("contener.bank.noPermission", player)
             stop
         if player is sneaking:
             #send "§6[§aDrawer§e]§r §7right click §r%player% sneak, (%event-block%)" to player
             
             set {_h} to player's tool
             set {_p} to line 2 parsed as player
-            set {_n} to {money.%player's uuid%}
+            set {_n} to userData("data.money")
+            set {_n} to {_n} parsed as number
                 
                 #send "Number: %{_n}% / %{_i}%" to player
             if line 2 is "<player>":
@@ -64,11 +66,12 @@ on right click on sign:
                         if {_n} is not 0:
                             moneyRemove(player, {_n}, true)
                 else:
-                    send "§6[§aBank§6] §cThis sign is not yours.."
+                    send lang("contener.bank.signIsNotYours", player)
         else:
             set {_h} to player's tool
             set {_p} to line 2 parsed as player
-            set {_n} to {money.%player's uuid%}
+            set {_n} to userData.("data.money")
+            set {_n} to {_n} parsed as number
                 
                 #send "Number: %{_n}% / %{_i}%" to player
             if line 2 is "<player>":
@@ -87,7 +90,7 @@ on right click on sign:
                         set line 3 to "%{_num} + 1%"
                         moneyRemove(player, 1, true)
                 else:
-                    send "§6[§aBank§6] §cThis sign is not yours.."
+                    send lang("contener.bank.signIsNotYours", player)
 on left click on sign:
     set {_line} to yaml value "data.drawer.line" from "bck.manager.contener.config"
     if player's gamemode is creative:
@@ -95,11 +98,12 @@ on left click on sign:
     if line 1 is "§6[§aBank§6]":
         if hasPermission(player, "bank.use") is false:
             cancel event
-            send "§c§lHey! §7Tu n'a pas la permission :|"
+            send lang("contener.bank.noPermission", player)
             stop
         if player is sneaking:
             set {_h} to player's tool
-            set {_n} to {money.%player's uuid%}
+            set {_n} to userData("data.money")
+            set {_n} to {_n} parsed as number
             set {_p} to line 2 parsed as player
             set {_num} to line 3 parsed as integer
             if line 2 is not "<player>":
@@ -121,11 +125,12 @@ on left click on sign:
                         set line 2 to "<player>"
                         set line 3 to ""
                 else:
-                    send "§6[§aBank§6] §cThis sign is not yours.."
+                    send lang("contener.bank.signIsNotYours", player)
             #send "§6[§aDrawer§6]§r §7left click §r%player% sneak, (%event-block%)" to player
         else:
             set {_h} to player's tool
-            set {_n} to {money.%player's uuid%}
+            set {_n} to userData("data.money")
+            sety {_n} to {_n} parsed as number
             set {_p} to line 2 parsed as player
             set {_num} to line 3 parsed as integer
             if line 2 is not "<player>":
@@ -138,7 +143,7 @@ on left click on sign:
                         set line 2 to "<player>"
                         set line 3 to ""
                 else:
-                    send "§6[§aBank§6] §cThis sign is not yours.."
+                    send lang("contener.bank.signIsNotYours", player)
             #send "Number: %{_n}%" to player
             #send "§6[§aDrawer§6]§r §7left click §r%player% not sneak with %player's tool%, (%event-block%)" to player
             #send "§6[§aDrawer§6]§r §7left click §r%player% not sneak, (%event-block%)" to player   
@@ -167,4 +172,4 @@ on break of sign:
             if player = {_p}:
                 moneyAdd({_p}, {_n}, true)
             else:
-                send "§6[§aBank§6] §cThis sign is not yours.."                         
+                send lang("contener.bank.signIsNotYours", player)                       

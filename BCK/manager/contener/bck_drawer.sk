@@ -4,7 +4,7 @@ on sign change:
     if line 1 is "drawer":
         if hasPermission(player, "drawer.create") is false:
             cancel event
-            send "§c§lHey! §7Tu n'a pas la permission :|"
+            send lang("contener.drawer.noPermission", player)
             set line 1 to ""
             stop
         if userDataNumber(player, "data.money") >= contenerConfigNumber("data.drawer.price"):
@@ -21,7 +21,8 @@ on sign change:
             set line 1 to ""
             send "%{_line}% §6Drawer§r %{_uline}%" to player
             set {_s} to managerConfig("data.money")
-            send "§cVous n'avez pas assez d'agent, il vous manque %{_r}%%{_s}%"
+            set {_uuu} to lang("contener.drawer.noEnoughtMoneyWithNumber", player)
+            send "%{_uuu}% %{_r}%%{_s}%"
 
 on right click on sign:
     set {_line} to yaml value "data.drawer.line" from "bck.manager.contener.config"
@@ -29,7 +30,7 @@ on right click on sign:
     if line 1 is "§6[§aDrawer§6]":
         if hasPermission(player, "drawer.use") is false:
             cancel event
-            send "§c§lHey! §7Tu n'a pas la permission :|"
+            send lang("contener.drawer.noPermission", player)
             stop
         if player is sneaking:
             #send "§6[§aDrawer§e]§r §7right click §r%player% sneak, (%event-block%)" to player
@@ -40,7 +41,10 @@ on right click on sign:
                 set {_n} to item amount of player's tool
                 set {_l::*} to uncolored lore of player's tool
                 set {_damage} to durability of {_h}
-
+                set {_uuu} to lang("contener.drawer.blackList", player)
+                set {_uuuu} to lang("contener.drawer.blackListEnchanted", player)
+                set {_wil} to lang("contener.drawer.withLore", player)
+                set {_bd} to lang("contener.drawer.blackListDammaged", player)
                 if contenerConfig("data.config.compactDrawer") is "true":
                     if "%{_i}%" is contenerConfig("data.config.compactDrawerItem"):
                         
@@ -48,22 +52,22 @@ on right click on sign:
                 loop getDrawerItemBlacklist():
                     if loop-value is "%{_i}%":
                         send "%{_line}% §6Drawer§r %{_uline}%" to player
-                        send "§b§l%{_i}%§r §eest §csur liste noir §e!"
+                        send "§b§l%{_i}%§r %{_uuu}%"
                         stop
                 loop getDrawerLoreBlacklist():
                     if "%{_l::*}%" contains loop-value:
                         send "%{_line}% §6Drawer§r %{_uline}%" to player
-                        send "§b§l%{_i}%§r §eavec le lore §d(%loop-value%)§e est §csur la liste noir §e!"
+                        send "§b§l%{_i}%§r %{_wil}% §d(%loop-value%) %{_uuu}%"
                         stop
                 
                 if itemIsEnchanted({_h}) is true:
                     send "%{_line}% §6Drawer§r %{_uline}%" to player
-                    send "§b§l%{_i}%§r §ewavec un enchantement est §csur liste noir §e!"
+                    send "§b§l%{_i}%§r %{_uuuu}%"
                     stop
                 #broadcast "DMG: %{_damage}%"
                 if {_damage} >= 1:
                     send "%{_line}% §6Drawer§r %{_uline}%" to player
-                    send "§b§l%{_i}%§r §eendommagé est §csur liste noir §e!"
+                    send "§b§l%{_i}%§r %{_bd}%"
                     stop
                 #send "Number: %{_n}% / %{_i}%" to player
                 if line 2 is "<id>":
@@ -83,7 +87,7 @@ on right click on sign:
                         remove {_n} of {_h} from player's tool
                     else:
                         send "%{_line}% §6Drawer§r %{_uline}%" to player
-                        send "§cCe n'est pas le même type d'item.."
+                        send lang("contener.drawer.noSameItemType", player)
             else:
                 if player is op:
                     set {_item} to line 2 parsed as item
@@ -91,7 +95,7 @@ on right click on sign:
                     set {_player} to line 4 parsed as player
                     if line 2 is not "<id>":
                         if line 4 is not "<player>":
-                            send formatted "§6§l⦑ Drawer Informations ⦒%nl%§7⁃ Joueur:§b %selector({_player})%%nl%§7⁃ Item:§b %{_item}%%nl%§7⁃ Amount:§b %{_amount}%"
+                            send formatted "§6§l⦑ Drawer Informations ⦒%nl%§7⁃ Joueur:§b %selector({_player})%%nl%§7⁃ Item:§b %{_item}%%nl%§7⁃ Montant:§b %{_amount}%"
              
         else:
             set {_player} to line 4 parsed as player
@@ -101,24 +105,28 @@ on right click on sign:
                 set {_n} to item amount of player's tool
                 set {_l::*} to uncolored lore of player's tool
                 set {_damage} to durability of {_h}
+                set {_uuu} to lang("contener.drawer.blackList", player)
+                set {_uuuu} to lang("contener.drawer.blackListEnchanted", player)
+                set {_wil} to lang("contener.drawer.withLore", player)
+                set {_bd} to lang("contener.drawer.blackListDammaged", player)
                 loop getDrawerItemBlacklist():
                     if loop-value is "%{_i}%":
                         send "%{_line}% §6Drawer§r %{_uline}%" to player
-                        send "§b§l%{_i}%§r §eest §csur liste noir §e!"
+                        send "§b§l%{_i}%§r %{_uuu}%"
                         stop
                 loop getDrawerLoreBlacklist():
                     if "%{_l::*}%" contains loop-value:
                         send "%{_line}% §6Drawer§r %{_uline}%" to player
-                        send "§b§l%{_i}%§r §eavec le lore §d(%loop-value%)§e est §csur liste noir §e!"
+                        send "§b§l%{_i}%§r %{_wil}% §d(%loop-value%) %{_uuu}%"
                         stop
                     #broadcast loop-value
                 if itemIsEnchanted({_h}) is true:
                     send "%{_line}% §6Drawer§r %{_uline}%" to player
-                    send "§b§l%{_i}%§r §eavec un enchantement est §csur liste noir §e!"
+                    send "§b§l%{_i}%§r %{_uuuu}%"
                     stop
                 if {_damage} >= 1:
                     send "%{_line}% §6Drawer§r %{_uline}%" to player
-                    send "§b§l%{_i}%§r §eendommagé est §csur liste noir §e!"
+                    send "§b§l%{_i}%§r %{_bd}%"
                     stop
                 #send "Number: %{_n}% / %{_i}%" to player
                 if line 2 is "<id>":
@@ -140,10 +148,10 @@ on right click on sign:
                             remove 1 of {_h} from player's tool
                         else:
                             send "%{_line}% §6Drawer§r %{_uline}%" to player
-                            send "§cCe n'est pas le même type d'item.."
+                            send lang("contener.drawer.noSameItemType", player)
                     else:
                         send "%{_line}% §6Drawer§r %{_uline}%" to player
-                        send "§cCe panneau ne vous appartient pas.."  
+                        send lang("contener.drawer.signIsNotYours", player)
              
 on left click on sign:
     set {_line} to yaml value "data.drawer.line" from "bck.manager.contener.config"
@@ -151,7 +159,7 @@ on left click on sign:
     if line 1 is "§6[§aDrawer§6]":
         if hasPermission(player, "drawer.use") is false:
             cancel event
-            send "§c§lHey! §7Tu n'a pas la permission :|"
+            send lang("contener.drawer.noPermission", player)
             stop
         if player's gamemode is creative:
             stop
@@ -180,7 +188,7 @@ on left click on sign:
                             set line 4 to "<player>"
                     else:
                         send "%{_line}% §6Drawer§r %{_uline}%" to player
-                        send "§6[§aDrawer§6] §cCe panneau ne vous appartient pas.."  
+                        send lang("contener.drawer.signIsNotYours", player) 
             #send "§6[§aDrawer§6]§r §7left click §r%player% sneak, (%event-block%)" to player
         else:
             set {_player} to line 4 parsed as player
@@ -199,7 +207,7 @@ on left click on sign:
                             set line 3 to ""
                             set line 4 to "<player>"
                     else:
-                        send "§6[§aDrawer§6] §cThis sign is not yours.."
+                        send lang("contener.drawer.signIsNotYours", player)
 on break of sign:
     if line 1 is "§6[§aDrawer§6]":
         if player's gamemode is creative:

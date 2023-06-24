@@ -106,17 +106,19 @@ on sneak toggle:
 command /elevator [<text>]:
     trigger:
         set {_blocks::*} to all blocks
+        set {_el} to lang("elevator.elevator", player)
         if arg-1 is set:
             if arg-1 is "create":
                 set {_t} to player's tool
                 set {_ty} to type of {_t}
                 if {_t} is air:
-                    send "{@line} §6Elevator§r {@line}" to player
-                    send "§cVotre main de doit pas étre vide.."
+                    send "{@line} %{_el}% {@line}" to player
+                    send lang("elevator.handNotEmpty", player)
                     stop
                 if isBlockWithItem({_t}) is false:
-                    send "{@line} §6Elevator§r {@line}" to player
-                    send "§cL'élévateur ne peut être ajouté que sur un block (%{_t}%)"
+                    send "{@line} %{_el}% {@line}" to player
+                    set {_uuu} to lang("elevator.elevatorCanBeAddedTo", player)
+                    send "%{_uuu}% (%{_t}%)"
                     #send {_blocks::*}
                     stop
                 set {_lore::*} to uncolored lore of player's tool
@@ -124,22 +126,24 @@ command /elevator [<text>]:
                     if loop-value is not "⦉ Elevator ⦊":
                         exit loop
                     else:
-                        send "{@line} §6Elevator§r {@line}" to player
-                        send "§cVotre block et déja un élévateur.."
+                        send "{@line} %{_el}% {@line}" to player
+                        send lang("elevator.blockAlreadyElevator", player)
                         play sound "entity.villager.no" with volume 0.5 at player
                         stop
                 #send {_lore::*}
                 set line 1 of lore of player's tool to "§7§l⦉ §dElevator §7§l⦊§r"
                 play sound "entity.experience_orb.pickup" with volume 0.4 at player
             else if arg-1 is "list":
-                send "{@line} §6Elevators List§r {@line}" to player
+                set {_uuu} to lang("elevator.elevatorList.title", player)
+                send "{@line} %{_uuu}% {@line}" to player
                 set {_c} to listCounter({elevator.blocks::*})
                 if {_c} < 20:
                     loop {elevator.blocks::*}:
                         send "§8-§r%loop-value%"
                 else:
-                    send "§c§l⟁§r §7Nombre trop grand"
-                send "§6Elevators Counter: §b§l%{_c}%"
+                    send lang("elevator.numberToMany", player)
+                set {_uuu} to lang("elevator.elevatorCounter", player)
+                send "%{_uuu}% §b§l%{_c}%"
             else if arg-1 is "visible":
                 set {_c} to 0
                 loop {elevator.blocks::*}:
@@ -165,17 +169,19 @@ command /elevator [<text>]:
                     #make console execute command "/execute at @e[x=%{_x}%,y=%{_y}%,z=%{_z}%] run data modify entity @e[tag=elevator,limit=1,distance=..1] Glowing set value 1b"
                     add 1 to {_c}
                 make console execute command "/team join elevator @e[tag=elevator]"
-                send "{@line} §6Elevator§r {@line}" to player
-                send "§b§l%{_c}% §6élévateur rendu visible"
+                set {_elv} to lang("elevator.elevatorVisible", player)
+                send "{@line} %{_el}% {@line}" to player
+                send "§b§l%{_c}% %{_elv}%"
                 wait 5 second 
                 make console execute command "/kill @e[tag=elevator]"
-                send "{@line} §6Elevator§r {@line}" to player
-                send "§b§l%{_c}% §6élévateur rendu invible"
+                send "{@line} %{_el}% {@line}" to player
+                set {_eli} to lang("elevator.elevatorInvisible", player)
+                send "§b§l%{_c}% %{_eli}%"
             else:
-                send "{@line} §6Elevator§r {@line}" to player
-                send "§cOption inconnue"
+                send "{@line} %{_el}% {@line}" to player
+                send lang("elevator.unknownOption", player)
         else:
-            send "{@line} §6Elevator§r {@line}" to player
+            send "{@line} %{_el}% {@line}" to player
             send "§c/elevator <option>"
 on place:
     set {_t} to player's tool
@@ -183,10 +189,10 @@ on place:
     if {_lore::*} contain "⦉ Elevator ⦊":
         if hasPermission(player, "elevator.create") is false:
             cancel event
-            send "§c§lHey! §7Tu n'a pas la permission :|"
+            send lang("elevator.noPermission", player)
             stop
         add event-block to {elevator.blocks::*}
-        send action bar "§7[§dElevator§7] §6Elévateur §2crée" to player
+        send action bar lang("elevator.elevatorCreated", player) to player
         play sound "block.note_block.bell" with volume 1 with pitch 1 at player
         logCustom("§7%selector(player)% has been §7created elevator§r at %event-location%", 4)
         logCustom("§7%selector(player)% has been §7created elevator§r at %event-location%", 5)
@@ -198,10 +204,10 @@ on break:
         if event-block is {_b}:
             if hasPermission(player, "elevator.delete") is false:
                 cancel event
-                send "§c§lHey! §7Tu n'a pas la permission :|"
+                send lang("elevator.noPermission", player)
                 stop
             remove {_b} from {elevator.blocks::*}
-            send action bar "§7[§dElevator§7] §6Elévateur §cenlever" to player
+            send action bar lang("elevator.elevatorDeleted", player) to player
             play sound "entity.firework_rocket.blast_far" with volume 1 with pitch 0.7 at player
             logCustom("§7%selector(player)% has been §7deleted elevator§r at %event-location%", 4)
             logCustom("§7%selector(player)% has been §7deleted elevator§r at %event-location%", 5)

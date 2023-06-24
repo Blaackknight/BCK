@@ -213,6 +213,32 @@ function guiMain(player: player, type: text):
         open {_gui} to {_player}
         userData({_player}, "data.inv", "set", "manager.%{_type}%.main")
     else if {_type} is "zones":
+    else if {_type} is "language":
+        set {_list::*} to getLanguages()
+        set {_slot} to 0
+        set {_langCount} to listCounter({_list::*})
+        set {_gn} to managerConfig("data.gui.%{_type}%.guiName")
+        set {_n} to 1
+        if {_langCount} > 9:
+            set {_n} to {_n} + 2
+        else if {_langCount} > 18:
+            set {_n} to {_n} + 3
+        else if {_langCount} > 27:
+            set {_n} to {_n} + 4
+        else if {_langCount} > 36:
+            set {_n} to {_n} + 5
+        else if {_langCount} > 45:
+            set {_n} to {_n} + 6
+        set {_gui} to genericGui({_gn}, {_n}, true)
+        loop {_list::*}:
+            set {_l} to loop-value
+            set {_i} to managerConfig("data.gui.config.language.item")
+            set {_i} to {_i} parsed as item
+            set {_ii} to {_i} named {_l}
+            set slot {_slot} of {_gui} to {_ii}
+            add 1 to {_slot}
+        open {_gui} to {_player}
+        userData({_player}, "data.inv", "set", "manager.%{_type}%.main")
     else:
         set {_gn} to managerConfig("data.gui.%{_type}%.guiName")
         set {_gs} to managerConfig("data.gui.config.size")
@@ -392,6 +418,9 @@ on inventory click:
             else if "%{_t}%" is "ender rod":
                 if {_u} contain "Crypter":
                     guiMain(player, "crypter")
+            else if "%{_t}%" is "amethyst shard":
+                if {_u} contain "Language":
+                    guiMain(player, "language")
             else:
                 broadcast {_t}
     else if userData(player, "data.inv") is "manager.money.main":
@@ -718,6 +747,19 @@ on inventory click:
                 if {_u} contain "Back":
                     managerGuiMain(player)
     else if userData(player, "data.inv") is "manager.zones.main":
+        cancel event
+        set {_i} to event-slot
+        set {_t} to type of {_i}
+        set {_n} to display name of {_i}
+        set {_u} to uncolored {_n}
+        if {_t} is not air:
+            set {_ins} to managerConfig("data.gui.config.install.item")
+            set {_swi} to managerConfig("data.gui.config.switch.item")
+            set {_uni} to managerConfig("data.gui.config.uninstall.item")
+            if "%{_t}%" contain "barrier":
+                if {_u} contain "Back":
+                    managerGuiMain(player)
+    else if userData(player, "data.inv") is "manager.language.main":
         cancel event
         set {_i} to event-slot
         set {_t} to type of {_i}

@@ -27,6 +27,8 @@ data:
                 item: player head
             recipe:
                 giveLore: "§aLeft click to give"
+            language:
+                item: echo shard
         account:
             item: writable book
             name: "§d⟪ Account ⟫"

@@ -27,7 +27,7 @@ on place:
     set {_b} to event-block
     set {_t} to type of {_b}
     if contenerConfig("data.config.compactDrawer") is "true":
-        if "%{_t}%" is contenerConfig("data.config.compactDrawerItem"):
+        if "%{_t}%" contains contenerConfig("data.config.compactDrawerItem"):
             set {_h} to player's tool
             set {_type} to uncolored line 1 of lore of {_h}
             set {_base} to uncolored contenerConfig("data.config.compactDrawerLore.line1")
@@ -48,7 +48,7 @@ on break:
     set {_b} to event-block
     set {_t} to type of {_b}
     if contenerConfig("data.config.compactDrawer") is "true":
-        if "%{_t}%" is contenerConfig("data.config.compactDrawerItem"):
+        if "%{_t}%" contains contenerConfig("data.config.compactDrawerItem"):
             set {_list::*} to yaml list "data.drawer.list" from "bck.manager.contener.data"
             loop {_list::*}:
                 set {_l} to loop-value

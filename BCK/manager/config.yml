@@ -29,6 +29,28 @@ data:
                 giveLore: "§aLeft click to give"
             language:
                 item: echo shard
+                languages:
+                    - ar
+                    - cn
+                    - da
+                    - de
+                    - el
+                    - en
+                    - es
+                    - fi
+                    - fr
+                    - he
+                    - hi
+                    - it
+                    - jp
+                    - kr
+                    - nl
+                    - no
+                    - pl
+                    - pt
+                    - ru
+                    - sv
+                    - tr 
         account:
             item: writable book
             name: "§d⟪ Account ⟫"

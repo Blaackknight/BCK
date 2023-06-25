@@ -219,6 +219,7 @@ function guiMain(player: player, type: text):
         set {_langCount} to listCounter({_list::*})
         set {_gn} to managerConfig("data.gui.%{_type}%.guiName")
         set {_n} to 1
+        set {_line} to 2
         if {_langCount} > 9:
             set {_n} to {_n} + 2
         else if {_langCount} > 18:
@@ -232,11 +233,21 @@ function guiMain(player: player, type: text):
         set {_gui} to genericGui({_gn}, {_n}, true)
         loop {_list::*}:
             set {_l} to loop-value
-            set {_i} to managerConfig("data.gui.config.language.item")
+            set {_i} to managerConfig("data.gui.config.%{_type}%.item")
             set {_i} to {_i} parsed as item
             set {_ii} to {_i} named {_l}
+            #broadcast {_l}
+            load yaml "plugins/Skript/scripts/BCK/manager/%{_type}%/language/%{_l}%.yml" as "bck.manager.%{_type}%.%{_l}%"
+            loop yaml node keys "" from "bck.manager.%{_type}%.%{_l}%":
+                add loop-node to {_nodes::*}
+                set line {_line} of lore of {_ii} to "§b-> §c§n%loop-node%"
+                add 1 to {_line}
+            # loop {_nodes::*}:
+            #     set line {_line} of lore of {_ii} to "%loop-value-2%"
+            #     add 1 to {_line}
             set slot {_slot} of {_gui} to {_ii}
             add 1 to {_slot}
+            set {_line} to 2
         open {_gui} to {_player}
         userData({_player}, "data.inv", "set", "manager.%{_type}%.main")
     else:
@@ -318,6 +329,12 @@ function addonInstaller(player: player, item: item, cat: text):
             set {_gn} to managerConfig("data.gui.%{_cat}%.guiName")
             send "§6[§4BCK§6/%{_gn}%§6]§r §2§lInstallation.." to {_player}
             set {_link} to "https://raw.githubusercontent.com/Blaackknight/BCK/main/BCK"
+            if {_cat} is "language":
+                set {_list::*} to yaml list "data.gui.config.language.languages" from "bck.manager.config"
+                loop {_list::*}:
+                    set {_l} to "%loop-value%"
+                    if file "plugins/Skript/scripts/BCK/manager/%{_cat}%/language/%{_l}%.yml" doesn't exist:
+                        download file from "%{_link}%/manager/%{_cat}%/language/%{_l}%.yml" to file "plugins/Skript/scripts/BCK/manager/%{_cat}%/language/%{_l}%.yml"
             if file "plugins/Skript/scripts/BCK/manager/%{_cat}%/bck_%{_cat}%.sk" doesn't exist:
                 download file from "%{_link}%/manager/%{_cat}%/bck_%{_cat}%.sk" to file "plugins/Skript/scripts/BCK/manager/%{_cat}%/bck_%{_cat}%.sk"
             if file "plugins/Skript/scripts/BCK/manager/%{_cat}%/config.yml" doesn't exist:

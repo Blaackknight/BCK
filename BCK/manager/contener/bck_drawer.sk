@@ -23,7 +23,66 @@ on sign change:
             set {_s} to managerConfig("data.money")
             set {_uuu} to lang("contener.drawer.noEnoughtMoneyWithNumber", player)
             send "%{_uuu}% %{_r}%%{_s}%"
-
+on place:
+    set {_b} to event-block
+    set {_t} to type of {_b}
+    if contenerConfig("data.config.compactDrawer") is "true":
+        if "%{_t}%" is contenerConfig("data.config.compactDrawerItem"):
+            set {_h} to player's tool
+            set {_type} to uncolored line 1 of lore of {_h}
+            set {_base} to uncolored contenerConfig("data.config.compactDrawerLore.line1")
+            replace {_base} with "" in {_type}
+            set {_amount} to uncolored line 2 of lore of {_h}
+            set {_base1} to uncolored contenerConfig("data.config.compactDrawerLore.line2")
+            replace {_base1} with "" in {_amount}
+            set {_amount} to {_amount} parsed as number
+            set {_list::*} to yaml list "data.drawer.list" from "bck.manager.contener.data"
+            set {_x} to x-coordinate of event-block's location
+            set {_y} to y-coordinate of event-block's location
+            set {_z} to z-coordinate of event-block's location
+            set {_w} to event-block's world
+            add "%{_type}%|%{_amount}%|%{_x}%|%{_y}%|%{_z}%|%{_w}%" to {_list::*}
+            set yaml list "data.drawer.list" from "bck.manager.contener.data" to {_list::*}
+            save yaml "bck.manager.contener.data"
+on break:
+    set {_b} to event-block
+    set {_t} to type of {_b}
+    if contenerConfig("data.config.compactDrawer") is "true":
+        if "%{_t}%" is contenerConfig("data.config.compactDrawerItem"):
+            set {_list::*} to yaml list "data.drawer.list" from "bck.manager.contener.data"
+            loop {_list::*}:
+                set {_l} to loop-value
+                set {_data::*} to {_l} split by "|"
+                set {_type} to {_data::1}
+                set {_type} to {_type} parsed as item
+                set {_amount} to {_data::2}
+                set {_amount} to {_amount} parsed as number
+                set {_x} to {_data::3}
+                set {_y} to {_data::4}
+                set {_z} to {_data::5}
+                set {_w} to {_data::6}
+                set {_w} to "%{_w}%"
+                set {_x} to {_x} parsed as number
+                set {_y} to {_y} parsed as number
+                set {_z} to {_z} parsed as number
+                set {_loc} to location({_x}, {_y}, {_z}, {_w}) 
+                set {_xx} to x-coordinate of event-location
+                set {_yy} to y-coordinate of event-location
+                set {_zz} to z-coordinate of event-location
+                set {_ww} to {_b}'s world
+                set {_loca} to location({_xx}, {_yy}, {_zz}, {_ww}) 
+                if "%{_loca}%" contains "%{_loc}%":
+                    set block at event-location to air
+                    drop {_amount} of {_type} at event-location
+                    loop {_list::*}:
+                        if loop-value-2 is {_l}:
+                            continue
+                        else:
+                            add loop-value-2 to {_r::*}
+                    set yaml list "data.drawer.list" from "bck.manager.contener.data" to {_r::*}
+                    save yaml "bck.manager.contener.data"
+                else:
+                    #send "%event-location% -> %{_loc}%"
 on right click on sign:
     set {_line} to yaml value "data.drawer.line" from "bck.manager.contener.config"
     set {_uline} to yaml value "data.drawer.uline" from "bck.manager.contener.config"
@@ -47,7 +106,34 @@ on right click on sign:
                 set {_bd} to lang("contener.drawer.blackListDammaged", player)
                 if contenerConfig("data.config.compactDrawer") is "true":
                     if "%{_i}%" is contenerConfig("data.config.compactDrawerItem"):
-                        
+                        set {_type} to uncolored line 1 of lore of {_h}
+                        set {_base} to uncolored contenerConfig("data.config.compactDrawerLore.line1")
+                        replace {_base} with "" in {_type}
+                        set {_amount} to uncolored line 2 of lore of {_h}
+                        set {_base1} to uncolored contenerConfig("data.config.compactDrawerLore.line2")
+                        replace {_base1} with "" in {_amount}
+                        set {_amount} to {_amount} parsed as number
+                        set {_amount} to {_amount} * {_n}
+
+                        set {_typeStart} to line 2
+                        set {_amountStart} to line 3 parsed as number
+                        set {_playerStart} to line 4 parsed as offlineplayer
+
+                        if {_playerStart} is player:
+                            if {_typeStart} is {_type}:
+                                set line 2 to {_typeStart}
+                                set {_rrrr} to {_amountStart} + {_amount}
+                                #send "%{_rrrr}% -> %{_amountStart}% -> %{_amount}%"
+                                set line 3 to "%{_rrrr}%"
+                                set line 4 to "%player%"
+                                remove {_n} of {_h} from player's tool
+                                stop
+                            else:
+                                send lang("contener.drawer.noSameItemType", player)
+                                stop
+                        else:
+                            send lang("contener.drawer.signIsNotYours", player)
+                            stop
 
                 loop getDrawerItemBlacklist():
                     if loop-value is "%{_i}%":
@@ -109,6 +195,37 @@ on right click on sign:
                 set {_uuuu} to lang("contener.drawer.blackListEnchanted", player)
                 set {_wil} to lang("contener.drawer.withLore", player)
                 set {_bd} to lang("contener.drawer.blackListDammaged", player)
+
+                if contenerConfig("data.config.compactDrawer") is "true":
+                    if "%{_i}%" is contenerConfig("data.config.compactDrawerItem"):
+                        set {_type} to uncolored line 1 of lore of {_h}
+                        set {_base} to uncolored contenerConfig("data.config.compactDrawerLore.line1")
+                        replace {_base} with "" in {_type}
+                        set {_amount} to uncolored line 2 of lore of {_h}
+                        set {_base1} to uncolored contenerConfig("data.config.compactDrawerLore.line2")
+                        replace {_base1} with "" in {_amount}
+                        set {_amount} to {_amount} parsed as number
+
+                        set {_typeStart} to line 2
+                        set {_amountStart} to line 3 parsed as number
+                        set {_playerStart} to line 4 parsed as offlineplayer
+
+                        if {_playerStart} is player:
+                            if {_typeStart} is {_type}:
+                                set line 2 to {_typeStart}
+                                set {_rrrr} to {_amountStart} + {_amount}
+                                #send "%{_rrrr}% -> %{_amountStart}% -> %{_amount}%"
+                                set line 3 to "%{_rrrr}%"
+                                set line 4 to "%player%"
+                                remove 1 of {_h} from player's tool
+                                stop
+                            else:
+                                send lang("contener.drawer.noSameItemType", player)
+                                stop
+                        else:
+                            send lang("contener.drawer.signIsNotYours", player)
+                            stop
+
                 loop getDrawerItemBlacklist():
                     if loop-value is "%{_i}%":
                         send "%{_line}% §6Drawer§r %{_uline}%" to player

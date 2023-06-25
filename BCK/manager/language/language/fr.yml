@@ -8,7 +8,7 @@ box:
     boxRemoved: "§6[§4BCK§6/§1Box§6]§r §eBox §b%{_box}%§r §eenlever !"
     boxList:
         top: "§8---------{ §1§lBoxList§r §8}---------"
-    default: "64 §o(défault)"
+    default: "64 §o(défaul)"
     custom: "64 §o(custom)"
     unknownOption: "§cOption incconue"
 clan:
@@ -36,10 +36,10 @@ clan:
     enterOption: "§cVeuillez entrer une option.."
     clanList:
         top: "§7⟬ Listes des clans ⟭"
-        number: "§7Bombre de Clans:"
+        number: "§7Nombre de Clans:"
     clanJoin: "§eClan §arejoint avec succès§e, nom:"
     requestAcceptedFrom: "§eRequête §aaccepté §ede"
-    youRequestRefusedFrom: §eTa requête a été §4refusé, de
+    youRequestRefusedFrom: "§eTa requête a été §4refusé, de"
     requestRefusedFrom: "§eRequête §4refusé §ede"
 contener:
     bank:
@@ -71,7 +71,7 @@ elevator:
     numberToMany: "§c§l⟁§r §7Nombre trop grand"
     elevatorCounter: "§6Elevators Counter:"
     elevatorVisible: "§6élévateur rendu visible"
-    elevatorInvisible: "§6élévateur rendu invible"
+    elevatorInvisible: "§6élévateur rendu invisible"
     elevator: "§6Elevator§r"
     unknownOption: "§cOption inconnue"
     noPermission: "§c§lHey! §7Tu n'a pas la permission :|"
@@ -83,7 +83,7 @@ hammer:
     syntaxError: "§cErreur de syntaxe !"
 language:
     unknownOption: "§cOption inconnue"
-    languageNotFound: "§cLanguage non trouvé.."
+    languageNotFound: "§cLangage non trouvé.."
     noPermission: "§c§lHey! §7Tu n'a pas la permission :|"
     languageClientSetTo: "§eVotre §llanguage§r§l vient d'être §achanger§e pour§r"
     languageServerSetTo: "§eLe language de §4§lBCK§e coté serveur vient d'être §achanger§e pour§r"
@@ -96,6 +96,7 @@ money:
     numberAbove1: "§cSpécifie un nombre au dessus de 1 !"
     enterAmount: "§cEntrer un montant"
     noEnoughtMoney: "§eTu n'as pas assez d'argent"
+manager:
 other:
 turret:
     deleteTurret: "§fPermet de supprimer la tourelle"

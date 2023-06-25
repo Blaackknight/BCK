@@ -1,0 +1,111 @@
+account:
+    goStaff: "§6Your account has just passed §dSTAFF"
+    goPlayer: "§6Your account has just passed §bPLAYER"
+attributs:
+backpack:
+box:
+    boxPlaced: "§6[§4BCK§6/§1Box§6]§r §eBox §b%{_box}%§r §eplaced !"
+    boxRemoved: "§6[§4BCK§6/§1Box§6]§r §eBox §b%{_box}%§r §eremoved !"
+    boxList:
+        top: "§8---------{ §1§lBoxList§r §8}---------"
+    default: "64 §o(default)"
+    custom: "64 §o(custom)"
+    unknownOption: "§cUnknown option"
+clan:
+    enterClanName: "§cPlease enter your clan name!"
+    enterName: "§cPlease enter clan name!"
+    clanNameAlreadyExist: "§cA clan bearing his name and already existing"
+    alreadyInClan: "§cYou are already in a clan.."
+    clanCreatedWithName: "§eYour clan has just been created §asuccessfully§e, the name is"
+    noExistingClanWithName: "§cClan not existing with as name"
+    demandSend: "§eRequest send !"
+    clanLeave: "§eClan §4left §esuccessfully §e!"
+    dontPromoteYourSelf: "§cYou can't promote yourself :|"
+    youGotPromoted: "§eYou have just been promoted"
+    enterRank: "§cPlease enter a rank !"
+    notInYourClan: "is not in your clan !"
+    enterPlayer: "§cSpecifies a player.."
+    owner&CoOwerPermission: "§cSOnly the §eOwner of the clan§c and the §eCo-owner §ccan use this command.."
+    noClan: "§cYou are not in a clan !"
+    allyDemandSend: "§6Alliance request §2send§6 !" 
+    clanNotExist: "§cClan not existing"
+    enterClan: "§cPlease specify a clan."
+    unknownOption: "§cUnknown option"
+    notOwner: "§cYou are not the owner of this clan!"
+    clanDelete: "§eClan §4deleted §asuccessfully §f!"
+    enterOption: "§cPlease enter an option.."
+    clanList:
+        top: "§7⟬ Clan lists ⟭"
+        number: "§7Number of Clans:"
+    clanJoin: "§eClan §asuccessfully joined§e, name:"
+    requestAcceptedFrom: "§eRequest §aaccepted §efrom"
+    youRequestRefusedFrom: "§eYour request has been §crefused§e, from"
+    requestRefusedFrom: "§eRequest §crefused §efrom"
+contener:
+    bank:
+        noPermission: "§c§lHey! §7You don't have permission :|"
+        noEnoughtMoneyWithNumber: "§cYou don't have enough agent, you are missing"
+        signIsNotYours: "§6[§aBank§6] §cThis panel is not yours.."
+    drawer:
+        noPermission: "§c§lHey! §7You don't have permission :|"
+        noEnoughtMoneyWithNumber: "§cYou don't have enough agent, you are missing"
+        blackList: "§eis §cblacklisted §e!"
+        blackListEnchanted: "§ewith an enchantment is §cblacklisted §e!"
+        withLore: "§ewith lore"
+        blackListDammaged: "§edamaged is §cblacklisted §e!"
+        noSameItemType: "§cIt is not the same type of item.."
+        signIsNotYours: "§cThis panel does not belong to you.."  
+    xpBank:
+        noPermission: "§c§lHey! §7You don't have permission :|"
+        noEnoughtMoneyWithNumber: "§cYou don't have enough agent, you are missing"
+        signIsNotYours: "§cThis panel does not belong to you.."  
+crypter:
+    chatNotFound: "§cChat not found.."
+    noPermission: "§c§lHey! §7You don't have permission :|"
+elevator:
+    handNotEmpty: "§cYour hand must not be empty.."
+    elevatorCanBeAddedTo: "§cThe elevator can only be added on a block"
+    blockAlreadyElevator: "§cYour block and already an elevator.."
+    elevatorList:
+        title: "§6Elevators List§r"
+    numberToMany: "§c§l⟁§r §7Number too large"
+    elevatorCounter: "§6Elevators Counter:"
+    elevatorVisible: "§6elevator made visible"
+    elevatorInvisible: "§6riser made invisible"
+    elevator: "§6Elevator§r"
+    unknownOption: "§cUnknown option"
+    noPermission: "§c§lHey! §7You don't have permission :|"
+    elevatorCreated: "§7[§dElevator§7] §6Elevator §2created"
+    elevatorDeleted: "§7[§dElevator§7] §6Elevator §cremove"
+hammer:
+    noPermission: "§c§lHey! §7You don't have permission :|"
+    alreadyUpdradeOn: "§eYou already have this upgrade on your"
+    syntaxError: "§cSyntax error !"
+language:
+    unknownOption: "§cUnknown option"
+    languageNotFound: "§cLanguage not found.."
+    noPermission: "§c§lHey! §7You don't have permission :|"
+    languageClientSetTo: "§eYour §llanguage§r§l has just been §achanged to§r"
+    languageServerSetTo: "§eThe §4§lBCK§e language on the server side has just been §achanged to§r"
+mob:
+    mobNotFound: "§cMob not found"
+    unknownOption: "§cUnknown option"
+money:
+    noPermission: "§cYou do not have permission."
+    numberAbove0: "§cSpecifies a number above 0 !"
+    numberAbove1: "§cSpecifies a number above 0 !"
+    enterAmount: "§cEnter an amount"
+    noEnoughtMoney: "§eYou do not have enough money"
+manager:
+other:
+turret:
+    deleteTurret: "§fAllows you to remove the turret"
+    needTargetTurret: "§cYou have to aim for the turret !"
+zones:
+    zonesList:
+        top: "§8----{ §2§lZones§r §8}----"
+        name: "§bName:"
+        radius: "§dRadius:"
+        location: "§aLocation:"
+    noAreaFound: "§eNo zone was found.."
+    unknownOption: "§cUnknown option"

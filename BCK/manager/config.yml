@@ -142,3 +142,8 @@ data:
             name: "§5⟪ Language ⟫"
             guiName: "§5Language"
             lore:
+        head_collector:
+            item: ender dragon head
+            name: "§6⟪ Head Collector ⟫"
+            guiName: "§6Head Collector"
+            lore:

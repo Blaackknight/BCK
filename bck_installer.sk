@@ -92,6 +92,10 @@ on load:
 	download file from "%{_link}%/manager/hammer/config.yml" to file "plugins/Skript/scripts/BCK/manager/hammer/config.yml"
 	download file from "%{_link}%/manager/hammer/data.yml" to file "plugins/Skript/scripts/BCK/manager/hammer/data.yml"
 
+	download file from "%{_link}%/manager/head_collector/bck_head_collector.sk" to file "plugins/Skript/scripts/BCK/manager/head_collector/bck_head_collector.sk"
+	download file from "%{_link}%/manager/head_collector/config.yml" to file "plugins/Skript/scripts/BCK/manager/head_collector/config.yml"
+	download file from "%{_link}%/manager/head_collector/data.yml" to file "plugins/Skript/scripts/BCK/manager/head_collector/data.yml"
+
 	download file from "%{_link}%/manager/language/bck_language.sk" to file "plugins/Skript/scripts/BCK/manager/language/bck_language.sk"
 	download file from "%{_link}%/manager/language/config.yml" to file "plugins/Skript/scripts/BCK/manager/language/config.yml"
 	download file from "%{_link}%/manager/language/data.yml" to file "plugins/Skript/scripts/BCK/manager/language/data.yml"

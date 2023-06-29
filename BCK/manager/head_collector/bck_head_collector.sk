@@ -1,0 +1,34 @@
+on load:
+    if {skripts::*} contains "core.sk" and "bck_manager.sk":
+        send "§6[§4BCK§6]§r Loading head collector..." to console
+        send "§6[§4BCK§6/Head Collector§6]§r Loaded successfully !" to console
+        load yaml "plugins/Skript/scripts/BCK/manager/head_collector/config.yml" as "bck.manager.head_collector.config"
+        load yaml "plugins/Skript/scripts/BCK/manager/head_collector/data.yml" as "bck.manager.head_collector.data"
+        #languageRegister()
+    else:
+        broadcast "§6[§4BCK§6/Head Collector§6]§r Script loading cancel It requires (§lcore.sk§r and §lbck_manager.sk§r)"
+        unload script file "bck_language.sk"
+function collectHead(entity: livingentity) :: item:
+    if {_entity} is player:
+        set {_i} to {_entity}'s skull named "%{_entity}% head"
+    else:
+        set {_i} to {_entity}'s head named "%{_entity}% head"
+        #broadcast "%{_i}%"
+    if {_i} is not set:
+        set {_i} to player head
+    drop {_i} at {_entity}'s location
+on death of living entities:
+    set {_v} to victim
+    set {_a} to attacker
+    set {_at} to attacker's tool
+    set {_lores::*} to uncolored lore of {_at}
+    if "%{_lores::*}%" contains "Head Collector":
+        collectHead({_v})
+command /uwu [<player>]:
+    trigger:
+        if arg-1 is set:
+            collectHead(arg-1)
+        else:
+            set {_i} to diamond sword named "§1Bouboup"
+            set line 1 of lore of {_i} to "§4Head Collector"
+            give {_i} to player

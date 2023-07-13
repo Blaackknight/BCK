@@ -8,21 +8,30 @@ on load:
     else:
         broadcast "§6[§4BCK§6/Head Collector§6]§r Script loading cancel It requires (§lcore.sk§r and §lbck_manager.sk§r)"
         unload script file "bck_language.sk"
-function collectHead(entity: livingentity) :: item:
-    if {_entity} is player:
-        set {_i} to {_entity}'s skull named "%{_entity}% head"
+function collectHead(entity: livingentity, attacker: text="<none>") :: item:
+    if headCollectorConfigBoolean("data.config.onlyPlayers") is true:
+        if {_entity} is player:
+            set {_i} to {_entity}'s skull named "%{_entity}% head"
+            if {_i} is not set:
+                set {_i} to player head named "%{_entity}% head"
     else:
-        set {_i} to {_entity}'s head named "%{_entity}% head"
+        if {_entity} is player:
+            set {_i} to {_entity}'s skull named "%{_entity}% head"
+        else:
+            set {_i} to {_entity}'s head named "%{_entity}% head"
         #broadcast "%{_i}%"
-    if {_i} is not set:
-        set {_i} to player head
+        if {_i} is not set:
+            set {_i} to player head named "%{_entity}% head"
     drop {_i} at {_entity}'s location
+    if {_attacker} is not "<none>":
+        logCustom("%{_entity}% has been droped head by %{_attacker}%", 4)
+        logCustom("%{_entity}% has been droped head by %{_attacker}%", 5)
 on death of living entities:
     set {_v} to victim
     set {_a} to attacker
     set {_at} to attacker's tool
     set {_lores::*} to uncolored lore of {_at}
-    if "%{_lores::*}%" contains "Head Collector":
+    if "%{_lores::*}%" contains headCollectorConfig("data.config.loreNeeded"):
         collectHead({_v})
 command /uwu [<player>]:
     trigger:
@@ -32,3 +41,40 @@ command /uwu [<player>]:
             set {_i} to diamond sword named "§1Bouboup"
             set line 1 of lore of {_i} to "§4Head Collector"
             give {_i} to player
+function headCollectorConfig(find: text, mode: text="extract", data: text="") :: text:
+    if {_mode} is "extract":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.head_collector.config"
+        if {_result} isn't set:
+            if {_data} isn't empty:
+                set {_result} to {_data}
+    else if {_mode} is "delete":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.head_collector.config"
+        if {_result} is set:
+            delete yaml value "%{_find}%" from "bck.manager.head_collector.config"
+            save yaml "bck.manager.head_collector.config"
+        else:
+            set yaml value "%{_find}%" from "bck.manager.head_collector.config" to {_data}
+            save yaml "bck.manager.head_collector.config"
+    else if {_mode} is "set":
+        set yaml value "%{_find}%" from "bck.manager.head_collector.config" to {_data}
+        save yaml "bck.manager.head_collector.config"
+    return "%{_result}%"
+function headCollectorConfigBoolean(find: text, mode: text="extract", data: text="") :: boolean:
+    if {_mode} is "extract":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.head_collector.config"
+        if {_result} isn't set:
+            if {_data} isn't empty:
+                set {_result} to {_data}
+    else if {_mode} is "delete":
+        set {_result} to yaml value "%{_find}%" from "bck.manager.head_collector.config"
+        if {_result} is set:
+            delete yaml value "%{_find}%" from "bck.manager.head_collector.config"
+            save yaml "bck.manager.head_collector.config"
+        else:
+            set yaml value "%{_find}%" from "bck.manager.head_collector.config" to {_data}
+            save yaml "bck.manager.head_collector.config"
+    else if {_mode} is "set":
+        set yaml value "%{_find}%" from "bck.manager.head_collector.config" to {_data}
+        save yaml "bck.manager.head_collector.config"
+    set {_r} to "%{_result}%" parsed as boolean
+    return {_r}

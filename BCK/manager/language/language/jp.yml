@@ -1,0 +1,111 @@
+account:
+  goStaff: "あなたのアカウントはSTAFFになりました"
+  goPlayer: "あなたのアカウントはPLAYERになりました"
+attributs:
+backpack:
+box:
+    boxPlaced: "Box %{_box}%を配置しました！"
+    boxRemoved: "Box %{_box}%を削除しました！"
+    boxList:
+        top: "---------{ BoxList }---------"
+        default: "64 (デフォルト)"
+        custom: "64 (カスタム)"
+    unknownOption: "不明なオプション"
+clan:
+    enterClanName: "クラン名を入力してください！"
+    enterName: "クランの名前を入力してください！"
+    clanNameAlreadyExist: "そのクラン名はすでに存在しています"
+    alreadyInClan: "すでにクランに所属しています.."
+    clanCreatedWithName: "クランが作成されました: 名前は"
+    noExistingClanWithName: "その名前のクランは存在しません"
+    demandSend: "リクエストを送信しました！"
+    clanLeave: "クランから脱退しました！"
+    dontPromoteYourSelf: "自分自身を昇進させることはできません :|"
+    youGotPromoted: "昇進しました"
+    enterRank: "ランクを入力してください！"
+    notInYourClan: "はあなたのクランに所属していません！"
+    enterPlayer: "プレーヤーを指定してください.."
+    owner&CoOwerPermission: "このコマンドは、クランオーナーおよび共同オーナーのみが使用できます.."
+    noClan: "あなたはクランに所属していません！"
+    allyDemandSend: "同盟要求を送信しました！"
+    clanNotExist: "そのクランは存在しません"
+    enterClan: "クランを指定してください。"
+    unknownOption: "不明なオプション"
+    notOwner: "あなたはこのクランのオーナーではありません！"
+    clanDelete: "クランが削除されました！"
+    enterOption: "オプションを入力してください.."
+    clanList:
+        top: "⟬ クラン一覧 ⟭"
+        number: "クランの数"
+    clanJoin: "§eクランに参加しました: §a"
+    requestAcceptedFrom: "§eリクエストが承諾されました: "
+    youRequestRefusedFrom: "§eリクエストが拒否されました: "
+    requestRefusedFrom: "§eリクエストが拒否されました: "
+contener:
+    bank:
+        noPermission: "§c§lHey! §7権限がありません :|"
+        noEnoughtMoneyWithNumber: "§c所持金が足りません、不足分: "
+        signIsNotYours: "§6[§aBank§6] §cこの看板はあなたのものではありません.."
+    drawer:
+        noPermission: "§c§lHey! §7権限がありません :|"
+        noEnoughtMoneyWithNumber: "§c所持金が足りません、不足分: "
+        blackList: "§eはブラックリストに登録されています！"
+        blackListEnchanted: "§eエンチャント付きアイテムはブラックリストに登録されています！"
+        withLore: "§eロア付きアイテムはブラックリストに登録されています！"
+        blackListDammaged: "§eダメージを受けたアイテムはブラックリストに登録されています！"
+        noSameItemType: "§c同じ種類のアイテムではありません.."
+        signIsNotYours: "§cこの看板はあなたのものではありません.."
+    xpBank:
+        noPermission: "§c§lHey! §7権限がありません :|"
+        noEnoughtMoneyWithNumber: "§c所持金が足りません、不足分: "
+        signIsNotYours: "§cこの看板はあなたのものではありません.."
+crypter:
+    chatNotFound: "§cチャットが見つかりません.."
+    noPermission: "§c§lHey! §7権限がありません :|"
+elevator:
+    handNotEmpty: "§c手を空にしてください.."
+    elevatorCanBeAddedTo: "§cエレベーターはブロックにのみ追加できます"
+    blockAlreadyElevator: "§cこのブロックは既にエレベーターです.."
+    elevatorList:
+        title: "§6エレベーターリスト§r"
+    numberToMany: "§c§l⟁§r §7数が多すぎます"
+    elevatorCounter: "§6エレベーターカウンター:"
+    elevatorVisible: "§6エレベーターが表示されました"
+    elevatorInvisible: "§6エレベーターが非表示になりました"
+    elevator: "§6エレベーター§r"
+    unknownOption: "§c不明なオプション"
+    noPermission: "§c§lHey! §7権限がありません :|"
+    elevatorCreated: "§7[§dElevator§7] §6エレベーターが作成されました"
+    elevatorDeleted: "§7[§dElevator§7] §6エレベーターが削除されました"
+hammer:
+    noPermission: "§c§lHey! §7権限がありません :|"
+    alreadyUpdradeOn: "§eこのアップグレードは既に適用されています: "
+    syntaxError: "§c構文エラーです！"
+language:
+    unknownOption: "§c不明なオプション"
+    languageNotFound: "§c言語が見つかりません.."
+    noPermission: "§c§lHey! §7権限がありません :|"
+    languageClientSetTo: "§e言語が変更されました: "
+    languageServerSetTo: "§eサーバー側の言語が変更されました: "
+mob:
+    mobNotFound: "§cモブが見つかりません"
+    unknownOption: "§c不明なオプション"
+money:
+    noPermission: "§c権限がありません。"
+    numberAbove0: "§c0より大きい数を指定してください！"
+    numberAbove1: "§c1より大きい数を指定してください！"
+    enterAmount: "§c金額を入力してください"
+    noEnoughtMoney: "§eお金が足りません"
+manager:
+other:
+turret:
+    deleteTurret: "§f砲塔を削除するためのコマンド"
+    needTargetTurret: "§c砲塔をターゲットしてください！"
+zones:
+    zonesList:
+        top: "§8----{ §2§lゾーン§r §8}----"
+        name: "§b名前:"
+        radius: "§d半径:"
+        location: "§a位置:"
+    noAreaFound: "§eゾーンが見つかりませんでした.."
+    unknownOption: "§c不明なオプション"

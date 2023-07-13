@@ -300,7 +300,7 @@ function loadUserdata():
         replace "userdata" with "" in {_r}
         replace all "/" with "" in {_r}
         replace all "\" with "" in {_r}
-        broadcast "bck.userdata.%{_r}%"
+        #broadcast "bck.userdata.%{_r}%"
         load yaml "plugins/Skript/scripts/BCK/manager/userdata/%{_r}%.yml" as "bck.userdata.%{_r}%"
         #broadcast yaml value "data.username" from "bck.userdata.%{_r}%"
 function guiUpdater(player: player, cat: text):
